@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>右侧测试</title>
+	<link rel="stylesheet" href="/vue/vue-index.css">
+	<script src="/vue/vue.js"></script>
+	<link rel="stylesheet" href="/element/index.css">
+	<script src="/vue/vue-index.js"></script>
+	<style>
+		html,
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		
+		.el-header {
+			background-color: #B3C0D1;
+			color: #333;
+			line-height: 60px;
+		}
+		
+		.el-aside {
+			color: #333;
+		}
+		#app1{
+			margin: 20px;
+		}
+	</style>
+</head>
+
+<body>
+<div id="app1">
+	<el-row type="flex" class="row-bg" justify="center">
+		<el-col :span="20">
+			<el-table :data="tableData" border>
+				<el-table-column prop="date" label="日期" width="140">
+				
+				</el-table-column>
+				<el-table-column prop="name" label="姓名" width="120">
+				</el-table-column>
+				<el-table-column prop="address" label="地址">
+				</el-table-column>
+			</el-table>
+		</el-col>
+	</el-row>
+
+</div>
+</body>
+<script type="text/javascript">
+
+	/*var vm = new Vue({
+		el: '#app',
+		data: {
+			items : []
+		}, //end data
+		created:function(){
+			let self = this;
+			axios.post('/getCity').then(function(response){
+				
+				self.items=response.data.aa
+				console.log(response.data.aa)
+			})
+			
+		}
+	});*/
+	//分界线
+	let Main = {
+		data() {
+			const item = {
+				date: '2016-05-02',
+				name: '王小虎',
+				address: '上海市普陀区金沙江路 1518 弄'
+			};
+			return {
+				tableData: Array(50).fill(item)
+			}
+		}
+	};
+	let Ctor = Vue.extend(Main)
+	new Ctor().$mount('#app1')
+</script>
+</body>
+</html>
