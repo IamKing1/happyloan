@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "customer")
-public class information {
+public class Information {
     @Autowired
     private InformationService informationService;
 
@@ -130,10 +130,6 @@ public class information {
         int i = informationService.SubmissionRealName(map, session);
           return i;
     }
-
-
-
-
 
 
 }

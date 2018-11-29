@@ -318,9 +318,6 @@ body {
 .fr {
   float: right;
 }
-.fl {
-  float: left;
-}
 .clearfix:before,
 .clearfix:after {
   content: "";

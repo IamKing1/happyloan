@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.customer.LoanDao">
+        <insert id="applyLoan" parameterType="map">
+            insert into tb_borrow (id,REALID,MONEY,LONGTIME,REPAYMENTMETHOD,HOUSINGQUANTITY,TOTALPRICE,PURPOSE,STATUS,REMARK)
+            VALUES (seq_borrow_id.nextval,#{realId},#{money},#{longtime},#{mode},#{house},#{price},#{purpose},21,#{remark})
+        </insert>
+</mapper>

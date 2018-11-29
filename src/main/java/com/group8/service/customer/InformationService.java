@@ -61,4 +61,10 @@ public interface InformationService {
      * @return
      */
     int SubmissionRealName(Map map, HttpSession session);
+    /**
+     * 根据用户名查询真实姓名
+     * @param userName
+     * @return
+     */
+    List<Map> getRealIdByUserName(String userName);
 }

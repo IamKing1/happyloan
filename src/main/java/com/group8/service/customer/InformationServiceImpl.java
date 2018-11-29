@@ -98,4 +98,12 @@ public class InformationServiceImpl implements InformationService {
 
         return i;
     }
+
+
+    @Override
+   public  List<Map> getRealIdByUserName(String userName){
+        List<Map> realIdByUserName = informationDao.getRealIdByUserName(userName);
+        return realIdByUserName;
+    }
+
 }

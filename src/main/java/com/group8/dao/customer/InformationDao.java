@@ -62,4 +62,11 @@ public interface InformationDao {
      */
     int SubmissionRealName(Map map);
 
+    /**
+     * 根据用户名查询真实姓名
+     * @param userName
+     * @return
+     */
+    List<Map> getRealIdByUserName(String userName);
+
 }

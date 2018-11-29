@@ -36,6 +36,8 @@
    values(seq_realname_id.nextval,#{userId},#{realName},#{sex},#{address},#{idNumber},#{education},#{marriage},#{income},21,#{housed})
     </insert>
 
-    
+    <select id="getRealIdByUserName" resultType="map">
+        select b.* from tb_user a join tb_realname b on a.userid=b.userid where a.username=#{userName}
+    </select>
 
 </mapper>

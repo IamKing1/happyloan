@@ -10,9 +10,15 @@
     <script type="text/javascript">
 
         $(function () {
+            jySession();
+        })
+
+        //校验是否登录
+        function jySession(){
             $.ajax({
                 type: "post", //请求方式
                 dataType: "json",
+                async: false,
                 url: "customer/jySession", //发送请求地址
                 //请求成功后的回调函数有两个参数
                 success: function (data) {
@@ -22,11 +28,11 @@
                     } else {
                         $("#uS").append("<div class=\"\"><a href=\"login.html\" class=\"js-login\" title=\"登录\">登录</a></div>")
                         $("#href1").attr("href","login.html")
+                        stutas=false;
                     }
                 }
             })
-        })
-
+        }
         // 上下滚动
         function AutoScroll(obj) {
             $(obj).find("ul:first").animate({
@@ -82,10 +88,30 @@
             <li> <a href="list.html" class="">我要投资</a> </li>
             <li><a href="borrow.html">我要贷款</a></li>
             <li> <a href="帮助中心.html">安全保障</a> </li>
-            <li class="top-nav-safe"> <a id="href1" >我的账户</a></span> </li>
+            <li class="top-nav-safe"> <a href="##" onclick="zhanghu()">我的账户</a></span> </li>
             <li> <a href="公司简介.html">关于我们</a> </li>
         </ul>
     </div>
 </div>
+<script>
+    function zhanghu(){
+        $.ajax({
+            type: "post", //请求方式
+            dataType: "json",
+            async: false,
+            url: "customer/jySession", //发送请求地址
+            //请求成功后的回调函数有两个参数
+            success: function (data) {
+                if (data.session!= "-1") {
+                    window.location.href='个人中心首页.html';
+                } else {
+                    if(confirm("你还没有登录，是否去登录?")){
+                        window.location.href='login.html';
+                    }
+                }
+            }
+        })
+    }
+</script>
 </body>
 </html>

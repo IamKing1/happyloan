@@ -33,7 +33,7 @@ import java.util.Random;
  */
 @Controller
 @RequestMapping(value = "customer")
-public class loginController {
+public class LoginController {
         @Autowired
         private LoginService loginService;
 
