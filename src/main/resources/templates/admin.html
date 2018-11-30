@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>欢迎进入后台页面</title>
+	<link rel="stylesheet" href="/vue/vue-index.css">
+	<link rel="stylesheet" href="/element/index.css">
+	<script src="/vue/vue.js"></script>
+	<script src="/vue/vue-index.js"></script>
+	<style>
+		html,
+		body {
+			padding: 0;
+			margin: 0;
+			height: 100%;
+		}
+		
+		.el-header {
+			background-color: #B3C0D1;
+			color: #333;
+			line-height: 60px;
+			
+		}
+		
+		#app, .el-container {
+			height: 100%;
+		}
+		
+		.el-aside {
+			color: #333;
+		}
+		
+		iframe {
+			border: none;
+		}
+		
+		a {
+			text-decoration: none;
+			color: inherit;
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+		}
+		
+		a:visited {
+			color: inherit;
+		}
+		
+		a:hover {
+			color: inherit;
+		}
+		
+		a:active {
+			color: inherit;
+		}
+		.el-menu{
+			border: none;
+		}
+		.el-menu-item.is-active {
+			background-color: rgb(238, 239, 240);
+		}
+		::-webkit-scrollbar {
+			display: none;
+		}
+		.el-menu{
+			background: rgba(200,200,200,.4);
+		}
+		.el-menu .el-menu--inline{
+			background: rgba(255,255,255,.9);
+		}
+	</style>
+	
+</head>
+
+<body>
+<div id="app">
+	<el-container >
+		<el-header style="text-align: right; font-size: 12px;height: 80px; background-color: rgb(84, 92, 100);color: #fff;" >
+			<span>王小虎</span>
+		</el-header>
+		<el-container>
+			<el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+				<el-menu :default-openeds="['1']" background-color="" >
+					<el-submenu index="1">
+						<template slot="title"><i class="el-icon-message"></i>导航一</template>
+						
+						<el-menu-item index="1-1"><a href="/jump/toEg1" target="iframe">选项1</a></el-menu-item>
+						<el-menu-item index="1-2"><a href="/jump/toEg2" target="iframe">选项2</a></el-menu-item>
+						<el-menu-item index="1-3"><a href="/jump/toEg1" target="iframe">选项3</a></el-menu-item>
+					</el-submenu>
+					<el-submenu index="2">
+						<template slot="title"><i class="el-icon-menu"></i>导航二</template>
+						
+						<el-menu-item index="2-1"><a href="/jump/toEg1" target="iframe">选项1</a></el-menu-item>
+						<el-menu-item index="2-2"><a href="/jump/toEg2" target="iframe">选项2</a></el-menu-item>
+						<el-menu-item index="2-3"><a href="/jump/toEg1" target="iframe">选项3</a></el-menu-item>
+					</el-submenu>
+					<el-submenu index="3">
+						<template slot="title"><i class="el-icon-setting"></i>导航三</template>
+						
+						<el-menu-item index="3-1"><a href="/jump/toEg1" target="iframe">选项1</a></el-menu-item>
+						<el-menu-item index="3-2"><a href="/jump/toEg2" target="iframe">选项2</a></el-menu-item>
+						<el-menu-item index="3-3"><a href="/jump/toEg1" target="iframe">选项3</a></el-menu-item>
+					</el-submenu>
+				</el-menu>
+			</el-aside>
+			<el-main style="padding: 0 0 0 30px;">
+				<iframe src="/jump/toEg1" width="100%" id="mainiframe" height="100%" name="iframe" style="margin: 0;padding: 0"></iframe>
+			</el-main>
+		</el-container>
+	</el-container>
+</div>
+</body>
+<script type="text/javascript">
+
+	new Vue({
+		el:"#app"
+	})
+
+</script>
+<!--<script>
+	function changeFrameHeight(){
+		var ifm= document.getElementById("mainiframe");
+		ifm.height=document.documentElement.clientHeight-80; //56是头顶的高度，和网友估计不一样。
+	}
+	$(function(){ window.onresize=function(){
+		changeFrameHeight(); }});
+</script>-->
+</html>
