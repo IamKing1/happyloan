@@ -69,4 +69,19 @@ public interface InformationDao {
      */
     List<Map> getRealIdByUserName(String userName);
 
+
+    /**
+     * 根据用户名修改头像
+     * @param map
+     * @return
+     */
+    int updateHeadPortrait(Map map);
+
+    /**
+     * 根据用户名查询头像
+     * @param userName
+     * @return
+     */
+    List<Map> selectHeadPortrait(String userName);
+
 }
