@@ -106,4 +106,17 @@ public class InformationServiceImpl implements InformationService {
         return realIdByUserName;
     }
 
+
+    @Override
+    public int updateHeadPortrait(Map map){
+        int i = informationDao.updateHeadPortrait(map);
+
+        return  i ;
+    }
+
+    @Override
+    public Map selectHeadPortrait(String userName) {
+        List<Map> maps = informationDao.selectHeadPortrait(userName);
+        return maps.get(0);
+    }
 }
