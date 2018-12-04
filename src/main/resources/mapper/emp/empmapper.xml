@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.employee.EmpDao">
+    <!--查询-->
+    <select id="getList" resultType="map">
+        select * from
+        (select rownum rn,a.deptid,a.dutyid,a.empid,a.ename,a.sex,a.age,a.ephone,a.email,a.eident,a.birth,a.educ,to_char(a.hiredate,'yyyy-mm-dd') as hiredate,a.living,b.deptname,c.dutyname from tb_employee a
+        join tb_dept b on a.deptid=b.deptid
+        join tb_duty c on a.dutyid=c.dutyid
+        where rownum &lt; #{end}
+        <where>
+            <if test="empid!=null and empid!=''">
+                and empid=#{empid}
+            </if>
+            <if test="ename!=null and ename!=''">
+                and ename like '%'||#{ename}||'%'
+            </if>
+            <if test="deptid!=null and deptid!=0">
+                and deptid=#{deptid}
+            </if>
+        </where>
+        ) d where d.rn &gt; #{start}
+    </select>
+<!--查询总数量-->
+<select id="getPageCount" resultType="int" >
+  select count(*) from tb_employee
+    <where>
+        <if test="empid!=null and empid!=''">
+            and empid=#{empid}
+        </if>
+        <if test="ename!=null and ename!=''">
+            and ename like '%'||#{ename}||'%'
+        </if>
+        <if test="deptid!=null and deptid!=0">
+            and deptid=#{deptid}
+        </if>
+    </where>
+</select>
+    <!--查询部门-->
+    <select id="getDept" resultType="map">
+        select deptid,deptname from tb_dept
+    </select>
+    <!--查询职位-->
+    <select id="getDuty" resultType="map">
+        select dutyid,dutyname from tb_duty
+    </select>
+    <!--更新-->
+    <update id="update" parameterType="map">
+        update tb_employee set ename=#{ENAME},sex=#{SEX},age=#{AGE},ephone=#{EPHONE},email=#{EMAIL},eident=#{EIDENT},
+        birth=#{BIRTH} ,educ=#{EDUC},hiredate=#{HIREDATE},living=#{LIVING}, deptid=#{DEPTID},dutyid=#{DUTYID} where empid=#{EMPID}
+    </update>
+<!--新增-->
+    <insert id="add" parameterType="map">
+        insert into tb_employee(empid,deptid,dutyid,ename,ephone,eident,sex,age,email,birth,educ,hiredate,living) values(empno.nextval,#{DEPTID},#{DUTYID},#{ENAME},#{EPHONE},#{EIDENT},#{SEX},#{AGE},#{EMAIL},
+        #{BIRTH},#{EDUC},#{HIREDATE},#{LIVING})
+    </insert>
+    <!--删除-->
+    <delete id="delete" parameterType="int">
+        delete from tb_employee where empid=#{empid}
+    </delete>
+</mapper>
