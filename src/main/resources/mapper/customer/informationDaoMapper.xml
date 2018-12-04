@@ -39,5 +39,15 @@
     <select id="getRealIdByUserName" resultType="map">
         select b.* from tb_user a join tb_realname b on a.userid=b.userid where a.username=#{userName}
     </select>
+    
+    
+    <update id="updateHeadPortrait" parameterType="map">
+        update tb_user set headportrait=#{filePath,jdbcType=VARCHAR} where username = #{userName,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="selectHeadPortrait" parameterType="String" resultType="map">
+        select HEADPORTRAIT from tb_user where username= #{userName}
+    </select>
 
 </mapper>

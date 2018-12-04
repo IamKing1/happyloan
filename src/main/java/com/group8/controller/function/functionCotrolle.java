@@ -28,19 +28,17 @@ public class functionCotrolle {
      * @param model
      * @return
      */
-    @ResponseBody
+
     @RequestMapping(value = "index")
-    public List<Map> index(Model model){
+    public String index(Model model){
         List<Map> list = functionService.getList();
         for (Map map : list) {
             map.put("childrenList",functionService.getListByPid(Integer.valueOf(map.get("ID").toString())));
         }
-        return  list;
-    }
-    @RequestMapping(value = "toIndex")
-    public String toIndex(){
 
-         return "index";
+        model.addAttribute("list",list);
+        return  "admin";
     }
+
 
 }

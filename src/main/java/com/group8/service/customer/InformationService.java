@@ -67,4 +67,18 @@ public interface InformationService {
      * @return
      */
     List<Map> getRealIdByUserName(String userName);
+
+
+    /**
+     * 根据用户名修改头像
+     * @param map
+     * @return
+     */
+    int updateHeadPortrait(Map map);
+    /**
+     * 根据用户名查询头像
+     * @param userName
+     * @return
+     */
+    Map selectHeadPortrait(String userName);
 }
