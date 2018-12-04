@@ -3,6 +3,7 @@ package com.group8.controller.customer;
 
 import com.group8.entity.Customer;
 import com.group8.service.customer.InformationService;
+import com.group8.util.FTPfile;
 import com.group8.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -78,11 +80,8 @@ public class Information {
             List<Map> realNameList = informationService.getRealNameByUserId(customer.getUserId());
             if(realNameList!=null&&realNameList.size()>0){
                 Integer auditorid = Integer.valueOf(realNameList.get(0).get("AUDITORID").toString());
-                System.out.println(auditorid);
                 List<Map> realNameByUserId = informationService.getAuditorStatus(auditorid);
-                System.out.println(realNameByUserId);
                 Object item = realNameByUserId.get(0).get("ITEM");
-                System.out.println(item);
                  map.put("meg",item);
             }else{
                 map.put("meg","-1");
@@ -137,19 +136,40 @@ public class Information {
     }
 
 
+    /**
+     * 实名验证提交
+     * @param map
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "SubmissionRealName")
-    @ResponseBody
-    public Object SubmissionRealName(@RequestParam Map  map,HttpSession session){
+    public String SubmissionRealName(@RequestParam Map  map, HttpSession session, @RequestParam MultipartFile positive, @RequestParam MultipartFile opposite){
+
+
+
+
+
+
+        if(positive!=null&&!positive.isEmpty()){
+            String s = FTPfile.upLoad(positive);
+            map.put("positive",s);
+           /* map.put("positive",positive.getOriginalFilename());*/
+        }
+        if(opposite!=null&&!opposite.isEmpty()){
+            String s = FTPfile.upLoad(opposite);
+            map.put("opposite",s);
+            /*map.put("positive",positive.getOriginalFilename());*/
+        }
         int i = informationService.SubmissionRealName(map, session);
-          return i;
+          return "redirect:/个人中心-实名认证.html";
     }
 
 
-    /**
+   /* *//**
      * 添加头像
      * @param
      * @return
-     */
+     *//*
 
     @RequestMapping("/addPortrait")
     public Object add(HttpSession session,@RequestParam MultipartFile pic){
@@ -169,11 +189,40 @@ public class Information {
         int i = informationService.updateHeadPortrait(map);
         return "redirect:/person.html";
     }
+*/
     /**
+     * 添加头像到ftp服务器
+     * @param
+     * @return
+     */
+
+    @RequestMapping("/addPortraitToFTP")
+    public Object add2(HttpSession session,@RequestParam MultipartFile pic){
+
+        System.out.println("----------"+pic);
+        Map map = new HashMap();
+        if(pic!=null&&!pic.isEmpty()){
+            String s = FTPfile.upLoad(pic);
+
+            System.out.println(s);
+            map.put("filePath",s);
+            map.put("fileName",pic.getOriginalFilename());
+        }
+
+        Object customerName = session.getAttribute("CustomerName");
+        if (customerName!=null) {
+            map.put("userName",customerName.toString());
+
+        }
+        int i = informationService.updateHeadPortrait(map);
+        return "redirect:/person.html";
+    }
+
+  /*  *//**
      * 图片显示方法
      * @param session
      * @return
-     */
+     *//*
     @RequestMapping("/show")
     public ResponseEntity show(HttpSession session){
 
@@ -199,7 +248,38 @@ public class Information {
             return ResponseEntity.notFound().build();
         }
 
+        }*/
+
+    /**
+     * ftp图片显示方法
+     * @param session
+     * @return
+     */
+    @RequestMapping("/showFtp")
+    public ResponseEntity showFtp(HttpSession session){
+
+
+        Object customerName = session.getAttribute("CustomerName");
+        if (customerName!=null) {
+
+            //根据登录用户查询他的头像名称
+            Map map = informationService.selectHeadPortrait(customerName.toString());
+
+            String fileName = map.get("HEADPORTRAIT").toString();
+            try {
+
+
+                // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
+                Resource resource = resourceLoader.getResource("ftp://iamking:123456@172.16.22.81/" + fileName);
+                return ResponseEntity.ok(resourceLoader.getResource("ftp://iamking:123456@172.16.22.81/" + fileName));
+            } catch (Exception e) {
+                return ResponseEntity.notFound().build();
+            }
+        }else {
+            return ResponseEntity.notFound().build();
         }
+    }
+
 
 
 
