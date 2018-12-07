@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>审核列表</title>
+    <title>审核列表2</title>
     <!-- 引入样式 -->
     <script src="/vue/vue.js"></script>
     <script type="text/javascript" src="/js1/axios.min.js"></script>
@@ -49,9 +49,9 @@
                     width="100">
             </el-table-column>
             <el-table-column
-                    prop="ADDRESS"
-                    label="住址"
-                    width="280">
+                    prop="MARRIAGE"
+                    label="婚姻状况"
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="IDNUMBER"
@@ -64,21 +64,6 @@
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="MONEY"
-                    label="借款金额（元）"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    prop="MARRIAGE"
-                    label="婚姻状况"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                prop="LONGTIME"
-                label="借款时长"
-                width="120">
-             </el-table-column>
-            <el-table-column
                     prop="ACADEMIC"
                     label="学历"
                     width="100">
@@ -88,9 +73,30 @@
                     label="收入（元）"
                     width="100">
             </el-table-column>
+
+            <el-table-column
+                    prop="MONEY"
+                    label="借款金额（元）"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="LONGTIME"
+                    label="借款时长"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="FIRSTINCNAME"
+                    label="初审人"
+                    width="90">
+            </el-table-column>
+            <el-table-column
+                    prop="FIRSTINCTIME"
+                    label="初审时间"
+                    width="120">
+            </el-table-column>
             <el-table-column
                     prop="STATUS"
-                    label="状态"
+                    label="二审状态"
                     width="100">
                 <template slot-scope="scope">
                     <el-tag class="btn btn-info">{{scope.row.STATUS | formatStata}}</el-tag>
@@ -136,18 +142,21 @@
                 <el-input v-model="editForm.REMARK" disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="一审意见" prop="FIRSTINC">
-                <el-input type="textarea" v-model="editForm.FIRSTINC"></el-input>
+                <el-input type="textarea" v-model="editForm.FIRSTINC" disabled="true"></el-input>
             </el-form-item>
-            <el-form-item label="一审时间">
-                <el-date-picker type="date"  placeholder="选择日期" v-model="editForm.FIRSTINCTIME"format="yyyy 年 MM 月 dd 日"
+            <el-form-item label="二审人" prop="SECONDINCNAME">
+                <el-input v-model="editForm.SECONDINCNAME"></el-input>
+            </el-form-item>
+            <el-form-item label="二审时间">
+                <el-date-picker type="date"  placeholder="选择日期" v-model="editForm.SECONDTIME"format="yyyy 年 MM 月 dd 日"
                                 value-format="yyyy/MM/dd"></el-date-picker>
             </el-form-item>
-            <el-form-item label="一审人" prop="FIRSTINCNAME">
-                <el-input v-model="editForm.FIRSTINCNAME"></el-input>
+            <el-form-item label="二审意见" prop="SECONDINC">
+                <el-input type="textarea" v-model="editForm.SECONDINC"></el-input>
             </el-form-item>
             <el-form-item label="状态" prop="STATUS">
                 <el-radio-group v-model="editForm.STATUS">
-                    <el-radio :label="21">通过</el-radio>
+                    <el-radio :label="23">通过</el-radio>
                     <el-radio :label="22">不通过</el-radio>
                 </el-radio-group>
             </el-form-item>
@@ -206,8 +215,9 @@
                 TOTALPRICE:'',
                 REMARK:'',
                 FIRSTINC:'',
-                FIRSTINCTIME:'',
-                FIRSTINCNAME:'',
+                SECONDINCNAME:'',
+                SECONDTIME:'',
+                SECONDINC:'',
                 STATUS:'',
             }
 
@@ -217,7 +227,7 @@
             var self = this;
             var start =(this.currentPage-1)*this.pageSize;
             var end =this.currentPage*this.pageSize+1;//分页
-            axios.post('/Loan/getListLoan',{'start':start,'end':end}).then(function(response){
+            axios.post('/loanAuditSecond/getListLoanSec',{'start':start,'end':end}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.data;
                 console.log(self.total);
@@ -227,7 +237,7 @@
         filters: { // el-tag类型转换
             // 状态显示转换
             formatStata: function (status) {
-                const statusMap = {20: '未审核', 21: '通过',22:'未通过'}
+                const statusMap = {21: '未审核'}
                 return statusMap[status]
             },
         },
@@ -244,7 +254,7 @@
                     'end': end,
                     'realname': this.searchForm.realname
                 };
-                axios.post('/Loan/getListLoan', searchForm).then(function (response) {
+                axios.post('/loanAuditSecond/getListLoanSec', searchForm).then(function (response) {
                     _self.total = response.data.total;
                     _self.tableData = response.data.data;
                 })

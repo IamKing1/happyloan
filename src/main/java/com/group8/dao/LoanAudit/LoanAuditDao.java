@@ -26,7 +26,7 @@ public interface LoanAuditDao {
     int getPageCount(Map map);
 
     /**
-     * 审核
+     * 审核1
      * @param map
      * @return
      */

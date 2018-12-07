@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.group8.dao.LoanAudit.LoanAuditDao">
-    <!--分页查询-->
-    <select id="getListLoan" resultType="map" parameterType="map">
+<mapper namespace="com.group8.dao.LoanAudit.LoanAuditSecondDao">
+<!--分页查询二审贷款列表-->
+    <select id="getListLoanSec" resultType="map" parameterType="map">
         select * from
-        (select rownum rn,a.id,b.REALNAME,b.sex,b.address,b.idnumber,c.telephone,a.MONEY,d.ITEM purpose,e.item longtime,a.TOTALPRICE,a.STATUS,f.item marriage,g.item academic,h.item income,a.HOUSINGQUANTITY,a.remark,a.firstinc,to_char(firstinctime,'yyyy/mm/dd') as firstinctime,a.firstincname from TB_BORROW a
+        (select rownum rn,a.id,b.REALNAME,b.sex,b.idnumber,c.telephone,a.MONEY,d.ITEM purpose,e.item longtime,a.TOTALPRICE,a.STATUS,f.item marriage,g.item academic,h.item income,a.HOUSINGQUANTITY,a.remark,a.firstinc,to_char(firstinctime,'yyyy/mm/dd') as firstinctime,a.firstincname,a.secondinc,to_char(secondtime,'yyyy/mm/dd') as secondtime,a.secondincname from TB_BORROW a
         join TB_REALNAME b on a.REALID=b.ID
         join tb_user c on c.userid=b.userid
         join tb_systemcategoryitem d on a.purpose = d.id
@@ -15,7 +15,7 @@
         join tb_systemcategoryitem g on b.ACADEMIC=g.id
         join tb_systemcategoryitem h on b.INCOME=h.id
         where rownum &lt; #{end}
-        ) i where i.rn &gt;#{start} and status=20
+        ) i where i.rn &gt;#{start} and status=21
         <if test="realname!=null and realname!=''">
             and i.realname like '%'||#{realname}||'%'
         </if>
@@ -23,10 +23,6 @@
     </select>
     <!--分页数量-->
     <select id="getPageCount"  parameterType="map" resultType="Integer">
-        select count(*) from tb_borrow where status=20
+        select count(*) from tb_borrow where status=21
     </select>
-    <!--审核-->
-    <update id="update" parameterType="map">
-        update tb_borrow set firstinc=#{FIRSTINC},firstincname=#{FIRSTINCNAME},firstinctime=to_date(#{FIRSTINCTIME},'yyyy/MM/dd'),status=#{STATUS} where id=#{ID}
-    </update>
 </mapper>
