@@ -1,22 +1,22 @@
-package com.group8.dao.Client;
+package com.group8.dao.LoanAudit;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * className:ClientDao
- * descriptive:
+ * className:LoanAuditDao
+ * descriptive:贷款一审
  * author:万中华
- * createTime:2018-11-26 21:18
+ * createTime:2018-12-06 13:57
  */
-public interface ClientDao {
+public interface LoanAuditDao {
 
     /**
-     * 分页查询
+     * 分页查询待审核贷款信息
      * @param map
      * @return
      */
-    List<Map> getListClient(Map map);
+    List<Map> getListLoan(Map map);
 
     /**
      * 分页总数量
@@ -26,13 +26,7 @@ public interface ClientDao {
     int getPageCount(Map map);
 
     /**
-     * 删除
-     * @param userid
-     * @return
-     */
-    int delete(int userid);
-    /**
-     * 更新状态
+     * 审核
      * @param map
      * @return
      */

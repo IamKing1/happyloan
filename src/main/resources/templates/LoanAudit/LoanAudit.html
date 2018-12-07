@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户列表</title>
+    <title>审核列表</title>
     <!-- 引入样式 -->
     <script src="/vue/vue.js"></script>
     <script type="text/javascript" src="/js1/axios.min.js"></script>
@@ -26,9 +26,8 @@
             <el-form-item label="用户姓名">
                 <el-input v-model="searchForm.realname" placeholder="姓名"></el-input>
             </el-form-item>
-
             <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
-        </el-form-item>
+            </el-form-item>
         </el-form>
     </el-row>
     <!--列表-->
@@ -39,10 +38,6 @@
                 border
                 @selection-change="selectionChange"
                 style="width: 100%">
-            <el-table-column
-                    type="selection"
-                    width="80">
-            </el-table-column>
             <el-table-column
                     prop="REALNAME"
                     label="姓名"
@@ -61,12 +56,7 @@
             <el-table-column
                     prop="IDNUMBER"
                     label="身份证号"
-                    width="190">
-            </el-table-column>
-            <el-table-column
-                    prop="USERNAME"
-                    label="用户名"
-                    width="130">
+                    width="180">
             </el-table-column>
             <el-table-column
                     prop="TELEPHONE"
@@ -74,13 +64,8 @@
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="ACADEMIC"
-                    label="学历"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    prop="INCOME"
-                    label="收入(元)"
+                    prop="MONEY"
+                    label="借款金额（元）"
                     width="120">
             </el-table-column>
             <el-table-column
@@ -89,19 +74,32 @@
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="STATE"
+                prop="LONGTIME"
+                label="借款时长"
+                width="120">
+             </el-table-column>
+            <el-table-column
+                    prop="ACADEMIC"
+                    label="学历"
+                    width="100">
+            </el-table-column>
+            <el-table-column
+                    prop="INCOME"
+                    label="收入（元）"
+                    width="100">
+            </el-table-column>
+            <el-table-column
+                    prop="STATUS"
                     label="状态"
                     width="100">
                 <template slot-scope="scope">
-                    <el-tag class="btn btn-info">{{scope.row.STATE | formatStata}}</el-tag>
+                    <el-tag class="btn btn-info">{{scope.row.STATUS | formatStata}}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column
                     label="操作">
                 <template scope="scope">
-                   <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">编辑</el-button>
-                    <el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">删除</el-button>
-
+                    <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">审核</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -109,9 +107,6 @@
 
     <!--列表底部工具条和分页符-->
     <el-row style="margin-top: 20px" type="flex" justify="end">
-        <el-col :span="6" >
-            <el-button :plain="true" type="danger" size="small" icon="delete" @click="removeSelection">删除所选</el-button>
-        </el-col>
         <el-col :span="18" >
             <el-pagination
                     style="float: right"
@@ -126,14 +121,37 @@
         </el-col>
     </el-row>
     <!--编辑界面-->
-    <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-        <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-            <el-form-item label="状态" prop="STATE">
-                <el-radio-group v-model="editForm.STATE">
-                    <el-radio :label="1">正常</el-radio>
-                    <el-radio :label="2">已拉黑</el-radio>
+    <el-dialog title="审核" :visible.sync="editFormVisible" :close-on-click-modal="false">
+        <el-form :model="editForm" label-width="200px" :rules="editFormRules" ref="editForm">
+            <el-form-item label="贷款用途" prop="PURPOSE">
+                <el-input v-model="editForm.PURPOSE" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="抵押物数量（房屋/套）" prop="HOUSINGQUANTITY">
+                <el-input v-model="editForm.HOUSINGQUANTITY" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="抵押物价值" prop="TOTALPRICE">
+                <el-input v-model="editForm.TOTALPRICE" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="贷款描述" prop="REMARK">
+                <el-input v-model="editForm.REMARK" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="一审意见" prop="FIRSTINC">
+                <el-input type="textarea" v-model="editForm.FIRSTINC"></el-input>
+            </el-form-item>
+            <el-form-item label="一审时间">
+                <el-date-picker type="date"  placeholder="选择日期" v-model="editForm.FIRSTINCTIME"format="yyyy 年 MM 月 dd 日"
+                                value-format="yyyy/MM/dd"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="一审人" prop="FIRSTINCNAME">
+                <el-input v-model="editForm.FIRSTINCNAME"></el-input>
+            </el-form-item>
+            <el-form-item label="状态" prop="STATUS">
+                <el-radio-group v-model="editForm.STATUS">
+                    <el-radio :label="21">通过</el-radio>
+                    <el-radio :label="22">不通过</el-radio>
                 </el-radio-group>
             </el-form-item>
+
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click.native="editFormVisible = false">取消</el-button>
@@ -147,10 +165,9 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: '用户列表'
+            message: '审核列表'
         }
     });
-
     var tableView = new Vue({
         el: '#tableView',
         data: {
@@ -176,6 +193,7 @@
             editFormVisible: false,
             editLoading: false,
             goUrl: '',
+            //校验
             editFormRules: {
                 name: [
                     {required: true, message: '请输入姓名', trigger: 'blur'}
@@ -183,7 +201,14 @@
             },
             //编辑界面数据
             editForm: {
-                state:'',
+                PURPOSE:'',
+                HOUSINGQUANTITY:'',
+                TOTALPRICE:'',
+                REMARK:'',
+                FIRSTINC:'',
+                FIRSTINCTIME:'',
+                FIRSTINCNAME:'',
+                STATUS:'',
             }
 
         },
@@ -192,19 +217,21 @@
             var self = this;
             var start =(this.currentPage-1)*this.pageSize;
             var end =this.currentPage*this.pageSize+1;//分页
-            axios.post('/client/getClient',{'start':start,'end':end}).then(function(response){
+            axios.post('/Loan/getListLoan',{'start':start,'end':end}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.data;
+                console.log(self.total);
             })
+
         },
         filters: { // el-tag类型转换
             // 状态显示转换
             formatStata: function (status) {
-                const statusMap = {1: '正常', 2: '已拉黑'}
+                const statusMap = {20: '未审核', 21: '通过',22:'未通过'}
                 return statusMap[status]
             },
         },
-            methods:{
+        methods:{
             //表格重新加载数据
             loadingData:function() {
                 var _self = this;
@@ -217,7 +244,7 @@
                     'end': end,
                     'realname': this.searchForm.realname
                 };
-                    axios.post('/client/getClient', searchForm).then(function (response) {
+                axios.post('/Loan/getListLoan', searchForm).then(function (response) {
                     _self.total = response.data.total;
                     _self.tableData = response.data.data;
                 })
@@ -225,91 +252,18 @@
                     _self.loading = false;
                 }, 300);
             },
-            //表格编辑事件
+            //表格审核事件
             editClick:function(row) {
-                this.goUrl="/client/update";
+                this.goUrl="/Loan/update";
                 this.editFormVisible = true;
                 this.editForm = Object.assign({}, row);
 
             },
-            //表格删除事件
-            deleteClick:function(row) {
-                var _self = this;
-                this.$confirm('确认删除' + row.USERID +'吗?', '提示', {
-                    type: 'warning'
-                }).then(function(){
-                    var  url="/client/del/"+row.USERID;
-                    axios.get(url).then(function (response) {
-                        if(response.data>0){
-                            _self.$message({
-                                message: row.USERID + '删除成功',
-                                type: 'success'
-                            });
-                            _self.loadingData();//重新加载数据
-                        }else{
-                            _self.$message({
-                                message: '删除失败',
-                                type: 'success'
-                            });
-                        }
-                    });
-                }).catch(function(e){
-                    if(e != "cancel")
-                        console.log("出现错误：" + e);
-                });
-            },
+
             //表格查询事件
             searchClick:function() {
                 var self = this;
                 self.loadingData();//重新加载数据
-            },
-            //表格勾选事件
-            selectionChange:function(val) {
-                for(var i=0;i<val.length;i++) {
-                    var row = val[i];
-                }
-                this.multipleSelection = val;
-                console.info(val);
-            },
-            //删除所选，批量删除
-            removeSelection:function() {
-                var _self = this;
-                var multipleSelection = this.multipleSelection;
-                if(multipleSelection.length < 1) {
-                    _self.$message({
-                        message: '请至少选中一条记录',
-                        type: 'error'
-                    });
-                    return;
-                }
-                var ids = "";
-                for(var i=0;i<multipleSelection.length;i++) {
-                    var row = multipleSelection[i];
-                    ids += row.USERID + ","
-                }
-                this.$confirm('确认删除' + ids +'吗?', '提示', {
-                    type: 'warning'
-                }).then(function(){
-                    var  url="/client/batchDel/"+ids;
-                    axios.get(url).then(function (response) {
-                        //alert(response.data);
-                        var temp="";
-                        if(response.data>0){
-                            temp="删除成功";
-                        }else {
-                            temp="删除失败";
-                        }
-                        _self.$message({
-                            message: ids + temp,
-                            type: 'success'
-                        });
-                        _self.loadingData();//重新加载数据
-                    });
-
-                }).catch(function(e){
-                    if(e != "cancel")
-                        console.log("出现错误：" + e);
-                });
             },
             //分页大小修改事件
             pageSizeChange:function(val) {
