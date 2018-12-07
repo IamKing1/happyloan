@@ -32,7 +32,7 @@ public class jiekouTest {
         NameValuePair[] data = {//提交短信
                 new NameValuePair("account", "b602af58eec78ad63ca07cfe287ea6b7"),
                 new NameValuePair("password", "7299e5448d45d816c9e90d9a583dcf55 "),
-                new NameValuePair("phone", "15893281386"),
+                new NameValuePair("phone", "18339453177"),
                 new NameValuePair("msg", "【253云通讯】您的验证码是7528"),
                 new NameValuePair("appkey", "43b729d8eabe4b9d9f582f931ee64905 "),
         };

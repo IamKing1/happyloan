@@ -1,6 +1,7 @@
 package com.group8.controller.auditing;
 
 import com.group8.service.auditing.RealNameService;
+import com.group8.util.ConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -30,6 +31,14 @@ public class Auditing {
     @Autowired
     private RealNameService realNameService;
 
+    static Map configPara = ConfigUtil.getConfigMap();
+    static String ip=configPara.get("ip")+"";
+    static int port=Integer.valueOf(configPara.get("port")+"");
+    static String username=configPara.get("username")+"";
+    static String password=configPara.get("password")+"";
+    static String pathname=configPara.get("pathname")+"";
+    static String path1=configPara.get("path")+"";
+
 
     @RequestMapping(value = "toRealName")
     public String toRealName() {
@@ -45,7 +54,7 @@ public class Auditing {
     @RequestMapping("realNameList")
     public Object getReaNameList(@RequestBody Map map) {
 
-        System.out.println(map);
+
         Map map1 = new HashMap();
         map1.put("data", realNameService.getNoRealNameList(map));
 
@@ -64,29 +73,24 @@ public class Auditing {
      */
     @RequestMapping("/showIdNumber")
     public ResponseEntity showFtp(String fileName) {
-        System.out.println(fileName+"...........................");
+
         try {
             // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
-            Resource resource = resourceLoader.getResource("ftp://iamking:123456@172.16.22.81/" + fileName);
-            return ResponseEntity.ok(resourceLoader.getResource("ftp://iamking:123456@172.16.22.81/" + fileName));
+            Resource resource = resourceLoader.getResource("ftp://"+username+":"+password+"@"+ip+"/" + fileName);
+            return ResponseEntity.ok(resourceLoader.getResource("ftp://"+username+":"+password+"@"+ip+"/" + fileName));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-
-
     }
 
-    /*@RequestMapping("/showIdNumber")
-    public ResponseEntity showFtp(@RequestBody String fileName) {
-        System.out.println(fileName+"...........................");
-        try {
-            // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
-            Resource resource = resourceLoader.getResource("ftp://iamking:123456@172.16.22.81/" + fileName);
-            return ResponseEntity.ok(resourceLoader.getResource("ftp://iamking:123456@172.16.22.81/" + fileName));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+
+    @ResponseBody
+    @RequestMapping(value = "realNameResult")
+    public Object findingsOfAudit(@RequestBody Map map){
+        int realNameResult = realNameService.getRealNameResult(map);
 
 
-    }*/
+        return realNameResult;
+    }
+
 }

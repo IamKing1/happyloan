@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -29,20 +30,14 @@ import java.util.UUID;
  * createTime:2018-12-03 14:09
  */
 public class FTPfile {
-    @Value("${remoteIp}")
-    private  String remoteIp;
 
-    @Value("${uploadPort}")
-    private  int uploadPort;
-
-    @Value("${ftpUserName}")
-    private static String ftpUserName;
-
-    @Value("${ftpPassWord}")
-    private static String ftpPassWord;
-
-    @Value("${remotePath}")
-    private static String remotePath;
+    static Map configPara = ConfigUtil.getConfigMap();
+    static String ip=configPara.get("ip")+"";
+    static int port=Integer.valueOf(configPara.get("port")+"");
+    static String username=configPara.get("username")+"";
+    static String password=configPara.get("password")+"";
+    static String pathname=configPara.get("pathname")+"";
+    static String path1=configPara.get("path")+"";
 
     /**
      * 将图片上传到ftp远程服务器
@@ -52,13 +47,12 @@ public class FTPfile {
         FTPClient ftp = new FTPClient();
         InputStream local = null;
         try {
-            System.out.println(new FTPfile().remoteIp);
             //连接ftp服务器
-            ftp.connect("172.16.22.81",21);
+            ftp.connect(ip,port);
             //登录
-            ftp.login("iamking","123456");
+            ftp.login(username,password);
             //设置上传路径
-            String path = "/";
+            String path = path1;
             //检查上传路径是否存在 如果不存在返回false
             boolean flag = ftp.changeWorkingDirectory(path);
             if(!flag){
@@ -78,7 +72,7 @@ public class FTPfile {
             String originalFilename = multipartFile.getOriginalFilename();
             String newFileName= UUID.randomUUID()+originalFilename.substring(originalFilename.lastIndexOf("."));
             //读取本地文件
-            File file =new File("E:/Serv-U"+File.separator+newFileName);
+            File file =new File(pathname+File.separator+newFileName);
             //multipartFile.transferTo(file);
             org.apache.commons.io.FileUtils.copyInputStreamToFile(multipartFile.getInputStream(),file);
             System.out.println(file.length()+"............");

@@ -25,4 +25,11 @@ public interface RealNameDao {
      */
     int getNoRealNameCount(Map map);
 
+    /**
+     * 认证完毕  得到结果
+     * @param map
+     * @return
+     */
+    int getRealNameResult(Map map);
+
 }

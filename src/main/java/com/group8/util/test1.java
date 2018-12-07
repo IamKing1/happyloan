@@ -18,13 +18,39 @@ public class test1 {
     }
 
 
-    public static void main(String[] args) {
-        String s2 = new StringBuilder("ja").append("va").toString();
-        String s3 = new StringBuilder("11").append("22").toString();
-        System.out.println(s2.intern());
 
-        System.out.println(s2.intern() == s2);
-        System.out.println(s3.intern() == s3);
+
+
+    public static String reverse(String originStr) {
+
+        if(originStr == null || originStr.length() <= 1){
+            System.out.println(originStr.charAt(0));
+
+            return originStr;
+        }else{
+
+            return reverse(originStr.substring(1)) + originStr.charAt(0);
+        }
+
+
+
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println("撒大声地");
+        System.out.println("种方法减肥的减肥");
+        System.out.println((int)((Math.random()*9+1)*100000));
+    }
+
+
+
+    public static  String revce(String str){
+        if(str==null||str.length()<=1){
+            return str;
+        }else{
+            return  revce(str.substring(1))+ str.charAt(0);
+        }
 
     }
 }

@@ -3,6 +3,7 @@ package com.group8.controller.customer;
 
 import com.group8.entity.Customer;
 import com.group8.service.customer.InformationService;
+import com.group8.service.customer.LoginService;
 import com.group8.util.FTPfile;
 import com.group8.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -278,6 +279,25 @@ public class Information {
         }else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @Autowired
+    private LoginService loginService;
+
+
+
+    @ResponseBody
+    @RequestMapping(value = "rechargeAmount")
+    public Object rechargeAmount(HttpSession session,Integer money){
+        Map map = new HashMap();
+        System.out.println(money);
+        int userId = loginService.getIdByName(session.getAttribute("CustomerName").toString());
+        System.out.println(userId);
+        map.put("money",money);
+        map.put("userId",userId);
+        int i = informationService.rechargeAmount(map);
+        Map map1 = new HashMap();
+        map1.put("mse",i);
+        return map1;
     }
 
 

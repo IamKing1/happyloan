@@ -15,6 +15,15 @@ public class Customer {
    private  String recommend;  // 推荐人
     private  String nickName;
     private String email;
+    private  Integer state;
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
     public String getEmail() {
         return email;

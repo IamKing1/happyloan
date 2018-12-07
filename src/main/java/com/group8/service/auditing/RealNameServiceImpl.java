@@ -32,4 +32,11 @@ public class RealNameServiceImpl implements RealNameService {
         int noRealNameCount = realNameDao.getNoRealNameCount(map);
         return noRealNameCount;
     }
+
+
+    @Override
+    public int getRealNameResult(Map map) {
+        int realNameResult = realNameDao.getRealNameResult(map);
+        return realNameResult;
+    }
 }

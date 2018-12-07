@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.auditing.ReleaseDao">
+    <select id="getReleaseMessage" parameterType="map" resultType="map">
+        select * from (
+        select rownum rn,a.id realid,g.id brrid,g.MONEY,h.item LONGTIME,i.item REPAYMENTMETHOD,j.item PURPOSE,g.HOUSINGQUANTITY,g.TOTALPRICE,g.REMARK,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.AUDITREMARKS,a.id,a.realname,a.address,a.applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income
+        from tb_realname a
+        left join tb_systemcategoryitem b on a.housed=b.id
+        left join tb_systemcategoryitem c on a.academic=c.id
+        left join tb_systemcategoryitem d on a.marriage=d.id
+        left join tb_systemcategoryitem e on a.income=e.id
+        left join tb_systemcategoryitem f on a.auditorid=f.id
+        left join tb_borrow g on g.realid=a.id
+        left join tb_systemcategoryitem h on g.LONGTIME=h.id
+        left join tb_systemcategoryitem i on g.REPAYMENTMETHOD=i.id
+        left join tb_systemcategoryitem j on g.PURPOSE=j.id
+        where rownum &lt; #{end} and g.STATUS=23 and g.release = 1 ) c
+        where c.rn &gt; #{start}
+    </select>
+
+
+    <select id="getReleaseMessageCount" parameterType="map" resultType="Integer">
+        select count(*) from tb_borrow a where a.status=23 and a.release = 1
+    </select>
+
+
+    <insert id="confirmationInformation" parameterType="map">
+        insert into tb_tendering   values (seq_zhaobiao_id.nextval, #{REALID},#{title},1,sysdate,#{BRRID})
+    </insert>
+
+
+    <update id="updateConfirmationInformationStuts" parameterType="map">
+        update tb_borrow set release = #{release} where  id =#{BRRID}
+    </update>
+</mapper>

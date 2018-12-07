@@ -24,6 +24,9 @@ public class LoginServiceImpl implements  LoginService {
     @Override
     public int register(Customer customer) {
 
+       Integer num = (int)((Math.random()*9+1)*100000);
+        customer.setNickName("游客"+num.toString());
+
         int register = loginDao.register(customer);
         return register;
     }
@@ -46,5 +49,10 @@ public class LoginServiceImpl implements  LoginService {
     public List<Role> getById(Integer userId) {
         List<Role> roleList = loginDao.getById(userId);
         return roleList;
+    }
+    @Override
+    public int getIdByName(String userName) {
+        Customer customer = loginDao.getByName(userName);
+        return customer.getUserId();
     }
 }

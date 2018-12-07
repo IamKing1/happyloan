@@ -11,8 +11,31 @@
     <script type="text/javascript" src="script/jquery.min.js"></script>
     <script type="text/javascript" src="script/common.js"></script>
     <script src="script/user.js" type="text/javascript"></script>
-</head>
 
+    <script type="text/javascript">
+        function getShowPayVal1(){
+            var money = $("#money").val();
+            $.ajax({
+                url:"/customer/rechargeAmount",
+                data:{
+                    money:money
+                },
+                dataType:JSON,
+                success:function (data) {
+                    console.log(data.mse)
+                    if(data.mse>0){
+                        alert("充值成功")
+                    }else{
+                        alert("充值失败")
+                    }
+                },error:function () {
+                    alert("不明错误")
+                }
+            })
+
+        }
+    </script>
+</head>
 <body>
 <header id="thead">
     <script>
@@ -42,22 +65,22 @@
                         <div class="quick-main">
                             <div class="fl quick-info">
                                 <div class="info-1"><span class="info-tit">充值金额</span> <span class="info1-input">
-                  <input id="form:actualMoney1" type="text" name="" class="pay-money-txt" maxlength="10">
+                  <input id="money" type="text" name="" class="pay-money-txt" maxlength="10">
                   <em>元</em> </span> <span class="quick-error"> </span></div>
                                 <div class="info-tips">亿人宝提醒您：充值金额超过50000元时，请切换到网银充值</div>
-                                <div class="info-2"><span class="info-tit">银行卡号</span> <span class="info2-input">
+                                <!--<div class="info-2"><span class="info-tit">银行卡号</span> <span class="info2-input">
                   <input id="form:bankCardNo" type="text" name="form:bankCardNo" class="tx-txt">
                   <em class="info2-bank" style="display: none;">
                   <label id="form:defaultBankName" style="font-size:16px;"> </label>
-                  </em> </span> <span class="quick-error3" id="bankCardError"></span></div>
+                  </em> </span> <span class="quick-error3" id="bankCardError"></span></div>-->
                                 <div class="bank-check" id="bank-check2"><b class="selected"
                                                                             id="bankProtocol1"></b><span
                                         class="bank-agree">我同意并接受<a href="#"
                                                                     target="_blank">《亿人宝投资咨询与管理服务电子协议》</a></span> <span
                                         class="error" id="bankProtocol_message" style="display:none;margin-top:-3px;">请同意协议内容！</span>
                                 </div>
-                                <input type="submit" name="" value="充值" class="btn-paycz"
-                                       onclick="return getShowPayVal1()">
+                                <input type="button" name="" value="充值" class="btn-paycz"
+                                       onclick="getShowPayVal1()">
                             </div>
 
                         </div>
@@ -91,5 +114,9 @@
 </div>
 <script src="script/jquery.datetimepicker.js" type="text/javascript"></script>
 <script src="script/datepicker.js" type="text/javascript"></script>
+
+
+
+
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.group8.service.customer;
 
 import com.group8.entity.Customer;
+import com.group8.entity.MoneyRecords;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -81,4 +82,13 @@ public interface InformationService {
      * @return
      */
     Map selectHeadPortrait(String userName);
+
+    /**
+     * 充值
+     * @param map
+     * @return
+     */
+    int rechargeAmount(Map map);
+
+
 }

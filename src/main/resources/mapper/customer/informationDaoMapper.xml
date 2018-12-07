@@ -50,4 +50,14 @@
         select HEADPORTRAIT from tb_user where username= #{userName}
     </select>
 
+
+    <update id="rechargeAmount" parameterType="map">
+        update  tb_realname set BALANCE = BALANCE +#{money} where userid= #{userId}
+    </update>
+    
+    
+    <insert id="rechargeAmountRecords" parameterType="moneyRecords">
+        insert into tb_moneyrecords values (#{userId},#{records},#{type},sysdate,#{thing})
+    </insert>
+
 </mapper>
