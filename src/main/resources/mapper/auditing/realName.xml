@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.auditing.RealNameDao">
+    <select id="getNoRealNameList" resultType="map" parameterType="map">
+
+        select * from (
+        select rownum rn,a.realname,a.address,a.applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income from tb_realname a
+        left join tb_systemcategoryitem b on a.housed=b.id
+        left join tb_systemcategoryitem c on a.academic=c.id
+        left join tb_systemcategoryitem d on a.marriage=d.id
+        left join tb_systemcategoryitem e on a.income=e.id
+        left join tb_systemcategoryitem f on a.auditorid=f.id
+        where rownum &lt; #{end}
+        <if test="idNumber!=null and idNumber!=''"> and a.idnumber like '%'||#{idNumber}||'%' </if>
+        <if test="realName!=null and realName!=''"> and a.realname=#{realName} </if>
+        <if test="auditorId!=null and auditorId!=''"> and a.auditorid=#{auditorId} </if>
+        ) c where c.rn &gt; #{start}
+    </select>
+
+
+    <select id="getNoRealNameCount" resultType="INTEGER" parameterType="map">
+        select count(*) from tb_realname where 1=1
+        <if test="idNumber!=null and idNumber!=''"> and idnumber like '%'||#{idNumber}||'%' </if>
+        <if test="realName!=null and realName!=''"> and realname=#{realName} </if>
+        <if test="auditorId!=null and auditorId!=''"> and auditorid=#{auditorId} </if>
+    </select>
+</mapper>

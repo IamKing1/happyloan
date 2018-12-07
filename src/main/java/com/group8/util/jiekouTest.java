@@ -16,9 +16,9 @@ import java.io.IOException;
 public class jiekouTest {
     private static String Url = "https://sms.dun.163yun.com/v2/sendsms";
 
+
     public static void main(String[] args) {
 //https://way.jd.com/CL253/cl253_json?phone=13917969023&msg=【253云通讯】您的验证码是123456&appkey=81b7c0db9cefcece27604c6bc3289aab
-
 
         HttpClient client = new HttpClient();
         PostMethod method = new PostMethod(Url);

@@ -53,8 +53,7 @@
             <version>1.3.2</version>
         </dependency>
 
-
-        <!-- 加入上传文件组件 -->
+        <!--ftp 包-->
         <!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
         <dependency>
             <groupId>commons-net</groupId>
