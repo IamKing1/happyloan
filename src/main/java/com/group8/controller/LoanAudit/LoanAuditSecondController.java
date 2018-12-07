@@ -46,5 +46,16 @@ public class LoanAuditSecondController {
         map1.put("total",loanAuditSecondService.getPageCount(map));
         return map1;
     }
+    /**
+     * 审核
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/update")
+    public Object update(@RequestBody Map map){
+
+        return loanAuditSecondService.update(map);
+    }
 
 }

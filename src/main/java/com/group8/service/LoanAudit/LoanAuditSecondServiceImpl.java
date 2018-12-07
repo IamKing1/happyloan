@@ -40,4 +40,9 @@ public class LoanAuditSecondServiceImpl implements LoanAuditSecondService {
     public int getPageCount(Map map) {
         return loanAuditSecondDao.getPageCount(map);
     }
+
+    @Override
+    public int update(Map map) {
+        return loanAuditSecondDao.update(map);
+    }
 }

@@ -22,4 +22,10 @@ public interface LoanAuditSecondService {
      * @return
      */
     int getPageCount(Map map);
+    /**
+     * 审核2
+     * @param map
+     * @return
+     */
+    int update(Map map);
 }
