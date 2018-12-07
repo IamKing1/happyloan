@@ -21,18 +21,19 @@
     <!--列表顶部搜索和工具条-->
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-            <el-form-item label="员工编号">
-                <el-input v-model="searchForm.EMPID" placeholder="员工编号"></el-input>
-            </el-form-item>
+<!--            <el-form-item label="员工编号">
+                <el-input v-model="searchForm.empid" placeholder="员工编号"></el-input>
+            </el-form-item>-->
             <el-form-item label="名称">
-                <el-input v-model="searchForm.ENAME" placeholder="名称"></el-input>
+                <el-input v-model="searchForm.ename" placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item label="部门名称">
-                <el-select v-model="searchForm.DEPTID" placeholder="部门名称">
+                <el-select v-model="searchForm.deptid" placeholder="部门名称">
                     <el-option  v-for="item in options"  :key="item.DEPTID" :label="item.DEPTNAME" :value="item.DEPTID"></el-option>
                 </el-select>
             </el-form-item><el-form-item>
             <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
+            <el-button type="success" icon="plus" @click="toFlush">刷新</el-button>
             <el-button type="success" icon="plus" @click="addClick">新增</el-button>
         </el-form-item>
         </el-form>
@@ -87,7 +88,7 @@
             </el-table-column>
             <el-table-column
                     prop="HIREDATE"
-                    label="日期"
+                    label="入职日期"
                     width="150">
             </el-table-column>
             <el-table-column
@@ -156,14 +157,12 @@
             <el-form-item label="身份证号" prop="EIDENT">
                 <el-input v-model="editForm.EIDENT" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="出生日期">
-                <el-date-picker type="date" value-format="yyyy-MM-dd hh:mm:ss" placeholder="选择日期" v-model="editForm.BIRTH"></el-date-picker>
-            </el-form-item>
             <el-form-item label="学历" prop="EDUC">
                 <el-input v-model="editForm.EDUC" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="入职日期">
-                <el-date-picker type="date" value-format="yyyy-MM-dd hh:mm:ss"  placeholder="选择日期" v-model="editForm.HIREDATE"></el-date-picker>
+                <el-date-picker type="date"  placeholder="选择日期" v-model="editForm.HIREDATE"format="yyyy 年 MM 月 dd 日"
+                                value-format="yyyy/MM/dd"></el-date-picker>
             </el-form-item>
             <el-form-item label="现住址" prop="LIVING">
                 <el-input v-model="editForm.LIVING" auto-complete="off"></el-input>
@@ -212,9 +211,9 @@
             loading: false,
             //搜索表单
             searchForm: {
-                EMPID: '',
-                ENAME: '',
-                DEPTID: ''
+             /*   empid: '',*/
+                ename: '',
+                deptid: ''
             },
             //多选值
             multipleSelection: [],
@@ -244,7 +243,6 @@
                EPHONE:'',
                EMAIL:'',
                EIDENT:'',
-               BIRTH:'',
                EDUC:'',
                HIREDATE:'',
                LIVING:'',
@@ -275,6 +273,15 @@
 
         },
         methods:{
+            toFlush:function(){
+                this.searchForm= {
+                    id: '',
+                    name: '',
+                    deptNo: ''
+                }
+                this.loadingData();
+            },
+
             //表格重新加载数据
             loadingData:function() {
                 var _self = this;
@@ -285,16 +292,13 @@
                 var searchForm={
                     'start':start,
                     'end':end,
-                    'EMPID':this.searchForm.EMPID,
-                    'ENAME':this.searchForm.ENAME,
-                    'DEPTID':this.searchForm.DEPTID};
+                    'ename':this.searchForm.ename,
+                    'deptid':this.searchForm.deptid};
                 axios.post('/emp/getList',searchForm).then(function(response){
                     _self.total=response.data.total;
                     _self.tableData = response.data.data;
                 })
-               // console.log(_self.currentPage);
                 setTimeout(function(){
-                    console.info("加载数据成功");
                     _self.loading = false;
                 },300);
             },
@@ -338,10 +342,8 @@
                     EPHONE:'',
                     EMAIL:'',
                     EIDENT:'',
-                    BIRTH:'',
                     EDUC:'',
                     LIVING:'',
-                    HIREDATE:'',
                     DEPTNAME:'',
                     DUTYNAME:'',
                     DEPTID:'',
@@ -435,7 +437,6 @@
                         });
                     }
                 })
-              //  console.info(this.editForm);
             },
 
         }

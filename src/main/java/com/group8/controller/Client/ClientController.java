@@ -1,14 +1,10 @@
 package com.group8.controller.Client;
 
 import com.group8.service.Client.ClientService;
-import com.group8.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,19 +24,58 @@ public class ClientController {
      * @param map
      * @return
      */
-   /* @RequestMapping("/toClient")
+    @RequestMapping("/toClient")
     public String toClientList(Map map){
 
         return "Client/Clientlist";
-    }*/
-
-    public Object getClientList(@RequestParam Map map, Model model, HttpServletRequest request){
-
-        map.put("pageSize",10);
-        int pageNo = map.get("pageNo") == null?1 : Integer.valueOf(map.get("pageNo") + "");
-        String stringPage = new PageUtil(pageNo, 10, clientService.getPageCount(map), request).getStringPage();
-        model.addAttribute("stringPage",stringPage);
-        model.addAttribute("clientList",clientService.getListClient(map));
-        return "";
     }
+
+    /**
+     * 用户列表
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getClient")
+    public Object getClientList(@RequestBody Map map){
+        Map map1=new HashMap();
+        map1.put("data",clientService.getListClient(map));
+        map1.put("total",clientService.getPageCount(map));
+
+        return map1;
+    }
+    /**
+     * 删除
+     * @param userid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/del/{userid}")
+    public Object del(@PathVariable int userid){
+
+        return clientService.delete(userid);
+    }
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/batchDel/{ids}")
+    public Object batchDel(@PathVariable String ids){
+        return clientService.batchDelete(ids);
+    }
+
+    /**
+     * 更改状态
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/update")
+    public Object Update(@RequestBody Map map){
+        System.out.println(map);
+        return clientService.update(map);
+    }
+
 }

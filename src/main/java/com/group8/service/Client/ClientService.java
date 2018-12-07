@@ -24,4 +24,23 @@ public interface ClientService {
      * @return
      */
     int getPageCount(Map map);
+
+    /**
+     * 删除
+     * @param userid
+     * @return
+     */
+    int delete(int userid);
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    int batchDelete(String ids);
+    /**
+     * 更新状态
+     * @param map
+     * @return
+     */
+    int update(Map map);
 }
