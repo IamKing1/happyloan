@@ -117,7 +117,49 @@
           </ul>
         </div>
         <!------------投资列表-------------->
+        <div id="context"></div>
+
+
+          <script type="text/javascript">
+                $(function(){
+                    $.ajax({
+                        url:"release/getConfirmationInformationList",
+                        success:function(data){
+                            var list = data.list;
+
+                            var str ="";
+                            for(var i=0;i < list.length;i++){
+                                str+="<div class=\"item\">\n" +
+                                    "\n" +
+                                    "          <ul>\n" +
+                                    "            <li class=\"col-330 col-t\"><a href=\"infor.html\" target=\"_blank\"><i class=\"icon icon-che\" title=\"车易贷\"></i></a><a class=\"f18\" href=\"infor.html\" title=\"赵女士长安福特福克斯汽车质押贷款4万元\" target=\"_blank\"> 赵女士长安福特福克斯汽车质... </a></li>\n" +
+                                    "            <li class=\"col-180\"><span class=\"f20 c-333\">"+list[i].MONEY+"</span>元</li>\n" +
+                                    "            <li class=\"col-110 relative\"><span class=\"f20 c-orange\">12.00% </span></li>\n" +
+                                    "            <li class=\"col-150\"> "+list[i].LONGTIME+"</li>\n" +
+                                    "            <li class=\"col-150\">"+list[i].REPAYMENTMETHOD+"</li>\n" +
+                                    "            <li class=\"col-120\">\n" +
+                                    "              <div class=\"circle\">\n" +
+                                    "                <div class=\"left progress-bar\">\n" +
+                                    "                  <div class=\"progress-bgPic progress-bfb10\">\n" +
+                                    "                    <div class=\"show-bar\"> 10% </div>\n" +
+                                    "                  </div>\n" +
+                                    "                </div>\n" +
+                                    "              </div>\n" +
+                                    "            </li>\n" +
+                                    "            <li class=\"col-120-2\"> <a class=\"ui-btn btn-gray\" href=\"infor.html\">还款中</a> </li>\n" +
+                                    "          </ul>\n" +
+                                    "        </div>";
+                            }
+                            $("#context").append(str)
+                        },
+                        error:function() {
+                            alert("未知错误")
+                        }
+                    })
+                })
+          </script>
         <div class="item">
+
           <ul>
             <li class="col-330 col-t"><a href="infor.html" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a class="f18" href="infor.html" title="赵女士长安福特福克斯汽车质押贷款4万元" target="_blank"> 赵女士长安福特福克斯汽车质... </a></li>
             <li class="col-180"><span class="f20 c-333">40,000.00</span>元</li>
@@ -128,7 +170,7 @@
               <div class="circle">
                 <div class="left progress-bar">
                   <div class="progress-bgPic progress-bfb10">
-                    <div class="show-bar"> 100% </div>
+                    <div class="show-bar"> 10% </div>
                   </div>
                 </div>
               </div>
@@ -136,7 +178,7 @@
             <li class="col-120-2"> <a class="ui-btn btn-gray" href="infor.html">还款中</a> </li>
           </ul>
         </div>
-        <div class="item">
+        <!--<div class="item">
           <ul>
             <li class="col-330 col-t"><a href="infor.html" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a class="f18" href="infor.html" title="唐先生宝马318汽车质押贷款5万元" target="_blank"> 唐先生宝马318汽车质押贷... </a></li>
             <li class="col-180"><span class="f20 c-333">50,000.00</span>元</li>
@@ -306,7 +348,7 @@
             </li>
             <li class="col-120-2"> <a class="ui-btn btn-gray" href="infor.html">还款中</a> </li>
           </ul>
-        </div>
+        </div>-->
         <!------------投资列表-------------->
       </div>
       <div class="pagination clearfix mrt30"> <span class="page"><a href="javascript:void(0);" onclick="">首页</a><a href="javascript:void(0);" onclick="">上一页</a>&nbsp;<a class="curr" href="javascript:;">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a> <a href="javascript:void(0);" onclick="#">下一页</a><a href="javascript:void(0);" onclick="#">尾页</a>&nbsp;<em>共2297页&nbsp;</em></span>
