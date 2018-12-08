@@ -26,12 +26,6 @@ public interface ClientDao {
     int getPageCount(Map map);
 
     /**
-     * 删除
-     * @param userid
-     * @return
-     */
-    int delete(int userid);
-    /**
      * 更新状态
      * @param map
      * @return
