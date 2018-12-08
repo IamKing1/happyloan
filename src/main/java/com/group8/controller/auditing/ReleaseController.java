@@ -55,4 +55,14 @@ public class ReleaseController {
         return i;
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "getConfirmationInformationList")
+    public Object getConfirmationInformationList(){
+        Map map = new HashMap();
+        List<Map> confirmationInformationList = releaseService.getConfirmationInformationList();
+        System.out.println(confirmationInformationList);
+        map.put("list",confirmationInformationList);
+        return map;
+    }
 }

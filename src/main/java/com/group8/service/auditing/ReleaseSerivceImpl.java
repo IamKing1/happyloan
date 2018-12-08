@@ -44,4 +44,10 @@ public class ReleaseSerivceImpl implements  ReleaseService {
         }
         return i;
     }
+
+    @Override
+    public List<Map> getConfirmationInformationList() {
+        List<Map> confirmationInformationList = release.getConfirmationInformationList();
+        return confirmationInformationList;
+    }
 }

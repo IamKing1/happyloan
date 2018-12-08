@@ -29,5 +29,10 @@ public interface ReleaseService {
      * @return
      */
     int confirmationInformation(Map map);
+    /**
+     * 得到招标信息列表
+     * @return
+     */
+    List<Map> getConfirmationInformationList();
 
 }

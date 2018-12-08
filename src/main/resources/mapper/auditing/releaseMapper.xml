@@ -34,4 +34,12 @@
     <update id="updateConfirmationInformationStuts" parameterType="map">
         update tb_borrow set release = #{release} where  id =#{BRRID}
     </update>
+
+
+    <select id="getConfirmationInformationList" resultType="map">
+        select a.id tendid,a.stuts,a.title,b.money,c.item longtime,d.item REPAYMENTMETHOD from tb_tendering a
+        join  tb_borrow b on a.borrow=b.id
+        join tb_systemcategoryitem c on b.longtime = c.id
+        join tb_systemcategoryitem d on b.REPAYMENTMETHOD = d.id
+    </select>
 </mapper>

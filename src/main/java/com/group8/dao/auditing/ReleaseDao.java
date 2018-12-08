@@ -39,4 +39,11 @@ public interface ReleaseDao {
      */
     int updateConfirmationInformationStuts(Map map);
 
+
+    /**
+     * 得到招标信息列表
+     * @return
+     */
+    List<Map> getConfirmationInformationList();
+
 }
