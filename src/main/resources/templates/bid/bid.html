@@ -3,77 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/css/bootstrap.css">
     <script src="/js1/jquery-2.1.0.js"></script>
-    <link rel="stylesheet" href="/css/bidstyle.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script src="/js1/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/stylebid.css">
 </head>
 <body>
-
-<!--//添加-->
-<div class="container1">
-    <center>
-        <div class="left">
-            <form action="/bidcon/add" method="post">
-                <table class="tableLeft">
-                    <tr>
-                        <td>
-                            <label for="">满标金额(万元):</label>
-                            <input type="text" id="bulk" class="form-control" name="BID_MONEY" placeholder="请输入满标金额" required="true">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="">最低投入(万元):</label>
-                            <input type="text" id="load" class="aa form-control" name="BID_MINIMUM" placeholder="请输入最投入金额" required="true">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="words">标金期数：</td>
-                    <tr>
-                        <td>
-                            <select name="" class="form-control" th:name="BID_AMORTIZE">
-                                <option value="1">三期</option>
-                                <option value="2">六期</option>
-                                <option value="3">十二期</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                    <tr>
-                        <td class="words">结束时间:</td>
-                    </tr>
-                    <tr>
-                        <td><input type="date" name="BID_END_TIME" id="" class="form-control" required="true"/></td>
-                    </tr>
-                    <tr>
-                        <td class="words">操作人员：</td>
-                    <tr>
-                        <td>
-                            <select name="" class="form-control" th:name="OPERATION_STAFF">
-                                <option>赵谦</option>
-                                <option>孙犁</option>
-                                <option>周武</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-
-                    <tr>
-                        <td><input type="submit" class="btn btn-info tj" value="提交"/></td>
-                    </tr>
-
-                </table>
-            </form>
-        </div>
-
-    </center>
-<button id="btn">添加</button>
-</div>
-
+<div class="psize"><p>标金总计</p></div>
 <!--查询-->
-<center>
-    <div class="listye">
-        <table class="table table-hover">
+<div class="listye">
+    <!--搜索筛选-->
+    <form action="">
+        <table class="sxtable">
+            <tr>
+                <td align="right">标金期数:</td>
+                <td>
+                    <select name="BID_AMORTIZE" class="form-control">
+                        <option value="">--请选择--</option>
+                        <option th:each="bid : ${selecta}" th:value="${bid.ID}" th:text="${bid.ITEM}"></option>
+                    </select>
+                </td>
+                <td align="right">操作人员:</td>
+                <td>
+                    <select name="USERID" class="form-control">
+                        <option value="">--请选择--</option>
+                        <option th:each="bid : ${selectu}" th:value="${bid.USERID}" th:text="${bid.USERNAME}"></option>
+                    </select>
+                </td>
+                <td align="center"><a href="">
+                    <button type="submit" class="btn btn-success">检索</button>
+                </a></td>
+                <td align="right" colspan="3">
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"
+                            id="tjbtn">添加标金项目
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <center>
+        <table class="table table-hover" id="bidtable">
             <tr>
                 <td>序号</td>
                 <td>满标金额</td>
@@ -87,18 +56,20 @@
                 <td>操作</td>
             </tr>
             <tr th:each="bid : ${bidList}">
-                <td>序号</td>
+                <td th:text="${bid.BID_ID}"></td>
                 <td th:text="${bid.BID_MONEY}"></td>
                 <td th:text="${bid.BID_CREATION_TIME}"></td>
                 <td th:text="${bid.BID_MINIMUM}"></td>
                 <td th:text="${bid.BID_UNDERWAY}"></td>
-                <td th:text="${bid.BID_STATE}"></td>
-                <td th:text="${bid.BID_AMORTIZE}"></td>
+                <td th:text="${bid.STATE}"></td>
+                <td th:text="${bid.CDATE}"></td>
                 <td th:text="${bid.BID_END_TIME}"></td>
-                <td th:text="${bid.OPERATION_STAFF}"></td>
-                <td>
-                    <button type="button" class="btn"><a href="" >修改</a></button>
-                    <button type="button" class="btn"><a href="" >删除</a></button>
+                <td th:text="${bid.USERNAME}"></td>
+                <td >
+                    <button type="button" class="xgbtn" data-toggle="modal" id="changeMeth" data-target="#myModala" style="color: #fff;">修改
+                        <input type="hidden" th:value="${bid.BID_ID}">
+                    </button>
+                    <button type="button" class="btn btn-danger" id="dele"><input type="hidden" th:value="${bid.BID_ID}">删除</button>
                 </td>
             </tr>
             <tr>
@@ -106,48 +77,250 @@
                 </td>
             </tr>
         </table>
+    </center>
+</div>
+<!--添加-->
+<div class="modalbox">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+
+            <form action="/bidcon/add" method="post">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">标金项目添加</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <center>
+                            <table class="tableLeft">
+                                <tr>
+                                    <td class="words">满标金额(万元):</td>
+                                    <td>
+                                        <input type="text" id="bulk" class="form-control" name="BID_MONEY"
+                                               placeholder="请输入满标金额" required="true">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="words">最低投入(万元):</td>
+                                    <td>
+                                        <input type="text" id="load" class="aa form-control" name="BID_MINIMUM"
+                                               placeholder="请输入最投入金额" required="true">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="words">标金期数：</td>
+                                    <td>
+                                        <select name="BID_AMORTIZE" class="form-control" >
+                                            <option value="">--请选择--</option>
+                                            <option th:each="bid : ${selecta}" th:value="${bid.ID}"
+                                                    th:text="${bid.ITEM}"></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="words">结束时间:</td>
+                                    <td><input type="date" name="BID_END_TIME" class="form-control" required="true"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="words">操作人员：</td>
+                                    <td>
+                                        <select name="USERID" class="form-control" >
+                                            <option value="">--请选择--</option>
+                                            <option th:each="bid : ${selectu}" th:value="${bid.USERID}" th:text="${bid.USERNAME}"></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </center>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</center>
+
+</div>
 
 
+<!--修改-->
+<div class="modalbox">
+    <div class="modal fade" id="myModala" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">标金项目修改</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="aaaaaaa">
+
+                        <center>
+                            <table class="tableLeft">
+                                <tr>
+                                    <td class="words">满标金额(万元):</td>
+                                    <td>
+                                        <input type="text" id="bulka" class="form-control" name="BID_MONEY"
+                                               placeholder="请输入满标金额" required="true">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="words">最低投入(万元):</td>
+                                    <td>
+                                        <input type="text" id="loada" class="aa form-control" name="BID_MINIMUM"
+                                               placeholder="请输入最投入金额" required="true">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="words">标金期数：</td>
+                                    <td>
+                                        <select name="BID_AMORTIZE" class="form-control" id="option" required="true">
+                                            <option value="">--请选择--</option>
+                                            <option th:each="bid : ${selecta}" th:value="${bid.ID}" th:text="${bid.ITEM}"></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="words">结束时间:</td>
+                                    <td><input type="date" name="BID_END_TIME" id="endtime" class="form-control" required="true"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="words">操作人员：</td>
+                                    <td>
+                                        <select name="USERID" class="form-control" id="userx" required="true">
+                                            <option value="">--请选择--</option>
+                                            <option th:each="bid : ${selectu}" th:value="${bid.USERID}" th:text="${bid.USERNAME}"></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </center>
 
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="xgtjbtn">提交</button>
+                    </div>
+                </div>
+        </div>
+    </div>
 
-
-<script type="text/javascript">
-    $("#btn").click(function () {
-
-        var winW = $(window).width();
-        console.log("浏览器款" + winW)
-        var left = $(".left").get(0).offsetLeft;
-        console.log(left)
-        console.log(winW - left)
-        var w = winW - left;
-        var widthL = $(".left").width();
-        console.log(widthL)
-        if (w == (widthL + 1)) {
-            $(".left").css("right", -(widthL + 1) + "px")
-            $(this).text('添加')
-        } else {
-            $(".left").css("right", "0px")
-            $(this).text('取消')
-        }
-    })
-
-
-    $(document).on("blur",".aa",function(){
-        var bulk = $("#bulk").val();
-        var load = $("#load").val();
-        if(bulk<load){
-            alert("数额输入错误，请重新输入")
-            $("#load").val("");
-            return false;
-        }else{
-            return true;
-        }
-    })
-</script>
+</div>
 
 
 </body>
+<script>
+    $(document).on("blur", ".aa", function () {
+        var bulk = $("#bulk").val();
+        var load = $("#load").val();
+        if (parseInt(bulk)  < parseInt(load)) {
+            alert("数额输入错误，请重新输入")
+            $("#load").val("");
+            return false;
+        } else {
+            return true;
+        }
+    })
+    /*
+    * 获取修改页面内容
+    * */
+    $(document).on("click", "#changeMeth", function () {
+        var aa = $(this).children("input[type='hidden']").val();
+        $("#aaaaaaa").val(aa)
+        $.ajax({
+            url: "/bidcon/getid",
+            type: "POST",
+            data: {id: aa},
+            dataType: "json",
+            success: function (data) {
+                var anum = data[0].CDATE
+                console.log(anum)
+                $("#myModala").find("[name='BID_MONEY']").val(data[0].BID_MONEY);
+                $("#myModala").find("[name='BID_MINIMUM']").val(data[0].BID_MINIMUM);
+                $("#myModala").find("[name='BID_AMORTIZE']").val(data[0].BID_AMORTIZE);
+                $("#myModala").find("[name='BID_END_TIME']").val(data[0].BID_END_TIME);
+                $("#myModala").find("[name='USERID']").val(data[0].USERID);
+            },
+            error: function (data) {
+                console.log("error")
+            }
+        })
+
+
+    })
+    /*
+    * 修改方法传值
+    * */
+    $(document).on("click", "#xgtjbtn", function () {
+        var gaina= {BID_MONEY:$("#bulka").val(),BID_MINIMUM: $("#loada").val(),BID_AMORTIZE:$("#option").val(),BID_END_TIME:$("#endtime").val(),USERID:$("#userx").val(),BID_ID:$("#aaaaaaa").val()}
+        $.ajax({
+            url : "/bidcon/update",
+            type:"POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(gaina),
+
+            success:function (data) {
+                if (data>0){
+                    location.href="/bidcon/list"
+
+                    alert("修改成功")
+                }else {
+                    alert("修改失败")
+                    location.href="/bidcon/list"
+                }
+            },error:function () {
+                console.log("error")
+            }
+        })
+
+
+    })
+
+    $(document).on("click","#dele",function () {
+        var aa= $(this).children("input[type='hidden']").val();
+       if (confirm("是否删除")){
+           $.ajax({
+               url:"/bidcon/delete",
+               type:"POST",
+               data:{BID_ID:aa},
+               dataType: "json",
+               success: function (data){
+                   if (data>0){
+                       location.href="/bidcon/list"
+
+                       alert("删除成功")
+                   }else {
+                       alert("删除失败")
+                       location.href="/bidcon/list"
+                   }
+               },error:function () {
+                   console.log("error")
+               }
+
+           })
+       }else {
+
+       }
+    })
+
+
+</script>
+
+<script>
+
+</script>
 </html>
