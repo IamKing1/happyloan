@@ -6,32 +6,23 @@
     <!--分页查询-->
     <select id="getListClient" resultType="map">
         select * from
-        (select rownum rn,a.userid,a.realname,a.sex,a.address,a.idnumber,b.username,b.telephone,b.state,c.item academic,d.item income,e.item marriage from tb_realname a
+        (select rownum rn,a.userid,a.realname,a.sex,a.address,a.idnumber,b.username,b.telephone,a.state,c.item academic,d.item income,e.item marriage from tb_realname a
          join tb_user b on a.userid=b.userid
          join tb_systemcategoryitem c on a.academic =c.id
         join  tb_systemcategoryitem d on a.income = d.id
         join tb_systemcategoryitem e on a.marriage=e.id
          where rownum &lt; #{end}
-        ) d where d.rn &gt; #{start}
+        ) f where f.rn &gt; #{start} and state=1
         <if test="realname!=null and realname!=''">
             and realname like '%'||#{realname}||'%'
         </if>
     </select>
     <!--查询总数量-->
     <select id="getPageCount" resultType="int">
-        select count(*) from tb_realname
-        <where>
-            <if test="realname!=null and realname!=''">
-                and realname like '%'||#{realname}||'%'
-            </if>
-        </where>
+        select count(*) from tb_realname where state=1
     </select>
-    <!--删除-->
-    <delete id="delete" parameterType="int">
-        delete from tb_realname where userid=#{userid}
-    </delete>
     <!--更新-->
     <update id="update" parameterType="map">
-        update tb_user set state=#{STATE} where userid=#{USERID}
+        update tb_realname set state=#{STATE} where userid=#{USERID}
     </update>
 </mapper>
