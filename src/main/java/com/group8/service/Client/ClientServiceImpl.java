@@ -26,11 +26,6 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public List<Map> getListClient(Map map) {
-        int pageNo=map.get("pageNo")==null?1:Integer.valueOf(map.get("pageNo")+"");
-        int pageSize=map.get("pageSize")==null?10:Integer.valueOf(map.get("pageSize")+"");
-        //计算分页的开始值和结束值
-        map.put("start",(pageNo-1)*pageSize);
-        map.put("end",pageNo*pageSize+1);
         List<Map> list = clientDao.getListClient(map);
         return list;
     }
@@ -43,5 +38,15 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public int getPageCount(Map map) {
         return clientDao.getPageCount(map);
+    }
+
+    /**
+     * 更新状态
+     * @param map
+     * @return
+     */
+    @Override
+    public int update(Map map) {
+        return clientDao.update(map);
     }
 }

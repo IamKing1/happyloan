@@ -23,12 +23,10 @@
                 //请求成功后的回调函数有两个参数
                 success: function (data) {
                     if (data.session!= "-1") {
-                        $("#uS").append("<div  STYLE='width: 120PX;' class=\"\"><a href=\"个人中心首页.html\" STYLE='width: 140PX;'  class=\"js-login\" >欢迎您，" + data.session + "</a></div>")
-                        $("#href1").attr("href","个人中心首页.html")
+                        $("#uS").append("<div  STYLE='width: 120PX;' class=\"\"><a href=\"person.html\" STYLE='width: 140PX;'  class=\"js-login\" >欢迎您，" + data.session + "</a></div>")
                     } else {
                         $("#uS").append("<div class=\"\"><a href=\"login.html\" class=\"js-login\" title=\"登录\">登录</a></div>")
-                        $("#href1").attr("href","login.html")
-                        stutas=false;
+
                     }
                 }
             })
@@ -103,7 +101,7 @@
             //请求成功后的回调函数有两个参数
             success: function (data) {
                 if (data.session!= "-1") {
-                    window.location.href='个人中心首页.html';
+                    window.location.href='person.html';
                 } else {
                     if(confirm("你还没有登录，是否去登录?")){
                         window.location.href='login.html';

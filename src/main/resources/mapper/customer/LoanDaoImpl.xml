@@ -5,6 +5,6 @@
 <mapper namespace="com.group8.dao.customer.LoanDao">
         <insert id="applyLoan" parameterType="map">
             insert into tb_borrow (id,REALID,MONEY,LONGTIME,REPAYMENTMETHOD,HOUSINGQUANTITY,TOTALPRICE,PURPOSE,STATUS,REMARK)
-            VALUES (seq_borrow_id.nextval,#{realId},#{money},#{longtime},#{mode},#{house},#{price},#{purpose},21,#{remark})
+            VALUES (seq_borrow_id.nextval,#{realId},#{money},#{longtime},#{mode},#{house},#{price},#{purpose},20,#{remark})
         </insert>
 </mapper>

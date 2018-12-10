@@ -24,4 +24,11 @@ public interface ClientDao {
      * @return
      */
     int getPageCount(Map map);
+
+    /**
+     * 更新状态
+     * @param map
+     * @return
+     */
+    int update(Map map);
 }

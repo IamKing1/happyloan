@@ -4,6 +4,7 @@ import com.group8.dao.cascade.CascadeDao;
 import com.group8.dao.customer.InformationDao;
 import com.group8.dao.customer.LoginDao;
 import com.group8.entity.Customer;
+import com.group8.entity.MoneyRecords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,5 +106,44 @@ public class InformationServiceImpl implements InformationService {
         List<Map> realIdByUserName = informationDao.getRealIdByUserName(userName);
         return realIdByUserName;
     }
+
+
+    @Override
+    public int updateHeadPortrait(Map map){
+        int i = informationDao.updateHeadPortrait(map);
+
+        return  i ;
+    }
+
+    @Override
+    public Map selectHeadPortrait(String userName) {
+        List<Map> maps = informationDao.selectHeadPortrait(userName);
+        return maps.get(0);
+    }
+
+
+    @Override
+    public int rechargeAmount(Map map) {
+        int i = informationDao.rechargeAmount(map);
+        if(i>0){
+
+            MoneyRecords moneyRecords = new MoneyRecords();
+            moneyRecords.setRecords(Double.valueOf(map.get("money").toString()));
+            moneyRecords.setUserId(Integer.valueOf(map.get("userId").toString()));
+            moneyRecords.setThing("个人信息充值操作");
+            moneyRecords.setType(1);
+            System.out.println("------------------");
+
+            System.out.println(moneyRecords.getRecords());
+            System.out.println(moneyRecords.getThing());
+            System.out.println(moneyRecords.getType());
+            System.out.println(moneyRecords.getUserId());
+            informationDao.rechargeAmountRecords(moneyRecords);
+            System.out.println("------------------");
+        }
+        return i;
+    }
+
+
 
 }

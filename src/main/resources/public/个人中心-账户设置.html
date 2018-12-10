@@ -29,18 +29,29 @@
                 //请求成功后的回调函数有两个参数
                 success: function (data) {
 
-                        if(data.meg!="-1"){
-                            $("#realName").append("<i class=\"grzxbg p-right\"></i>");
-                            $("#realName1").html(data.meg);
-                            $("#realName2").append("<a href=\"#\">查看信息</a></span>");
-                        }else{
+                        if(data.meg=="-1"){
                             $("#realName").append("</span><i class=\"grzxbg p-danger\">");
                             $("#realName1").html("未认证");
                             $("#realName2").append("<a href=\"个人中心-实名认证.html\" id='renzheng'>去认证</a></span>");
+
+                        }else if(data.meg=="审核失败" ){
+
+                            $("#realName").append("<i class=\"grzxbg p-danger\"></i>");
+                            $("#realName1").html("认证失败");
+                            $("#realName2").append("<a href=\"个人中心-实名认证.html\">重新认证</a></span>");
+                        }else if(data.meg=="审核中"){
+
+                            $("#realName").append("<i class=\"grzxbg p-danger\"></i>");
+                            $("#realName1").html(data.meg);
+                            $("#realName2").append("<a >请耐心等待结果</a></span>");
+                        }else{
+                            $("#realName").append("<i class=\"grzxbg p-right\"></i>");
+                            $("#realName1").html("已认证");
+                            $("#realName2").append("<a >查看信息</a></span>");
                         }
                 },
                 error:function (data) {
-                    console.log(22)
+
                 }
             })
         }
@@ -53,7 +64,9 @@
                             url: "customer/getTelephoneByUserName", //发送请求地址
                             //请求成功后的回调函数有两个参数
                             success: function (data) {
+
                                 var user = data.customer;
+
                                 if (user.telephone != "" && user.telephone != null) {
                                     $("#telephone").html(user.telephone);
                                     $("#telephone1").append("<i class=\"grzxbg p-right\"></i>");
@@ -141,7 +154,7 @@
 
 
 
-                    <li><span id="email1"></span> <span class="zhsz-span1">电子邮箱</span><span  id="email2" class="zhsz-span2">348****@qq.com</span>
+                    <li><span id="email1"></span> <span class="zhsz-span1">电子邮箱</span><span  id="email2" class="zhsz-span2"></span>
                         <span class="zhsz-span3"><span id="email3"></span>  </span>
                     </li>
 

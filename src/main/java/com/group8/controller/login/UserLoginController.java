@@ -64,12 +64,7 @@ public class UserLoginController {
             redirectAttributes.addFlashAttribute("msg","密码错误");
             return "redirect:/UserLogin/toUserLogin";
         }
-        return "redirect:/UserLogin/toIndex";
-    }
-    @RequestMapping(value = "toIndex")
-    public String toIndex(){
-
-        return "Index";
+        return "redirect:/function/index";
     }
 
     //注销用户

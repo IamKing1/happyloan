@@ -74,6 +74,44 @@
 
             })
         }
+       function usermse(){
+           $.ajax({
+               type: "post", //请求方式
+               dataType: "json",
+               async: false,
+               url: "customer/jySession", //发送请求地址
+               //请求成功后的回调函数有两个参数
+               success: function (data) {
+                   if (data.session!= "-1") {
+                       window.location.href='个人中心-账户设置.html';
+                   } else {
+                       if(confirm("你还没有登录，是否去登录?")){
+                           window.location.href='login.html';
+                       }
+                   }
+               }
+           })
+       }
+        function usermse1(){
+            $.ajax({
+                type: "post", //请求方式
+                dataType: "json",
+                async: false,
+                url: "customer/jySession", //发送请求地址
+                //请求成功后的回调函数有两个参数
+                success: function (data) {
+                    if (data.session!= "-1") {
+                        window.location.href='个人中心-实名认证.html';
+                    } else {
+                        if(confirm("你还没有登录，是否去登录?")){
+                            window.location.href='login.html';
+                        }
+                    }
+                }
+            })
+        }
+
+
     </script>
 
 </head>
@@ -119,19 +157,25 @@
                     <h3 class="bor_onel_tit"><span>申请条件</span></h3>
                     <ul class="bor_onel_ul">
                         <li><img src="images/bor_pic01.png" alt="">
-                            <a href="个人中心-账户设置.html">个人信息</a>&nbsp&nbsp<span id="person1"></span>
+                            <a style="cursor:pointer" onclick="usermse()">个人信息</a>&nbsp&nbsp<span id="person1"></span>
                         </li>
-                        <li><img src="images/bor_pic02.png" alt=""><a href="个人中心-实名认证.html">身份认证</a>&nbsp&nbsp<span id="person2"></span>
+                        <li><img src="images/bor_pic02.png" alt=""><a style="cursor:pointer" onclick="usermse()" >身份认证</a>&nbsp&nbsp<span id="person2"></span>
                         </li>
                         <!--<li><img src="images/bor_pic03.png" alt="">视频认证
                         </li>-->
-                        <li><img src="images/bor_pic04.png" alt="">
+                        <li><img  src="images/bor_pic04.png" alt="">
                             无现有诉讼记录&nbsp&nbsp<span id="person3"></span>
                         </li>
                     </ul>
                     <h3 class="bor_onel_tit"><span>提交资料</span></h3>
                 </div>
                 <!-- end  -->
+
+                <script>
+                    $(function(){
+
+                    })
+                </script>
                 <div class="bor_det_one" style="display:none;">
                     <div class="bor_det_oner fl">
                         <form id="myLoan">
@@ -185,7 +229,7 @@
                                 </div>
                                 <script>
                                     function tijiao(){
-                                        console.log(11111)
+
                                         $.ajax({
                                             url:"/customer/toLoan",
                                             type: "post", //请求方式

@@ -1,6 +1,8 @@
 package com.group8.dao.customer;
 
 import com.group8.entity.Customer;
+import com.group8.entity.MoneyRecords;
+
 import java.util.List;
 import java.util.Map;
 
@@ -68,5 +70,34 @@ public interface InformationDao {
      * @return
      */
     List<Map> getRealIdByUserName(String userName);
+
+
+    /**
+     * 根据用户名修改头像
+     * @param map
+     * @return
+     */
+    int updateHeadPortrait(Map map);
+
+    /**
+     * 根据用户名查询头像
+     * @param userName
+     * @return
+     */
+    List<Map> selectHeadPortrait(String userName);
+
+    /**
+     * 充值
+     * @param map
+     * @return
+     */
+    int rechargeAmount(Map map);
+
+    /**
+     * 充值记录
+      * @param map
+     * @return
+     */
+    int rechargeAmountRecords(MoneyRecords records);
 
 }

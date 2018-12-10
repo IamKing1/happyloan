@@ -47,7 +47,6 @@
 
 
 
-
         //得到省
         function getProvince(){
             $("#province").empty();
@@ -185,17 +184,17 @@
         }
 
         //提交表单
-        function submitForm(){
-            $.ajax({
-                url:"/customer/SubmissionRealName",
-                type: "post", //请求方式
-                data:$("#myform").serialize(),
-                dataType: "json",
-                success: function (data) {
-                      alert("提交成功")
-                }
-            })
-        }
+       /* function submitForm(){
+                $.ajax({
+                    url:"/customer/SubmissionRealName",
+                    type: "post", //请求方式
+                    data:$("#myform").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        alert("提交成功")
+                    }
+                })
+        }*/
     </script>
 </head>
 <body>
@@ -227,7 +226,7 @@
         <div class="personal-main">
             <div class="personal-zhsz">
                 <h3><i>实名认证</i></h3>
-                <form id="myform" method="post" style="width: 400px">
+                <form action="/customer/SubmissionRealName" id="myform" method="post" style="width: 400px" enctype="multipart/form-data">
                     <table>
                         <tr>
                             <td>姓名</td>
@@ -265,7 +264,7 @@
                         <tr>
                             <td>学历</td>
                             <td>
-                                <select name=education" id="education">
+                                <select name="education" id="education">
 
                                 </select>
                             </td>
@@ -298,15 +297,15 @@
                     <div class="zhaopian">
                         <div>
                             <a>身份证正面照:</a>
-                            <input type="file"/>
+                            <input type="file" name="positive"/>
                         </div>
                         <div>
                             <a>身份证反面照:</a>
-                            <input type="file"/>
+                            <input type="file" name="opposite"/>
                         </div>
 
                     </div>
-                    <input type="button" id="bttn" value="提交" />
+                    <input type="submit" id="bttn" value="提交" />
                 </form>
             </div>
         </div>

@@ -1,6 +1,7 @@
 package com.group8.service.customer;
 
 import com.group8.entity.Customer;
+import com.group8.entity.MoneyRecords;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -67,4 +68,27 @@ public interface InformationService {
      * @return
      */
     List<Map> getRealIdByUserName(String userName);
+
+
+    /**
+     * 根据用户名修改头像
+     * @param map
+     * @return
+     */
+    int updateHeadPortrait(Map map);
+    /**
+     * 根据用户名查询头像
+     * @param userName
+     * @return
+     */
+    Map selectHeadPortrait(String userName);
+
+    /**
+     * 充值
+     * @param map
+     * @return
+     */
+    int rechargeAmount(Map map);
+
+
 }

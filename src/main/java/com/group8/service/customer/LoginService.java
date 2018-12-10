@@ -30,6 +30,12 @@ public interface LoginService {
     Customer getByName(String userName);
     /**
      * 根据用户名查询师傅存在
+     * @param userName
+     * @return
+     */
+    int getIdByName(String userName);
+    /**
+     * 根据用户名查询师傅存在
      * @param userId
      * @return
      */
