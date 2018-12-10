@@ -113,9 +113,9 @@ public class IdCardService {
 		return idCard;
 	}
 
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 
 			System.out.print(getIdCardDetail("410102199003071492"));
 
-	}
+	}*/
 }

@@ -44,27 +44,7 @@ public class ClientController {
 
         return map1;
     }
-    /**
-     * 删除
-     * @param userid
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/del/{userid}")
-    public Object del(@PathVariable int userid){
 
-        return clientService.delete(userid);
-    }
-    /**
-     * 批量删除
-     * @param ids
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/batchDel/{ids}")
-    public Object batchDel(@PathVariable String ids){
-        return clientService.batchDelete(ids);
-    }
 
     /**
      * 更改状态
@@ -74,7 +54,6 @@ public class ClientController {
     @ResponseBody
     @RequestMapping("/update")
     public Object Update(@RequestBody Map map){
-        System.out.println(map);
         return clientService.update(map);
     }
 

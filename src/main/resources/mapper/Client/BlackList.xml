@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.Client.BlackListDao">
+    <!--分页查询-->
+    <select id="getBlackList" resultType="map">
+        select * from
+        (select rownum rn,a.userid,a.realname,a.sex,a.address,a.idnumber,b.username,b.telephone,a.state,c.item academic from tb_realname a
+        join tb_user b on a.userid=b.userid
+        join tb_systemcategoryitem c on a.academic =c.id
+        where rownum &lt; #{end}
+        ) d where d.rn &gt; #{start} and state=2
+        <if test="realname!=null and realname!=''">
+            and realname like '%'||#{realname}||'%'
+        </if>
+    </select>
+    <!--查询总数量-->
+    <select id="getPageCount" resultType="int">
+        select count(*) from tb_realname where state=2
+    </select>
+    <!--更改-->
+    <update id="updateBlack" parameterType="map">
+   update tb_realname set state=#{STATE} where userid=#{USERID}
+    </update>
+</mapper>

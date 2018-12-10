@@ -27,7 +27,7 @@
 
 
     <insert id="confirmationInformation" parameterType="map">
-        insert into tb_tendering   values (seq_zhaobiao_id.nextval, #{REALID},#{title},1,sysdate,#{BRRID})
+        insert into tb_tendering   values (seq_zhaobiao_id.nextval, #{REALID},#{title},1,sysdate,#{BRRID},#{ISSUSER})
     </insert>
 
 
