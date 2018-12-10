@@ -54,7 +54,6 @@ public class ClientController {
     @ResponseBody
     @RequestMapping("/update")
     public Object Update(@RequestBody Map map){
-        System.out.println(map);
         return clientService.update(map);
     }
 
