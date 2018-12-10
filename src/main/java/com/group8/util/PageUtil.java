@@ -69,9 +69,9 @@ public class PageUtil {
         if(pageNo>1){
             // uri =/web20180904/jsp/page/page4.jsp?userName=a&gender=1&aaa=111&bbb=222& 有参数
             // uri =/web20180904/jsp/page/page4.jsp?  没有参数
-            stringBuffer.append("<a href='"+uri+"pageNo=1'>首页</a>&nbsp;<a href='"+uri+"pageNo="+(pageNo-1)+"'>上一页</a>");
+            stringBuffer.append("<span><a href='"+uri+"pageNo=1'>首页</a></span>&nbsp;<span><a href='"+uri+"pageNo="+(pageNo-1)+"'>上一页</a></span>");
         }else{//第一页
-            stringBuffer.append("首页&nbsp;上一页");
+            stringBuffer.append("<span>首页</span>&nbsp;<span>上一页</span>");
         }
         //如果当前页大于最大页 等于最大页
         if(pageNo>maxPage){
@@ -79,19 +79,19 @@ public class PageUtil {
         }
         //拼装下一页和尾页
         if(pageNo<maxPage){
-            stringBuffer.append("&nbsp;<a href='"+uri+"pageNo="+(pageNo+1)+"'>下一页</a>&nbsp;<a href='"+uri+"pageNo="+maxPage+"'>尾页</a>");
+            stringBuffer.append("&nbsp;<span><a href='"+uri+"pageNo="+(pageNo+1)+"'>下一页</a></span>&nbsp;<span><a href='"+uri+"pageNo="+maxPage+"'>尾页</a></span>");
         }else{//是最后一页
-            stringBuffer.append("&nbsp;下一页&nbsp;尾页");
+            stringBuffer.append("<span>&nbsp;下一页</span><span>&nbsp;尾页</span>");
         }
         //拼装跳转到第几页
-        stringBuffer.append("&nbsp;<select onchange=\"javascript:location.href='"+uri+"pageNo='+this.value\">");
+        stringBuffer.append("<span>&nbsp;<select onchange=\"javascript:location.href='"+uri+"pageNo='+this.value\">");
         for(int i=1;i<=maxPage;i++){
             if(i==pageNo)
                 stringBuffer.append("<option selected='selected' value='"+i+"'>"+i+"</option>");
             else
                 stringBuffer.append("<option value='"+i+"'>"+i+"</option>");
         }
-        stringBuffer.append("</select>&nbsp;");
+        stringBuffer.append("</select>&nbsp;</span>");
         stringBuffer.append("共"+totalCount+"条"+maxPage+"页");
         return stringBuffer.toString();
     }
