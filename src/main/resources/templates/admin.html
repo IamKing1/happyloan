@@ -1,37 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>欢迎进入后台页面</title>
+	<!--引用的天气icon  开始-->
+	<link rel="stylesheet" href="/pe-icon-set-weather/css/helper.css">
+	<link rel="stylesheet" href="/pe-icon-set-weather/css/pe-icon-set-weather.css">
+	<!--引用的天气icon  结束-->
 	<link rel="stylesheet" href="/vue/vue-index.css">
 	<link rel="stylesheet" href="/element/index.css">
 	<script src="/vue/vue.js"></script>
 	<script src="/vue/vue-index.js"></script>
-	<script type="text/javascript" src="/js1/jquery-2.1.0.js"></script>
-	<script>
-        /*$(function() {
-            $.ajax({
-                url : "/function/index",
-                type : "post",
-                dataType : "JSON",
-                success : function(data) {
-                    var str = "";
-                    for (var i = 0; i < data.length; i++) {
-                        str+="<el-submenu index='"+(i+1)+"'><template slot='title'><i class='el-icon-message'></i>"+data[i].NAME+"</template>";
-                        if (data[i].childrenList != null) {
-                            for (var j = 0; j < data[i].childrenList.length; j++) {
-                                str+="<el-menu-item index='"+(i+1)+"-"+(j+1)+"'><a href='"+data[i].childrenList[j].URL+"' target=\"iframe\">"+data[i].childrenList[j].NAME+"</a></el-menu-item>";
-                            }
-                        }
-                        str+="</el-submenu>";
-                    }
-                    $("#munuo").append(str);
-                }
-            })
-        })*/
-	</script>
-
-
+	<script src="/js1/jquery-2.1.0.js"></script>
+	<link rel="stylesheet" href="/css1/font-awesome.css">
 	<style>
 		html,
 		body {
@@ -44,7 +25,7 @@
 			background-color: #B3C0D1;
 			color: #333;
 			line-height: 60px;
-			
+			font-family: "微软雅黑";
 		}
 		
 		#app, .el-container {
@@ -59,7 +40,7 @@
 			border: none;
 		}
 		
-		a {
+		.el-container a {
 			text-decoration: none;
 			color: inherit;
 			display: inline-block;
@@ -78,54 +59,146 @@
 		a:active {
 			color: inherit;
 		}
-		.el-menu{
+		
+		.el-menu {
 			border: none;
 		}
+		
 		.el-menu-item.is-active {
 			background-color: rgb(238, 239, 240);
 		}
+		
 		::-webkit-scrollbar {
 			display: none;
 		}
-		.el-menu{
-			background: rgba(200,200,200,.4);
+		
+		.el-menu {
+			background: rgba(200, 200, 200, .4);
 		}
-		.el-menu .el-menu--inline{
-			background: rgba(255,255,255,.9);
+		
+		.el-menu .el-menu--inline {
+			background: rgba(255, 255, 255, .9);
 		}
-		i{
-			font-style: normal;
+		
+		/*weather*/
+		.weatherTag {
+			height: 50px;
+			line-height: 50px;
+			background: rgba(36, 36, 36, .2);
+			/*width: 540px;*/
+			box-shadow: 0 0 5px rgba(0, 0, 0, .2), 0 0 10px rgba(0, 0, 0, .1) inset;
+			border-radius: 28px;
+			/*text-indent: 30px;*/
+			font-family: "微软雅黑";
+			margin-top: 18px;
 		}
-	</style>
+		
+		.weatherTag div {
+			display: inline-block;
+		}
+		
+		.weatherTag > div {
+			width: 40%;
+			padding-left: 30px;
+			height: 35px;
+			line-height: 35px;
+			margin-left: 4%;
+			border-radius: 35px;
+			background: rgba(0, 0, 0, .1);
+		}
+		
+		.weatherTag .weatherInfo i {
+			font-size: 20px;
+			position: relative;
+			top: 2px;
+			margin: 0 7px;
+		}
+		
+		/*天气结束*/
+		
+		/*用户设置开始*/
+		.userSetting > img {
+			width: 30px;
+			height: 30px;
+			background: #aaa;
+			-webkit-border-radius: 15px;
+			-moz-border-radius: 15px;
+			border-radius: 15px;
+			position: relative;
+			top: 7px;
+			border: 2px solid #fff;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		
+		.userSetting a {
+			display: inline;
+		}
+		
+		.userSetting {
+			font-size: 16px;
+			margin-left: 100px;
+		}
+		
+		.userSetting .userNameShow {
+			margin: 0 15px 0 5px;
+		}
 	
+	</style>
+
 </head>
 
 <body>
 <div id="app">
-	<el-container >
-		<el-header style="text-align: right; font-size: 12px;height: 80px; background-color: rgb(84, 92, 100);color: #fff;" >
-			<span>王小虎</span>
+	<el-container>
+		<el-header style=" font-size: 12px;height: 80px; background-color: rgb(84, 92, 100);color: #fff;">
+			<el-row type="flex" class="row-bg" justify="center" style="height: 100%;">
+				<el-col :span="6">
+					<div style="line-height: 80px;">
+						<h2 style="margin: 0;">欢迎进入后台管理系统</h2>
+					</div>
+				</el-col>
+				<el-col :span="8" :offset="2">
+					<div style="line-height: 80px;">
+						<div class="weatherTag">
+							<div class="timeTag">
+								<i class="fa fa-calendar" aria-hidden="true"
+								   style="margin-right: 10px;font-size: 16px;"></i>
+								<div class="ymd"></div>
+								<div class="hms" style="min-width: 60px;"></div>
+								<div class="week"></div>
+							</div>
+							<div class="weatherInfo"></div>
+						</div>
+					</div>
+				</el-col>
+				<el-col :span="6" :offset="2">
+					<div style="line-height: 80px;">
+						<!--用户登录显示-->
+						<div class="userSetting">
+							<!--用户头像-->
+							<img src="/images/1121.jpeg" class="userImg"><!--用户名--><span
+								class="userNameShow">Admin</span>
+							<!--退出-->
+							<a href="#" title="退出登录"><i class="fa fa-sign-out" aria-hidden="true"						                            style="font-size: 20px;"></i>退出</a>
+						
+						</div>
+					</div>
+				
+				</el-col>
+			</el-row>
 		</el-header>
 		<el-container>
 			<el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-				<el-menu :default-openeds="['1']" background-color=""  id="munuo">
-
-
-
-					<div th:each="munelist,muneListIndex: ${list}">
-						<el-submenu th:index="${muneListIndex.index+1}"  >
-							<template slot="title"><i class="el-icon-message"></i><i th:text="${munelist.NAME}"></i></template>
-							<div  th:each="childrenList,childrenListIndex: ${munelist.childrenList}"  >
-									<el-menu-item th:index="${muneListIndex.index+1}+'-'+${childrenListIndex.index+1}">
-										<a th:href="${childrenList.URL}"  target="iframe" th:text="${childrenList.NAME}"></a>
-									</el-menu-item>
-							</div>
-						</el-submenu>
-					</div>
-
-
-
-<!--
+				<el-menu :default-openeds="['1']" background-color="">
+					<el-submenu index="1">
+						<template slot="title"><i class="el-icon-message"></i>导航一</template>
+						
+						<el-menu-item index="1-1"><a href="/jump/toEg1" target="iframe">选项1</a></el-menu-item>
+						<el-menu-item index="1-2"><a href="/jump/toEg2" target="iframe">选项2</a></el-menu-item>
+						<el-menu-item index="1-3"><a href="/jump/toEg1" target="iframe">选项3</a></el-menu-item>
+					</el-submenu>
 					<el-submenu index="2">
 						<template slot="title"><i class="el-icon-menu"></i>导航二</template>
 						
@@ -139,11 +212,12 @@
 						<el-menu-item index="3-1"><a href="/jump/toEg1" target="iframe">选项1</a></el-menu-item>
 						<el-menu-item index="3-2"><a href="/jump/toEg2" target="iframe">选项2</a></el-menu-item>
 						<el-menu-item index="3-3"><a href="/jump/toEg1" target="iframe">选项3</a></el-menu-item>
-					</el-submenu>-->
+					</el-submenu>
 				</el-menu>
 			</el-aside>
 			<el-main style="padding: 0 0 0 30px;">
-				<iframe src="/jump/toEg1" width="100%" id="mainiframe" height="100%" name="iframe" style="margin: 0;padding: 0"></iframe>
+				<iframe src="/jump/toEg1" width="100%" id="mainiframe" height="100%" name="iframe"
+				        style="margin: 0;padding: 0"></iframe>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -152,10 +226,91 @@
 <script type="text/javascript">
 
 	new Vue({
-		el:"#app"
+		el: "#app"
 	})
-
 </script>
+<script type="text/javascript">
+	function getDateTime() {
+		let date = new Date();
+		//获取小时
+		let hover = date.getHours();
+		//获取分钟
+		let min = date.getMinutes();
+		//获取秒数
+		let sec = date.getSeconds();
+		//判断如果时分秒小与10,补零
+		if (hover < 10) {
+			hover = "0" + hover;
+		}
+		if (min < 10) {
+			min = "0" + min;
+		}
+		if (sec < 10) {
+			sec = "0" + sec;
+		}
+		//拼装字符
+		let allTime = hover + ":" + min + ":" + sec;
+		//赋值
+		$(".hms").html(allTime);
+	}
+
+	//加载执行
+	$(function () {
+		//每秒执行一次
+		setInterval(getDateTime, 1000)
+		//获取天气信息
+		$.ajax({
+			type: "get",
+			url: "http://t.weather.sojson.com/api/weather/city/101180101",
+			success: function (data) {
+				// console.log(data.data.forecast[0])
+				var ymd = data.data.forecast[0].ymd; //获取年月日
+				$(".weatherTag .timeTag .ymd").html(ymd);
+				var high = (data.data.forecast[0].high).substring(2);//最高温度
+//					console.log(high)
+				var low = (data.data.forecast[0].low).substring(2);//最低温度
+				var type = data.data.forecast[0].type;//天气类型
+				var week = data.data.forecast[0].week;//星期
+				$(".weatherTag .week").html(week);
+//					console.log(type.indexOf("多云"))//包含判断 0表示包含 -1不包含
+				if (type.indexOf("多云") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-partly-cloudy-1'></i> 多云")
+				}
+				if (type.indexOf("小雨") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-rain-1'></i> 小雨")
+				}
+				if (type.indexOf("大雨") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-heavy-hail'></i> 大雨")
+				}
+				if (type.indexOf("暴雨") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-heavy-rain-1'></i> 暴雨")
+				}
+				if (type.indexOf("晴") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-sun-1'></i> 晴")
+				}
+				if (type.indexOf("雨夹雪") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-rain-and-snow'></i> 雨夹雪")
+				}
+				if (type.indexOf("暴雪") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-blizzard'></i> 暴雪")
+				}
+				if (type.indexOf("小雪") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-snow'></i> 小雪")
+				}
+				if (type.indexOf("中雪") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-snow'></i> 中雪")
+				}
+
+				$(".weatherTag .weatherInfo").append("&nbsp;&nbsp;" + high + "~" + low)
+
+				// console.log("最高温度:"+high+"最低温度"+low+"天气类型"+type+"星期"+week)
+			}
+
+		});
+	})
+</script>
+
+
 <!--<script>
 	function changeFrameHeight(){
 		var ifm= document.getElementById("mainiframe");
