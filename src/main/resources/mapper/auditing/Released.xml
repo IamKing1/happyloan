@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.auditing.ReleasedDao">
+    <select id="getListRelease" resultType="map">
+      select * from (
+        select rownum rn,b.realname,b.sex,c.money,to_char(c.longtime,'yyyy/MM/dd') as longtime,c.totalprice,a.id,a.title,a.begintime,a.issuser,c.firstincname,to_char(c.firstinctime,'yyyy/MM/dd') as firstinctime,c.firstinc,c.secondincname,to_char(c.secondtime,'yyyy/MM/dd') as secondtime,c.secondinc from tb_tendering a
+        join tb_realname b on a.realname=b.id
+        join tb_borrow c a..id=c.id
+         where rownum &lt; #{end}
+      ) d where d.rn &gt; #{start}
+        <if test="issuser!=null and issuser!=''">
+            and d.issuser like '%'||#{issuser}||'%'
+        </if>
+    </select>
+</mapper>
