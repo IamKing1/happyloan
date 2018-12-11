@@ -38,4 +38,31 @@ public class BidServiceImpl implements BidService {
     public int add(Map map) {
         return bidDao.add(map);
     }
+
+    @Override
+    public List<Map> selects(Map map) {
+        return bidDao.selects(map);
+    }
+
+    @Override
+    public List<Map> selectu(Map map) {
+        return bidDao.selectu(map);
+    }
+
+    @Override
+    public List<Map> getById(int bidid) {
+        return bidDao.getById(bidid);
+    }
+
+    @Override
+    public int update(Map map) {
+        return bidDao.update(map);
+    }
+
+    @Override
+    public int delete(Integer id) {
+        return bidDao.delete(id);
+    }
+
+
 }

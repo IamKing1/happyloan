@@ -29,4 +29,28 @@ public interface BidService {
      * @return
      */
     int add(Map map);
+    /**
+     * 搜索检索选项
+     * @return
+     */
+    List<Map> selects(Map map);
+    List<Map> selectu(Map map);
+    /**
+     *
+     * @param bidid
+     * @return
+     */
+    List<Map> getById(int bidid);
+    /**
+     * 修改
+     * @param map
+     * @return
+     */
+    int update(Map map);
+    /**
+     * 删除
+     * @param
+     * @return
+     */
+    int delete(Integer id);
 }
