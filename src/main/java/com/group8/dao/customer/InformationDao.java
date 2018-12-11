@@ -95,7 +95,7 @@ public interface InformationDao {
 
     /**
      * 充值记录
-      * @param map
+      * @param records
      * @return
      */
     int rechargeAmountRecords(MoneyRecords records);
