@@ -18,6 +18,9 @@
     <!--查询总数量-->
     <select id="getPageCount" resultType="int">
         select count(*) from tb_realname where state=2
+        <if test="realname!=null and realname!=''">
+            and realname like '%'||#{realname}||'%'
+        </if>
     </select>
     <!--更改-->
     <update id="updateBlack" parameterType="map">

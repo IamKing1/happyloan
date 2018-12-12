@@ -15,4 +15,10 @@ public interface ReleasedService {
      * @return
      */
     List<Map> getListRelease(Map map);
+    /**
+     * 分页总数量
+     * @param map
+     * @return
+     */
+    int getPageCount(Map map);
 }

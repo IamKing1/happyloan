@@ -4,14 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.group8.dao.auditing.ReleasedDao">
     <select id="getListRelease" resultType="map">
-      select * from (
-        select rownum rn,b.realname,b.sex,c.money,to_char(c.longtime,'yyyy/MM/dd') as longtime,c.totalprice,a.id,a.title,a.begintime,a.issuser,c.firstincname,to_char(c.firstinctime,'yyyy/MM/dd') as firstinctime,c.firstinc,c.secondincname,to_char(c.secondtime,'yyyy/MM/dd') as secondtime,c.secondinc from tb_tendering a
-        join tb_realname b on a.realname=b.id
-        join tb_borrow c a..id=c.id
-         where rownum &lt; #{end}
-      ) d where d.rn &gt; #{start}
+        select * from(
+        select rownum rn,d.item marriage,b.REALNAME,b.SEX,c.money,c.TOTALPRICE,	c.firstincname,to_char ( c.firstinctime, 'yyyy/MM/dd' ) AS firstinctime,c.firstinc,c.secondincname,to_char ( c.secondtime, 'yyyy/MM/dd' ) AS secondtime,c.secondinc,c.RELEASE,a.id,a.TITLE,a.ISSUSER,to_char(a.begintime,'yyyy/MM/dd') as begintime from TB_TENDERING a
+        join TB_REALNAME b on a.REALNAME=b.ID
+        join TB_BORROW c on a.id=c.id
+        join TB_SYSTEMCATEGORYITEM d on b.marriage=d.id
+        where rownum &lt; #{end}
+        ) e where e.rn &gt; #{start} and e.RELEASE=2
         <if test="issuser!=null and issuser!=''">
-            and d.issuser like '%'||#{issuser}||'%'
+            and e.issuser like '%'||#{issuser}||'%'
+        </if>
+    </select>
+
+    <!--分页数量-->
+    <select id="getPageCount" resultType="integer" parameterType="map">
+        select count(*) from TB_TENDERING a
+        join TB_BORROW b on a.id=b.id where RELEASE=2
+        <if test="issuser!=null and issuser!=''">
+            and a.issuser like '%'||#{issuser}||'%'
         </if>
     </select>
 </mapper>
