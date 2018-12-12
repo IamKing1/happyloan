@@ -187,10 +187,10 @@
                 </el-input>
 
             </el-form-item>
-            <el-form-item label="审核时间">
-                <el-input disabled v-model="editForm.AUDITTIME"></el-input>
+            <el-form-item label="审核时间" v-if="editForm.AUDITORID!='审核中'">
+                <el-input disabled v-model="editForm.AUDITTIME" ></el-input>
             </el-form-item>
-
+            <br/>
             <el-form-item label="确认审核结果" >
             <!--addForm.edititem最后取得的label的值。-->
             <el-radio-group v-model="editForm.result" v-if="editForm.AUDITORID==='审核中'" >  
