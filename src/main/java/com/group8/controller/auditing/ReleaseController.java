@@ -66,9 +66,31 @@ public class ReleaseController {
     }
 
 
+    /**
+     * 查看借款人详情  页面跳转
+     * @param tendId
+     * @param redirect
+     * @return
+     */
     @RequestMapping(value = "/personMse/{tendId}",method= RequestMethod.GET)
     public String personMse(@PathVariable Integer tendId,RedirectAttributes redirect){
-
+        redirect.addAttribute("num",tendId);
         return "redirect:/infor.html";
+    }
+
+    /**
+     * 招标信息
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "selectAllMseege")
+    @ResponseBody
+    public Object selectAllMseege(@RequestParam Map map){
+       Integer tendingId = Integer.valueOf(map.get("tendingId").toString());
+
+        List<Map> maps = releaseService.selectAllMseege(tendingId);
+
+        System.out.println(maps);
+        return maps.get(0);
     }
 }
