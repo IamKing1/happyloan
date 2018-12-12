@@ -271,8 +271,8 @@ public class Information {
 
 
                 // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
-                Resource resource = resourceLoader.getResource("ftp://iamking:123456@172.16.22.81/" + fileName);
-                return ResponseEntity.ok(resourceLoader.getResource("ftp://iamking:123456@172.16.22.81/" + fileName));
+                Resource resource = resourceLoader.getResource("ftp://p2p:123456@172.16.22.62/" + fileName);
+                return ResponseEntity.ok(resourceLoader.getResource("ftp://p2p:123456@172.16.22.62/" + fileName));
             } catch (Exception e) {
                 return ResponseEntity.notFound().build();
             }
@@ -299,9 +299,4 @@ public class Information {
         map1.put("mse",i);
         return map1;
     }
-
-
-
-
-
 }
