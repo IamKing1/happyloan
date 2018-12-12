@@ -300,6 +300,9 @@
 				if (type.indexOf("中雪") >= 0) {
 					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-snow'></i> 中雪")
 				}
+				if (type.indexOf("阴") >= 0) {
+					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-mostly-cloudy-1'></i> 阴")
+				}
 
 				$(".weatherTag .weatherInfo").append("&nbsp;&nbsp;" + high + "~" + low)
 

@@ -111,19 +111,57 @@
 	</el-dialog>-->
 	
 	<!--upload-->
-	<el-upload class="upload-demo" drag action="http://localhost:8080/images/" multiple>
+	<el-upload
+			class="upload-demo"
+			ref="upload"
+			drag
+			:action="api.addImg"
+			:auto-upload="false"
+			list-type="picture"
+			:on-error="uploadError"
+			:on-success="uploadSuccess"
+			:limit="1"
+	>
+		
 		<i class="el-icon-upload"></i>
 		<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
 		<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
 	</el-upload>
+	<el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
 	
 </div>
 <script>
 	/*upload*/
-	new Vue({
-		el:"#app1",
-		data:{
+	let vue = new Vue({
+		el: "#app1",
+		data: {
+			api: {addImg:"/user/addImg"}
+		},
 
+		methods: {
+			submitUpload: function () {
+				this.$refs.upload.submit();
+			},
+			uploadSuccess: function (response, file, fileList) {
+				/*console.log("上传文件成功response" + response);
+				console.log("上传文件成功file" + file);
+				console.log("上传文件成功fileList" + fileList);
+				// response：即为后端传来的数据，这里我返回的是图片的路径
+				// app1.user.userImage = response;
+				console.log(response)*/
+				this.$refs.upload.clearFiles()
+				this.$message({
+					message: '上传成功',
+					type: 'success'
+				});
+				
+			},
+			uploadError: function (response, file, fileList) {
+				/*console.log("上传文件失败response" + response);
+				console.log("上传文件失败file" + file);
+				console.log("上传文件失败fileList" + fileList);*/
+				this.$message.error('上传失败,可能是文件有点大,换个姿势再来一次吧');
+			}
 		}
 	})
 	/*增删改查*/
@@ -237,7 +275,7 @@
 			}
 		}
 	})*/
-	
+
 </script>
 </body>
 </html>
