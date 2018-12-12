@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户列表</title>
+    <title>已发布</title>
     <!-- 引入样式 -->
     <script src="/vue/vue.js"></script>
     <script type="text/javascript" src="/js1/axios.min.js"></script>
@@ -23,12 +23,11 @@
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
 
-            <el-form-item label="用户姓名">
-                <el-input v-model="searchForm.realname" placeholder="姓名"></el-input>
+            <el-form-item label="发布人姓名">
+                <el-input v-model="searchForm.issuser" placeholder="姓名"></el-input>
             </el-form-item>
-
             <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
-        </el-form-item>
+            </el-form-item>
         </el-form>
     </el-row>
     <!--列表-->
@@ -39,11 +38,10 @@
                 border
                 @selection-change="selectionChange"
                 style="width: 100%">
-
             <el-table-column
                     prop="REALNAME"
                     label="姓名"
-                    width="120">
+                    width="100">
             </el-table-column>
             <el-table-column
                     prop="SEX"
@@ -51,52 +49,36 @@
                     width="100">
             </el-table-column>
             <el-table-column
-                    prop="ADDRESS"
-                    label="住址"
-                    width="280">
+                    prop="MONEY"
+                    label="贷款金额"
+                    width="100">
             </el-table-column>
             <el-table-column
-                    prop="IDNUMBER"
-                    label="身份证号"
-                    width="210">
-            </el-table-column>
-            <el-table-column
-                    prop="USERNAME"
-                    label="用户名"
-                    width="130">
-            </el-table-column>
-            <el-table-column
-                    prop="TELEPHONE"
-                    label="联系方式"
-                    width="130">
-            </el-table-column>
-            <el-table-column
-                    prop="ACADEMIC"
-                    label="学历"
+                    prop="LONGTIME"
+                    label="贷款时长"
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="INCOME"
-                    label="月收入(元)"
+                    prop="TOTALPRICE"
+                    label="抵押物价值(元)"
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="MARRIAGE"
-                    label="婚姻状况"
+                    prop="TITLE"
+                    label="标题"
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="STATE"
-                    label="状态"
-                    width="120">
-                <template slot-scope="scope">
-                    <el-tag class="btn btn-success">{{scope.row.STATE | formatStata}}</el-tag>
-                </template>
+                    prop="BEGINTIME"
+                    label="发布时间"
+                    width="100">
+            </el-table-column>
+
             </el-table-column>
             <el-table-column
                     label="操作">
                 <template scope="scope">
-                   <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">编辑</el-button>
+                    <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">详情</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -117,19 +99,32 @@
             </el-pagination>
         </el-col>
     </el-row>
-    <!--编辑界面-->
-    <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-        <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-            <el-form-item label="状态" prop="STATE">
-                <el-radio-group v-model="editForm.STATE">
-                    <el-radio :label="1">正常</el-radio>
-                    <el-radio :label="2">拉黑</el-radio>
-                </el-radio-group>
+    <!--详情界面-->
+    <el-dialog title="审核" :visible.sync="editFormVisible" :close-on-click-modal="false">
+        <el-form :model="editForm" label-width="200px" :rules="editFormRules" ref="editForm">
+            <el-form-item label="一审人" prop="FIRSTINCNAME">
+                <el-input v-model="editForm.FIRSTINCNAME" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="一审时间">
+                <el-date-picker type="date"  placeholder="选择日期" v-model="editForm.FIRSTINCTIME"format="yyyy 年 MM 月 dd 日"
+                                value-format="yyyy/MM/dd" disabled="true"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="一审意见" prop="FIRSTINC">
+                <el-input type="textarea" v-model="editForm.FIRSTINC" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="二审人" prop="SECONDINCNAME">
+                <el-input v-model="editForm.SECONDINCNAME" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="二审时间">
+                <el-date-picker type="date"  placeholder="选择日期" v-model="editForm.SECONDTIME"format="yyyy 年 MM 月 dd 日"
+                                value-format="yyyy/MM/dd" disabled="true"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="二审意见" prop="SECONDINC">
+                <el-input type="textarea" v-model="editForm.SECONDINC" disabled="true"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click.native="editFormVisible = false">取消</el-button>
-            <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
         </div>
     </el-dialog>
 </div>
@@ -139,10 +134,9 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: '用户列表'
+            message: '已发布列表'
         }
     });
-
     var tableView = new Vue({
         el: '#tableView',
         data: {
@@ -152,7 +146,7 @@
             loading: false,
             //搜索表单
             searchForm: {
-                realname: '',
+                issuser: '',
             },
             //多选值
             multipleSelection: [],
@@ -168,35 +162,29 @@
             editFormVisible: false,
             editLoading: false,
             goUrl: '',
-            editFormRules: {
-                name: [
-                    {required: true, message: '请输入姓名', trigger: 'blur'}
-                ]
-            },
             //编辑界面数据
             editForm: {
-                state:'',
+                FIRSTINCNAME:'',
+                FIRSTINCTIME:'',
+                FIRSTINC:'',
+                SECONDINCNAME:'',
+                SECONDTIME:'',
+                SECONDINC:''
             }
-
         },
         created:function(){
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
             var self = this;
             var start =(this.currentPage-1)*this.pageSize;
             var end =this.currentPage*this.pageSize+1;//分页
-            axios.post('/client/getClient',{'start':start,'end':end}).then(function(response){
+            axios.post('/released/getListReleased',{'start':start,'end':end}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.data;
+                console.log(self.total);
             })
+
         },
-        filters: { // el-tag类型转换
-            // 状态显示转换
-            formatStata: function (status) {
-                const statusMap = {1: '正常'}
-                return statusMap[status]
-            },
-        },
-            methods:{
+        methods:{
             //表格重新加载数据
             loadingData:function() {
                 var _self = this;
@@ -207,22 +195,15 @@
                 var searchForm= {
                     'start': start,
                     'end': end,
-                    'realname': this.searchForm.realname
+                    'issuser': this.searchForm.issuser
                 };
-                    axios.post('/client/getClient', searchForm).then(function (response) {
+                axios.post('/released/getListReleased', searchForm).then(function (response) {
                     _self.total = response.data.total;
                     _self.tableData = response.data.data;
                 })
                 setTimeout(function () {
                     _self.loading = false;
                 }, 300);
-            },
-            //表格编辑事件
-            editClick:function(row) {
-                this.goUrl="/client/update";
-                this.editFormVisible = true;
-                this.editForm = Object.assign({}, row);
-
             },
 
             //表格查询事件
@@ -243,24 +224,6 @@
                 console.log('当前页: ' + val);
                 var _self = this;
                 _self.loadingData();//重新加载数据
-            },
-            //保存点击事件
-            editSubmit:function(){
-                var _self = this;
-                _self.loading = true;
-                var formData =this.editForm;
-                var goUrl=this.goUrl;
-                axios.post(goUrl,formData).then(function(response){
-                    if(response.data>0){
-                        _self.editFormVisible = false;// 让弹出层隐藏
-                        _self.loadingData();//重新加载数据
-                    }else{
-                        _self.$message({
-                            message: '更新失败',
-                            type: 'fail'
-                        });
-                    }
-                })
             },
         }
     })

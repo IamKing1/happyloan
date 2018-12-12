@@ -3,9 +3,8 @@ package com.group8.controller.auditing;
 import com.group8.service.auditing.ReleaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -64,5 +63,12 @@ public class ReleaseController {
         System.out.println(confirmationInformationList);
         map.put("list",confirmationInformationList);
         return map;
+    }
+
+
+    @RequestMapping(value = "/personMse/{tendId}",method= RequestMethod.GET)
+    public String personMse(@PathVariable Integer tendId,RedirectAttributes redirect){
+
+        return "redirect:/infor.html";
     }
 }

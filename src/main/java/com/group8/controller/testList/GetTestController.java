@@ -20,6 +20,9 @@ import java.util.Map;
 
 @Controller
 public class GetTestController {
+
+
+
 	@Autowired
 	private TestService testService;
 
@@ -33,8 +36,6 @@ public class GetTestController {
 
 		return testService.getTestList();
 	}
-
-
 
 	/**
 	 * 更新

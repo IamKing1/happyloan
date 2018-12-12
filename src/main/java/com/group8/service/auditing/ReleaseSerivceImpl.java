@@ -14,6 +14,7 @@ import java.util.Map;
  * createTime:2018-12-06 20:42
  */
 @Service
+@SuppressWarnings("all")
 public class ReleaseSerivceImpl implements  ReleaseService {
 
     @Autowired

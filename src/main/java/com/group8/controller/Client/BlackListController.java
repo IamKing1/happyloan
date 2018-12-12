@@ -56,7 +56,6 @@ public class BlackListController {
     @ResponseBody
     @RequestMapping("/update")
     public Object Update(@RequestBody Map map){
-        System.out.println(map);
         return blackListService.updateBlack(map);
     }
 }

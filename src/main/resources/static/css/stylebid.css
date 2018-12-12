@@ -1,0 +1,57 @@
+.tableLeft tr td{
+	padding: 15px;
+}
+#bidtable {
+	width: 85%;
+	margin-top: 30px;
+}
+.psize{
+	font-size: 30px;
+	font-weight: bold;
+	width: 150px;
+	margin-top: 25px;
+	margin-left: 125px;
+}
+.listye{
+	margin-top: 5%;
+}
+#tjbtn{
+	height: 35px;
+	font-size: 15px;
+	border-radius: 5px;
+	line-height: 14px;
+}
+.xgbtn{
+	width: 55px;
+	height: 35px;
+	border: 1px;
+	border-radius: 5px;
+	background: #409EFF;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+}
+.sxtable{
+	margin-left: 15%;
+}
+.sxtable tr td{
+	width: 180px;
+}
+#bidtable span{
+	margin-left: 25px;
+}

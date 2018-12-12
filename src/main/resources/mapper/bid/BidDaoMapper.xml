@@ -5,14 +5,53 @@
 <mapper namespace="com.group8.dao.bid.BidDao">
     <!-- 分页查询-->
     <select id="getPage" resultType="map">
-        select * from (select rownum rn,t.* from tb_bid t where rownum &lt; #{end}) a where a.rn &gt; #{start}
+        select * from (
+        select rownum rn,t.* from (
+        select a.bid_id,a.bid_money,to_char(a.bid_creation_time,'yyyy-MM-dd') bid_creation_time,a.bid_underway,a.bid_minimum,d.item state,c.item cdate,to_char(a.bid_creation_time,'yyyy-MM-dd') bid_end_time,b.username,c.id,b.userid
+        from tb_bid a
+        join tb_user b on a.userid=b.userid
+        join tb_systemcategoryitem c on a.bid_amortize=c.id
+        join tb_systemcategoryitem d on a.bid_state=d.id
+        where 1=1
+        <if test="USERID!=null and USERID!=''">
+            and a.USERID=#{USERID}
+        </if>
+        <if test="BID_AMORTIZE!=null and BID_AMORTIZE!=''">
+            and BID_AMORTIZE=#{BID_AMORTIZE}
+        </if>
+        ) t where rownum &lt; #{end}) a where a.rn &gt; #{start} order by bid_id DESC
+
     </select>
     <!-- 分页总数量-->
     <select id="getPageCount" resultType="int">
         select count(*) from tb_bid
     </select>
+    <!--搜索检索内容-->
+    <select id="selectu" resultType="map">
+        select * from tb_user
+    </select>
+    <select id="selects" resultType="map">
+        select * from tb_systemcategoryitem where parentid=9
+    </select>
     <!--添加-->
     <insert id="add" parameterType="map">
-        insert into tb_bid values(SEQ_BID_ID.nextval,#{BID_MONEY},sysdate,0,1,#{BID_MINIMUM},#{BID_AMORTIZE},#{BID_END_TIME},#{OPERATION_STAFF})
+        insert into tb_bid values(SEQ_BID_ID.nextval,#{BID_MONEY},sysdate,0,47,#{BID_MINIMUM},#{BID_AMORTIZE},to_date(#{BID_END_TIME},'yyyy-MM-dd'),#{USERID})
     </insert>
+    <!--获取id-->
+    <select id="getById" resultType="map">
+       select a.bid_id,a.bid_money,to_char(a.bid_creation_time,'yyyy-MM-dd') bid_creation_time,a.bid_underway,a.BID_AMORTIZE,a.bid_minimum,d.item state,c.item cdate,to_char(a.bid_creation_time,'yyyy-MM-dd') bid_end_time,b.username,c.id,b.userid
+        from tb_bid a
+        join tb_user b on a.userid=b.userid
+        join tb_systemcategoryitem c on a.bid_amortize=c.id
+        join tb_systemcategoryitem d on a.bid_state=d.id
+        where bid_id=#{BID_ID}
+    </select>
+    <!--修改-->
+    <update id="update" parameterType="map">
+        update tb_bid set BID_MONEY=#{BID_MONEY},BID_MINIMUM=#{BID_MINIMUM},BID_AMORTIZE=#{BID_AMORTIZE},BID_END_TIME=to_date(#{BID_END_TIME},'yyyy-MM-dd'),USERID=#{USERID} where BID_ID=#{BID_ID}
+    </update>
+    <!--删除-->
+    <delete id="delete">
+        delete from tb_bid where BID_ID=#{BID_ID}
+    </delete>
 </mapper>
