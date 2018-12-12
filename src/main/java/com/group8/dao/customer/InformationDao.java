@@ -100,4 +100,6 @@ public interface InformationDao {
      */
     int rechargeAmountRecords(MoneyRecords records);
 
+
+
 }

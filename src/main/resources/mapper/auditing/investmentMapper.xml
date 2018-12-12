@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.auditing.InvestmentDao">
+
+        <select id="remainingSum" parameterType="map" statementType="CALLABLE" resultType="java.lang.Integer">
+            call pro_query_calculate_investment(#{money,mode=IN},#{realId,mode=IN},#{mse,mode=OUT,jdbcType=INTEGER})
+        </select>
+
+    <insert id="investmentStorage" parameterType="map">
+          insert into tb_investmentlist (id,realid,money,BEGINTIME,tendid) VALUES (SEQ_INVESTMENTLIST.Nextval,#{realId},#{money},sysdate,#{tendId})
+    </insert>
+
+</mapper>

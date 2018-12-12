@@ -51,4 +51,11 @@ public class ReleaseSerivceImpl implements  ReleaseService {
         List<Map> confirmationInformationList = release.getConfirmationInformationList();
         return confirmationInformationList;
     }
+
+
+    @Override
+    public List<Map> selectAllMseege(Integer tendingId) {
+        List<Map> maps = release.selectAllMseege(tendingId);
+        return maps;
+    }
 }
