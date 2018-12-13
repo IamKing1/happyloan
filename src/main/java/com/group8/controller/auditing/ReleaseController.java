@@ -89,7 +89,6 @@ public class ReleaseController {
        Integer tendingId = Integer.valueOf(map.get("tendingId").toString());
 
         List<Map> maps = releaseService.selectAllMseege(tendingId);
-
         System.out.println(maps);
         return maps.get(0);
     }
