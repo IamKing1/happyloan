@@ -14,33 +14,15 @@
 
     <script type="application/javascript">
         $(function () {
-
             getheadportrait();
-
             $("#headportrait").on("click",function () {
                     $("#pic").click();
                 $("#pic").on("change", function () {
 
                     $("#portraitform").submit();
 
-
-                    /*$.ajax({
-                        url:"/customer/addPortrait",
-                        data:$("#portraitform").serialize(),
-                        success:function(data){
-                                if(data==1){
-                                        console.log("上传成功")
-                                }
-                       }
-                    });*/
-
                 });
-
-
-
             })
-
-
         })
         function getheadportrait(){
 
@@ -57,7 +39,7 @@
 <!--个人中心-->
 <div class="wrapper wbgcolor">
     <div class="w1200 personal">
-        <div class="credit-ad"><img src="images/clist1.jpg" width="1200" height="96"></div>
+       <!-- <div class="credit-ad"><img src="images/clist1.jpg" width="1200" height="96"></div>-->
         <div id="personal-left" class="personal-left">
             <script>
                 $("#personal-left").load("personalleft.html");
@@ -86,8 +68,8 @@
             </style>
             <div class="pmain-profile">
                 <div class="pmain-welcome">
-                        <span class="fl"><span id="outLogin">晚上好，</span>tg_gpdt0139 喝一杯下午茶，让心情放松一下~</span>
-                        <span class="fr">上次登录时间：2015-09-11 14:05:07 </span>
+                       <!-- <span class="fl"><span id="outLogin">晚上好，</span>tg_gpdt0139 喝一杯下午茶，让心情放松一下~</span>-->
+                     <!--   <span class="fr">上次登录时间：2015-09-11 14:05:07 </span>-->
                 </div>
                 <div class="pmain-user">
                     <div class="user-head"> <span  id="headportrait"  title="点击更换头像"><img src="/customer/showFtp";  style="width:88px;height:88px;z-index:0;"></span>
@@ -127,7 +109,6 @@
                                     class="pmain-log" id="signout">注销登录</a></span></li>
                             <li>安全级别<span><i class="safe-level"><i class="onlevel" style="width:40%;"></i></i></span> <a
                                     href="#">[低]</a></li>
-                            <li>您还未开通第三方支付账户，请 <a class="pmain-log" href="#">立即开通</a>以确保您的正常使用和资金安全。</li>
                         </ul>
                     </div>
                 </div>
@@ -224,9 +205,6 @@
                             <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-w100">债权转让</span><span
                                     class="pmain-w120 pmain-money">10.00</span><span class="pmain-w120 pmain-money">10.00</span><span
                                     class="pmain-w200">备注</span></li>
-                            <!--<div style=" width:760px;height:200px;padding-top:100px; text-align:center;color:#d4d4d4; font-size:16px;">
-                                                       <img src="images/nondata.png" width="60" height="60"><br><br>
-                                                         暂无资金记录</div>-->
                         </ul>
                         <div class="pmain-morebtn" style="border-top:0;margin-top:0"></div>
                     </div>
@@ -238,9 +216,7 @@
                             <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-w210">债权转让</span><span
                                     class="pmain-w80 pmain-money">10.00</span><span class="pmain-whb200 pmain-money">10.00</span><span
                                     class="pmain-whb110">备注</span></li>
-                            <!--	<div style=" width:760px;height:200px;padding-top:100px; text-align:center;color:#d4d4d4; font-size:16px;">
-                                                          <img src="images/nondata.png" width="60" height="60"><br><br>
-                                                         暂无投资记录</div>-->
+
                         </ul>
                         <div class="pmain-morebtn" style="border-top:0;margin-top:0"></div>
                     </div>

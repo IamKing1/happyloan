@@ -36,44 +36,52 @@
                 :data="tableData"
                 v-loading.body="loading"
                 border
-                @selection-change="selectionChange"
                 style="width: 100%">
             <el-table-column
                     prop="REALNAME"
                     label="姓名"
-                    width="100">
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="SEX"
                     label="性别"
-                    width="100">
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="MARRIAGE"
+                    label="婚姻"
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="MONEY"
-                    label="贷款金额"
-                    width="100">
+                    label="贷款金额(元)"
+                    width="130">
             </el-table-column>
-            <el-table-column
-                    prop="LONGTIME"
-                    label="贷款时长"
-                    width="120">
-            </el-table-column>
+            <!-- <el-table-column
+                     prop="LONGTIME"
+                     label="贷款时长"
+                     width="120">
+             </el-table-column>-->
             <el-table-column
                     prop="TOTALPRICE"
                     label="抵押物价值(元)"
-                    width="120">
+                    width="130">
             </el-table-column>
             <el-table-column
                     prop="TITLE"
                     label="标题"
-                    width="120">
+                    width="200">
             </el-table-column>
             <el-table-column
                     prop="BEGINTIME"
                     label="发布时间"
-                    width="100">
+                    width="120">
             </el-table-column>
-
+            <el-table-column
+                    prop="ISSUSER"
+                    label="发布人"
+                    width="120">
+            </el-table-column>
             </el-table-column>
             <el-table-column
                     label="操作">
@@ -101,7 +109,7 @@
     </el-row>
     <!--详情界面-->
     <el-dialog title="审核" :visible.sync="editFormVisible" :close-on-click-modal="false">
-        <el-form :model="editForm" label-width="200px" :rules="editFormRules" ref="editForm">
+        <el-form :model="editForm" label-width="200px" ref="editForm">
             <el-form-item label="一审人" prop="FIRSTINCNAME">
                 <el-input v-model="editForm.FIRSTINCNAME" disabled="true"></el-input>
             </el-form-item>
@@ -124,7 +132,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click.native="editFormVisible = false">取消</el-button>
+            <el-button @click.native="editFormVisible = false">确定</el-button>
         </div>
     </el-dialog>
 </div>
@@ -205,7 +213,12 @@
                     _self.loading = false;
                 }, 300);
             },
+            //查看详情
+            editClick:function(row) {
+                this.editFormVisible = true;
+                this.editForm = Object.assign({}, row);
 
+            },
             //表格查询事件
             searchClick:function() {
                 var self = this;
