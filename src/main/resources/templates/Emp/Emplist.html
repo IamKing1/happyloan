@@ -453,7 +453,6 @@
                 var _self = this;
                 _self.$refs[formName].validate((valid) => {
                     if (valid) {
-
                         _self.loading = true;
                         var formData =this.editForm;
                         var goUrl=this.goUrl;
@@ -469,7 +468,7 @@
                             }
                         })
                     } else {
-                        console.log("222")
+                        //console.log("222")
                         return false;
                     }
                 });

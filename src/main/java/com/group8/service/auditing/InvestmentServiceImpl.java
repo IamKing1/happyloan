@@ -17,6 +17,7 @@ import java.util.Map;
  * createTime:2018-12-12 17:03
  */
 @Service
+@SuppressWarnings("all")
 public class InvestmentServiceImpl implements InvestmentService {
     @Autowired
     private InvestmentDao investmentDao;
@@ -31,7 +32,6 @@ public class InvestmentServiceImpl implements InvestmentService {
         Integer realId = Integer.valueOf(realNameList.get(0).get("ID").toString());
         map.put("realId",realId);
         map.put("money",money);
-       // List<Map> mseList = investmentDao.remainingSum(map);
         investmentDao.remainingSum(map);
         return Integer.valueOf(map.get("mse")+"");
     }
@@ -47,7 +47,7 @@ public class InvestmentServiceImpl implements InvestmentService {
         map.put("realId",realId);
         map.put("money",money);
         map.put("tendId",tendId);
-        System.out.println(map);
+       // System.out.println(map);
         int result = investmentDao.investmentStorage(map);
         return result;
     }
