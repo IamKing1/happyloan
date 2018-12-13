@@ -37,6 +37,7 @@
             }
         }
         selectAllMseege(tendingId);
+        currently(tendingId);
     })
 
     function selectAllMseege(e) {
@@ -49,6 +50,13 @@
                 $("#name").text(data.REALNAME);
                 $("#title").text(data.TITLE);
 
+
+                var money = data.MONEY;
+                var strMoney =FormatNum(money);
+0
+
+                $("#account").text(strMoney);
+
             },
             error: function () {
                 alert("项目出现BUG，未知错误")
@@ -56,19 +64,59 @@
             }
         })
     }
+
+    function currently(e){
+        $.ajax({
+            url: "/investment/currentlyVoted",
+            data: {
+                tendingId: e
+            },
+            success: function (data) {
+                $("#currently").html(data)
+
+            },
+            error: function () {
+                alert("项目出现BUG，未知错误1111")
+
+            }
+        })
+    }
+
+    function FormatNum(str) {
+        var str = '' + str;
+        var newStr = "";
+        var count = 0;
+        if (str.indexOf(".") == -1) {
+            for (var i = str.length - 1; i >= 0; i--) { if (count % 3 == 0 && count != 0) { newStr = str.charAt(i) + "," + newStr; } else { newStr = str.charAt(i) + newStr; } count++;
+            } //str = newStr + ".00"; //自动补小数点后两位
+            str = newStr;
+        } else {
+            for (var i = str.indexOf(".") - 1; i >= 0; i--) {
+                if (count % 3 == 0 && count != 0) { newStr = str.charAt(i) + "," + newStr; } else {
+                    newStr = str.charAt(i) + newStr; //逐个字符相接起来
+                }
+                count++;
+            }
+            str = newStr + (str + "00").substr((str + "00").indexOf("."), 3);
+        }
+        return str;
+    }
+
+
+
 </script>
 <div class="item-detail wrap">
     <div class="breadcrumbs"><a href="index.html">首页</a>&gt; <a href="#">散标投资列表</a>&gt; <span class="cur">项目详情</span>
     </div>
     <div class="item-detail-head clearfix" data-target="sideMenu">
         <div class="hd"><i class="icon icon-che" title="车易贷"></i>
-            <h2 id="title">赵女士长安福特福克斯汽车质押贷款4万元</h2>
+            <h2 id="title"></h2>
         </div>
         <div class="bd clearfix">
             <div class="data">
                 <ul>
                     <li><span class="f16">借款金额</span><br>
-                        <span class="f30 c-333" id="account">40,000.00</span>元
+                        <span class="f30 c-333" id="account"></span>元
                     </li>
                     <li class="relative"><span class="f16">年利率</span><br>
                         <span class="f30 c-orange">12.00% </span></li>
@@ -89,6 +137,7 @@
                 </ul>
             </div>
             <div class="mod-right mod-status">
+                <div>本项目剩余投资数：<span id="currently" style="color: red"></span>元</div>
                 <form id="myform">
                     <table>
                         <tr>
@@ -98,7 +147,7 @@
                         </tr>
                         <tr>
                             <td rowspan="2"><input type="button" onclick="submitb()" value="立即投资"/></td>
-                        </tr>
+                        </tr> 
 
                     </table>
 
@@ -112,13 +161,13 @@
                                if(data==-1){
                                    alert("余额不足请充值，或者使用银行卡支付")
                                }else{
-                                   alert("投资成功，下一步明天再说")
+                                   window.location.reload();
+                                   alert("投资成功!")
+
                                }
                             }
-
                         })
                     }
-
                 </script>
                 <!--<div class="inner">
                   <div class="text"> 待还本息：<span class="f24 c-333">40,400.00</span>元<br>
