@@ -6,7 +6,7 @@
 
     <select id="getList" resultType="map">
         select * from(
-        select rownum rn,d.TITLE,b.REALNAME,a.MONEY,c.item LONGTIME,a.RELEASE,NVL((select round((select sum(money) from TB_INVESTMENTLIST where TENDID=a.id)/(select money from TB_BORROW where id=a.id)*100,0) from dual),0) jin
+        select rownum rn,d.TITLE,b.REALNAME,a.MONEY,c.item LONGTIME,a.RELEASE,NVL((select round((select sum(money) from TB_INVESTMENTLIST where TENDID=a.id)/(select money from TB_BORROW where id=a.id)*100,1) from dual),0) jin
          from TB_BORROW a
         join TB_REALNAME b on a.REALID=b.id
         join TB_SYSTEMCATEGORYITEM c on a.LONGTIME=c.id
@@ -15,6 +15,7 @@
         ) e where e.rn &gt;#{start} and RELEASE=2
     </select>
     <select id="getPageCount" resultType="int">
-        select count(*) from TB_TENDERING
+        select count(*) from TB_TENDERING a
+        join tb_borrow b on a.id=b.id where RELEASE=2
     </select>
 </mapper>

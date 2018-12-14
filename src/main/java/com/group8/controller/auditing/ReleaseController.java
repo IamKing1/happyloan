@@ -35,11 +35,9 @@ public class ReleaseController {
 
         Map map1 = new HashMap();
         List<Map> releaseMessageList = releaseService.getReleaseMessage(map);
-        System.out.println(releaseMessageList);
         map1.put("data", releaseMessageList);
 
         int releaseMessageCount = releaseService.getReleaseMessageCount(map);
-        System.out.println(releaseMessageCount);
         map1.put("total", releaseMessageCount);
 
         return map1;
@@ -60,7 +58,6 @@ public class ReleaseController {
     public Object getConfirmationInformationList(){
         Map map = new HashMap();
         List<Map> confirmationInformationList = releaseService.getConfirmationInformationList();
-        System.out.println(confirmationInformationList);
         map.put("list",confirmationInformationList);
         return map;
     }
@@ -89,7 +86,6 @@ public class ReleaseController {
        Integer tendingId = Integer.valueOf(map.get("tendingId").toString());
 
         List<Map> maps = releaseService.selectAllMseege(tendingId);
-        System.out.println(maps);
         return maps.get(0);
     }
 }
