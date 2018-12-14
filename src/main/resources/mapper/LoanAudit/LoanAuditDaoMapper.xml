@@ -24,6 +24,9 @@
     <!--分页数量-->
     <select id="getPageCount"  parameterType="map" resultType="Integer">
         select count(*) from tb_borrow where status=20
+        <if test="realname!=null and realname!=''">
+            and i.realname like '%'||#{realname}||'%'
+        </if>
     </select>
     <!--审核-->
     <update id="update" parameterType="map">

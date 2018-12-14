@@ -25,10 +25,12 @@
         select count(*) from tb_borrow a where a.status=23 and a.release = 1
     </select>
 
+<!--
 
     <insert id="confirmationInformation" parameterType="map">
         insert into tb_tendering   values (seq_zhaobiao_id.nextval, #{REALID},#{title},1,sysdate,#{BRRID},#{ISSUSER})
     </insert>
+-->
 
 
     <update id="updateConfirmationInformationStuts" parameterType="map">
@@ -41,5 +43,11 @@
         join  tb_borrow b on a.borrow=b.id
         join tb_systemcategoryitem c on b.longtime = c.id
         join tb_systemcategoryitem d on b.REPAYMENTMETHOD = d.id
+    </select>
+
+    <select id="selectAllMseege" resultType="map">
+          select c.realname,a.title,b.money from tb_tendering a
+join tb_borrow b on a.borrow = b.id and  a.id= #{tendingId}
+join tb_realname c on a.realname=c.id
     </select>
 </mapper>

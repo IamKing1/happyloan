@@ -35,4 +35,11 @@ public interface ReleaseService {
      */
     List<Map> getConfirmationInformationList();
 
+    /**
+     * 根据id查询借款人的详细资料
+     * @param tendingId
+     * @return
+     */
+    List<Map> selectAllMseege(Integer tendingId);
+
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.auditing.InvestmentDao">
+
+        <select id="remainingSum" parameterType="map" statementType="CALLABLE" resultType="java.lang.Integer">
+            call pro_query_calculate_investment(#{money,mode=IN},#{realId,mode=IN},#{mse,mode=OUT,jdbcType=INTEGER})
+        </select>
+
+    <insert id="investmentStorage" parameterType="map">
+          insert into tb_investmentlist (id,realid,money,BEGINTIME,tendid) VALUES (SEQ_INVESTMENTLIST.Nextval,#{realId},#{money},sysdate,#{tendId})
+    </insert>
+
+    <select id="currentlyVoted" resultType="map">
+        select money from tb_investmentlist where tendid =#{tendId}
+    </select>
+
+    <select id="totalMoney" resultType="Integer">
+    select b.money from tb_tendering a
+    join tb_borrow b on a.borrow=b.id where a.id=#{tendId}
+    </select>
+
+
+    <update id="updateTendStuts">
+      update tb_tendering set stuts=2 where id= #{tendId}
+    </update>
+    
+    
+    <select id="selectTenderingList" resultType="map">
+select b.realname,a.begintime,a.stuts,a.bid_end_time,c.money,a.id,b.id realId from tb_tendering a
+join tb_realname b on a.realname=b.id
+join tb_borrow c on a.borrow=c.id
+where a.stuts=1 or a.stuts=2
+    </select>
+
+    <select id="selectTenderingListCount" resultType="Integer">
+        select count(*) from tb_tendering a
+join tb_realname b on a.realname=b.id
+join tb_borrow c on a.borrow=c.id
+
+where a.stuts=1 or a.stuts=2
+    </select>
+
+    <update id="updateTendStutsToThree">
+        update tb_tendering set stuts=3 where id= #{tendId}
+    </update>
+
+    <update id="beatMoneyToBorrower" parameterType="map">
+          UPDATE  tb_realname set balance=balance+#{money} where id=#{realId}
+    </update>
+
+   <update id="failToBeSoldAtAuction">
+        UPDATE  tb_realname set balance=balance+#{MONEY} where id=#{REALID}
+    </update>
+
+    <select id="everyOneMoney" parameterType="map" resultType="map">
+        select realid,money from tb_investmentlist where  tendid=#{ID}
+    </select>
+
+
+    <update id="updateTendStutsToFour">
+        update tb_tendering set stuts=4 where id= #{tendId}
+    </update>
+</mapper>

@@ -23,4 +23,9 @@ public class ReleasedServiceImpl implements ReleasedService {
     public List<Map> getListRelease(Map map) {
         return releasedDao.getListRelease(map);
     }
+
+    @Override
+    public int getPageCount(Map map) {
+        return releasedDao.getPageCount(map);
+    }
 }

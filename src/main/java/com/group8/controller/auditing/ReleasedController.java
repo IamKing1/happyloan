@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,7 +42,11 @@ public class ReleasedController {
     @ResponseBody
     @RequestMapping("/getListReleased")
     public Object getListReleased(@RequestBody Map map){
-        return releasedService.getListRelease(map);
+        Map map1=new HashMap();
+        map1.put("data",releasedService.getListRelease(map));
+        map1.put("total",releasedService.getPageCount(map));
+
+        return map1;
     }
 
 }
