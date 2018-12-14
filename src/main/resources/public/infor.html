@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -257,7 +257,7 @@
 											style="text-align: center"
 											@size-change="handleSizeChange"
 											@current-change="handleCurrentChange"
-											:current-page="currentPage4"
+											:current-page="currentPage"
 											:page-sizes="[10, 20, 30, 50]"
 											:page-size="5"
 											layout="total, sizes, prev, pager, next, jumper"
@@ -277,7 +277,7 @@
 </div>
 
 <script type="text/javascript">
-	new Vue({
+	let vue = new Vue({
 		el: "#app",
 		data: {
 			num1: 100,
@@ -301,19 +301,40 @@
 						{name:'MM55940103',money:'5100元',time:'2018-01-02'},
 						{name:'GW49000108',money:'5000元',time:'2018-01-02'},
 					],
-			currentPage1: 5,
-			currentPage2: 5,
-			currentPage3: 5,
-			currentPage4: 4,
-			month:26,
+			//当前页
+			currentPage:1,
+			//分页大小
+			pageSize:10,
+			//总记录数
+			total:800,
+			month:0,
+			goUrl:'',
+			tendId:0,
 			
+		},
+		mounted(){
+			//把URL值绑定给tendid
+			this.tendId=this.getUrlKey("tendId")
+			//在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
+			let self = this;
+			axios.post('/tendInfo/getLoanList',{tendid:self.tendId}).then(function(response){
+				console.log(response.data);
+				self.total=response.data.total;
+				self.tableData = response.data.data;
+			})
 		},
 		methods: {
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
+				console.log(this.tendid)
 			},
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
+				console.log(this.tendid)
+			},
+			//获取URL参数值
+			getUrlKey: function(name) {
+				return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
 			}
 		},
 		//过滤器
@@ -328,6 +349,7 @@
 			}
 		}
 	})
+	
 </script>
 
 

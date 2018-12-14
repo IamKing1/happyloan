@@ -4,6 +4,7 @@ import com.group8.service.qiantai.TendInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -21,9 +22,9 @@ public class TendInfoController {
 
 	@ResponseBody
 	@RequestMapping("getLoanList")
-	public Object getLoanList(){
-
-		return tendInfoService.getLoanList();
+	public Object getLoanList(@RequestParam Integer tendid){
+		System.out.println(tendid);
+		return tendInfoService.getLoanList(tendid);
 	}
 
 

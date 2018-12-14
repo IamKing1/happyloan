@@ -19,8 +19,8 @@ public class TendInfoServiceImpl implements TendInfoService {
 	@Autowired
 	private TendInfoDao tendInfoDao;
 	@Override
-	public List<Map> getLoanList() {
-		return tendInfoDao.getLoanList();
+	public List<Map> getLoanList(Integer tendid) {
+		return tendInfoDao.getLoanList(tendid);
 	}
 
 	@Override

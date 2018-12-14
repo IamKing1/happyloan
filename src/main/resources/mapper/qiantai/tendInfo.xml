@@ -15,6 +15,6 @@
 		join TB_SYSTEMCATEGORYITEM h on c.INCOME=h.id
 		join TB_SYSTEMCATEGORYITEM i on a.PURPOSE=i.id
 		join TB_SYSTEMCATEGORYITEM j on a.REPAYMENTMETHOD=j.id
-
+		where a.id=#{tendid}
 	</select>
 </mapper>

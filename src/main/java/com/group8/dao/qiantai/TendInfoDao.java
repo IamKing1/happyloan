@@ -18,7 +18,7 @@ public interface TendInfoDao {
 	 * 获取借款人信息
 	 * @return
 	 */
-	List<Map> getLoanList();
+	List<Map> getLoanList(Integer tendid);
 
 	/**
 	 * 获取借款金额,期数
