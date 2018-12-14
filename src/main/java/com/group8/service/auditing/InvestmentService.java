@@ -80,5 +80,22 @@ public interface InvestmentService {
     int updateTendStutsToFour(Integer tendId);
 
 
+    /**
+     * 查询流标的列表
+     * @return
+     */
+    List<Map> selectFailMarkList(Map map);
 
+    /**
+     * 查询流标的列表数量
+     * @return
+     */
+    Integer selectFailMarkListCount(Map map);
+
+
+    /**
+     * 储存贷款信息
+     * @return
+     */
+    int saveBorrowingInformation(Map map);
 }
