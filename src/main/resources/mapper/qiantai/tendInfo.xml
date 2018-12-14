@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.qiantai.TendInfoDao">
+	<select id="getLoanList" resultType="map">
+
+		select b.item longtime,a.money,c.REALNAME,c.sex,(substr(TELEPHONE,1,3)||'****'||substr(TELEPHONE,-4,4)) as TELEPHONE,e.ITEM ACADEMIC,f.item MARRIAGE,g.item HOUSED,c.ADDRESS,c.job,h.item INCOME,d.USERNAME,i.ITEM PURPOSE,j.item REPAYMENTMETHOD from TB_BORROW a
+		join TB_SYSTEMCATEGORYITEM b on a.LONGTIME=b.id
+		join TB_REALNAME c on a.REALID=c.id
+		join TB_USER d on c.USERID=d.USERID
+		join TB_SYSTEMCATEGORYITEM e on c.ACADEMIC=e.id
+		join TB_SYSTEMCATEGORYITEM f on c.MARRIAGE=f.id
+		join TB_SYSTEMCATEGORYITEM g on c.HOUSED=g.id
+		join TB_SYSTEMCATEGORYITEM h on c.INCOME=h.id
+		join TB_SYSTEMCATEGORYITEM i on a.PURPOSE=i.id
+		join TB_SYSTEMCATEGORYITEM j on a.REPAYMENTMETHOD=j.id
+
+	</select>
+</mapper>
