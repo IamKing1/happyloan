@@ -80,8 +80,8 @@ where a.stuts=2
     
     
     <insert id="saveBorrowingInformation" parameterType="map">
-        insert into tb_loanrecord (id,realid,money,begintime,longtime)
-         VALUES  (SEQ_BORROWMONEY_RECOS.NEXTVAL,#{REALID},#{hasMoney},trunc(sysdate),#{time})
+        insert into tb_loanrecord (id,realid,money,begintime,longtime,tendid)
+         VALUES  (SEQ_BORROWMONEY_RECOS.NEXTVAL,#{REALID},#{hasMoney},trunc(sysdate),#{time},#{ID})
     </insert>
     
     <select id="getLongTimeByTendId" resultType="Integer" parameterType="map">
@@ -91,8 +91,10 @@ join tb_borrow b on a.borrow=b.id where a.id=#{ID}
 
     </select>
 
-    <select id="deductMoney" parameterType="map" statementType="CALLABLE" resultType="java.lang.Integer">
-        call pro_batch_huankuan1(#{money,mode=IN},#{realId,mode=IN},#{mse,mode=OUT,jdbcType=INTEGER})
+    <select id="">
+        select realid,round(sum(money)/(select sum(money) from tb_investmentlist )*100,2) from tb_investmentlist
+where tendid =#{tendId}
+ group by realid
     </select>
 
 </mapper>

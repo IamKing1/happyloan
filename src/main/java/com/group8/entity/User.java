@@ -9,18 +9,17 @@ import java.io.Serializable;
  * createTime:2018-11-23 17:30
  */
 public class User implements Serializable {
-    private int userId;
+    private int id;
     private String userName;
     private String PWD;
     private String salt;
 
-
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {

@@ -1,5 +1,6 @@
 package com.group8.dao.repayment;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,6 +17,21 @@ public interface RepayMoneyDao {
      * @return
      */
     Integer deductMoney(Map map);
+
+    /**
+     * 还款日从资金池拿钱，还给投资人
+     * @param map
+     * @return
+     */
+    int deductMoneyToInvestment(Map map);
+
+
+    /**
+     * 计算每个表各个投资人的比列
+     * @param map
+     * @return
+     */
+    List<Map> calculationProportion(Map map);
 
 
 

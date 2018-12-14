@@ -38,10 +38,10 @@ public class UserRealm extends AuthorizingRealm {
        // info.addStringPermission("user:add");
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
-        System.out.println(user.getUserId());
-        List<Role> userList = userService.findById(user.getUserId());
+
+        List<Role> userList = userService.findById(user.getId());
+
         for (Role role : userList) {
-            System.out.println(role.getRoleName());
             info.addRole(role.getRoleName());
         }
         return info;
