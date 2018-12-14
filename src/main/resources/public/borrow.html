@@ -1,125 +1,138 @@
 <!doctype html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>borrow</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <!-- <link rel="stylesheet/less" type="text/css" href="css/style.less" /> -->
-    <script type="text/javascript" src="script/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="script/all.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>borrow</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<!-- <link rel="stylesheet/less" type="text/css" href="css/style.less" /> -->
+	
+	
+	<!--<script type="text/javascript" src="script/jquery-2.1.0.js"></script>-->
+	<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.min.js"></script>
+	<script type="text/javascript" src="script/all.js"></script>
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	
+	
+	<script>
+		$(function () {
+			jytema();
+			realname();
+		})
 
+		//校验实名认证
+		function realname() {
+			$.ajax({
+				type: "post", //请求方式
+				dataType: "json",
+				url: "customer/realName", //发送请求地址
+				//请求成功后的回调函数有两个参数
+				success: function (data) {
+					console.log(data.meg)
+					if (data.meg != "审核成功" || data.meg == null || data.meg == "") {
+						$("#person2").attr("style", "color:red");
+						$("#person2").html("未完成");
+						$("#person3").attr("style", "color:red");
+						$("#person3").html("未完成");
+					} else {
+						$("#person2").attr("style", "color:green");
+						$("#person2").html("已完成");
+						$("#person3").attr("style", "color:green");
+						$("#person3").html("已完成");
+					}
+				},
+				error: function (data) {
+					console.log(22)
+				}
+			})
+		}
 
-    <script>
-        $(function(){
-            jytema();
-            realname();
-        })
+		//校验电话  邮箱
+		function jytema() {
 
-        //校验实名认证
-        function realname(){
-            $.ajax({
-                type: "post", //请求方式
-                dataType: "json",
-                url: "customer/realName", //发送请求地址
-                //请求成功后的回调函数有两个参数
-                success: function (data) {
-                        console.log(data.meg)
-                    if(data.meg!="审核成功"||data.meg==null||data.meg==""){
-                        $("#person2").attr("style", "color:red");
-                        $("#person2").html("未完成");
-                        $("#person3").attr("style", "color:red");
-                        $("#person3").html("未完成");
-                    }else{
-                        $("#person2").attr("style", "color:green");
-                        $("#person2").html("已完成");
-                        $("#person3").attr("style", "color:green");
-                        $("#person3").html("已完成");
-                    }
-                },
-                error:function (data) {
-                    console.log(22)
-                }
-            })
-        }
-        //校验电话  邮箱
-        function jytema() {
+			var jyperson = true;
+			$.ajax({
+				type: "post", //请求方式
+				dataType: "json",
+				url: "customer/getTelephoneByUserName", //发送请求地址
+				//请求成功后的回调函数有两个参数
+				success: function (data) {
+					var user = data.customer;
+					if (user.telephone == "" || user.telephone == null) {
 
-            var jyperson = true;
-            $.ajax({
-                type: "post", //请求方式
-                dataType: "json",
-                url: "customer/getTelephoneByUserName", //发送请求地址
-                //请求成功后的回调函数有两个参数
-                success: function (data) {
-                    var user = data.customer;
-                    if (user.telephone == "" || user.telephone == null) {
+						jyperson = false
+					}
+					if (user.email == "" || user.email == null) {
 
-                        jyperson = false
-                    }
-                    if (user.email == "" || user.email == null) {
+						jyperson = false;
+					}
 
-                        jyperson = false;
-                    }
+					if (!jyperson) {
+						$("#person1").attr("style", "color:red");
+						$("#person1").html("未完成");
 
-                    if (!jyperson) {
-                        $("#person1").attr("style", "color:red");
-                        $("#person1").html("未完成");
+					} else {
+						$("#person1").attr("style", "color:green");
+						$("#person1").html("已完成");
 
-                    }else{
-                        $("#person1").attr("style", "color:green");
-                        $("#person1").html("已完成");
+					}
+				}
 
-                    }
-                }
+			})
+		}
 
-            })
-        }
-       function usermse(){
-           $.ajax({
-               type: "post", //请求方式
-               dataType: "json",
-               async: false,
-               url: "customer/jySession", //发送请求地址
-               //请求成功后的回调函数有两个参数
-               success: function (data) {
-                   if (data.session!= "-1") {
-                       window.location.href='个人中心-账户设置.html';
-                   } else {
-                       if(confirm("你还没有登录，是否去登录?")){
-                           window.location.href='login.html';
-                       }
-                   }
-               }
-           })
-       }
-        function usermse1(){
-            $.ajax({
-                type: "post", //请求方式
-                dataType: "json",
-                async: false,
-                url: "customer/jySession", //发送请求地址
-                //请求成功后的回调函数有两个参数
-                success: function (data) {
-                    if (data.session!= "-1") {
-                        window.location.href='个人中心-实名认证.html';
-                    } else {
-                        if(confirm("你还没有登录，是否去登录?")){
-                            window.location.href='login.html';
-                        }
-                    }
-                }
-            })
-        }
+		function usermse() {
+			$.ajax({
+				type: "post", //请求方式
+				dataType: "json",
+				async: false,
+				url: "customer/jySession", //发送请求地址
+				//请求成功后的回调函数有两个参数
+				success: function (data) {
+					if (data.session != "-1") {
+						window.location.href = '个人中心-账户设置.html';
+					} else {
+						if (confirm("你还没有登录，是否去登录?")) {
+							window.location.href = 'login.html';
+						}
+					}
+				}
+			})
+		}
 
-
-    </script>
-
+		function usermse1() {
+			$.ajax({
+				type: "post", //请求方式
+				dataType: "json",
+				async: false,
+				url: "customer/jySession", //发送请求地址
+				//请求成功后的回调函数有两个参数
+				success: function (data) {
+					if (data.session != "-1") {
+						window.location.href = '个人中心-实名认证.html';
+					} else {
+						if (confirm("你还没有登录，是否去登录?")) {
+							window.location.href = 'login.html';
+						}
+					}
+				}
+			})
+		}
+	
+	
+	</script>
+	<style>
+		.bor_det_oner {
+			width: 100%;
+		}
+	</style>
 </head>
 <body>
 <header id="thead">
-    <script>
-        $("#thead").load("head.html");
-    </script>
+	<script>
+		$("#thead").load("head.html");
+	</script>
 </header>
 
 
@@ -128,141 +141,154 @@
 </div>
 <!-- end banner -->
 <div class="bor_con_wper">
-    <div class="bor_con px1000">
-        <div class="bor_detail">
-            <h2 class="bor_detail_tit">
-                <span class="bor_decurspan">贷款声明</span>
-                <span>信息完善</span>
-                <span>贷款申请</span>
-                <span>申请结果</span>
-            </h2>
-            <div class="bor_detail_box">
-                <div class="bor_det_one clearfix pt30 pb30">
-                    <div class="bor_det_onel fl">
-                        <p class="bor_p1">亿人宝平台的借款功能旨在帮助借款用户以
-                            低成本获得借款。用户在需要资金时，可以将
-                            自有房产和车产作为抵押物，小油菜线下审核
-                            通过后，根据抵押物的价值融资。</p>
-                        <p class="bor_p2">亿人宝平台的借款功能旨在帮助借款用户以
-                            低成本获得借款。用户在需要资金时，可以将
-                            自有房产和车产作为抵押物，小油菜线下审核
-                            通过后，根据抵押物的价值融资。</p>
-
-                    </div>
-                    <!-- end l -->
-
-                </div>
-                <!-- end 房产抵押 -->
-                <div class="bor_det_one" style="display:none;">
-                    <h3 class="bor_onel_tit"><span>申请条件</span></h3>
-                    <ul class="bor_onel_ul">
-                        <li><img src="images/bor_pic01.png" alt="">
-                            <a style="cursor:pointer" onclick="usermse()">个人信息</a>&nbsp&nbsp<span id="person1"></span>
-                        </li>
-                        <li><img src="images/bor_pic02.png" alt=""><a style="cursor:pointer" onclick="usermse()" >身份认证</a>&nbsp&nbsp<span id="person2"></span>
-                        </li>
-                        <!--<li><img src="images/bor_pic03.png" alt="">视频认证
-                        </li>-->
-                        <li><img  src="images/bor_pic04.png" alt="">
-                            无现有诉讼记录&nbsp&nbsp<span id="person3"></span>
-                        </li>
-                    </ul>
-                    <h3 class="bor_onel_tit"><span>提交资料</span></h3>
-                </div>
-                <!-- end  -->
-
-                <script>
-                    $(function(){
-
-                    })
-                </script>
-                <div class="bor_det_one" style="display:none;">
-                    <div class="bor_det_oner fl">
-                        <form id="myLoan">
-                            <fieldset>
-                                <div class="mt15">
-                                    <label>借款金额</label>
-                                    <input type="text" name="money" class="bor_inputbg01">
-                                </div>
-                                <div class="mt15">
-                                    <label>借款期限</label>
-                                    <select name="longtime">
-                                        <option value="39">一个月</option>
-                                        <option value="40">三个月</option>
-                                        <option value="41">六个月</option>
-                                        <option value="42">十二个月</option>
-                                    </select>
-                                </div>
-                                <div class="mt15 guarmethod clearfix">
-                                    <label class="guarmethod_l fl">担保方式</label>
-                                    <div class="fl">
-                                        <span>房屋数量</span>
-                                        <input type="text" name="house" class="bor_inputbg03 input2"><br><br>
-                                        <span>总价值</span>
-                                        <input type="text" name="price" class="bor_inputbg04 input2"><br>
-                                    </div>
-
-                                </div>
-                                <div class="mt15">
-                                    <label>借款用途</label>
-                                    <select name="purpose">
-                                        <option value="35">教育</option>
-                                        <option value="36">商业</option>
-                                        <option value="37">医疗</option>
-                                        <option value="38">日常</option>
-                                    </select>
-                                </div>
-                                <div class="mt15">
-                                    <label>还款方式</label>
-                                    <select name="mode">
-                                        <option value="23">等额本息</option>
-                                        <option value="24">付息还款</option>
-                                    </select>
-                                </div>
-                                <div class="mt15">
-                                    <label>借款描述</label>
-                                    <textarea name="remark"></textarea>
-                                </div>
-                                <div class="mt30">
-                                    <label></label>
-                                    <a href="#" onclick="tijiao()" class="bor_btn">提交申请</a>
-                                </div>
-                                <script>
-                                    function tijiao(){
-
-                                        $.ajax({
-                                            url:"/customer/toLoan",
-                                            type: "post", //请求方式
-                                            data:$("#myLoan").serialize(),
-                                            dataType: "json",
-                                            success: function (data) {
-                                                alert(data)
-                                                alert("提交成功")
-                                            }
-                                        })
-                                    }
-                                </script>
-
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- end  -->
-                <div class="bor_det_one" style="display:none;">
-                    4
-                </div>
-                <!-- end  -->
-            </div>
-        </div>
-    </div>
+	<div class="bor_con px1000">
+		<div class="bor_detail">
+			<h2 class="bor_detail_tit">
+				<span class="bor_decurspan">贷款声明</span>
+				<span>信息完善</span>
+				<span>贷款申请</span>
+				<span>申请结果</span>
+			</h2>
+			<div class="bor_detail_box">
+				<div class="bor_det_one clearfix pt30 pb30">
+					<div class="bor_det_onel fl">
+						<p class="bor_p1">亿人宝平台的借款功能旨在帮助借款用户以
+							低成本获得借款。用户在需要资金时，可以将
+							自有房产和车产作为抵押物，小油菜线下审核
+							通过后，根据抵押物的价值融资。</p>
+						<p class="bor_p2">亿人宝平台的借款功能旨在帮助借款用户以
+							低成本获得借款。用户在需要资金时，可以将
+							自有房产和车产作为抵押物，小油菜线下审核
+							通过后，根据抵押物的价值融资。</p>
+					
+					</div>
+					<!-- end l -->
+				
+				</div>
+				<!-- end 房产抵押 -->
+				<div class="bor_det_one" style="display:none;">
+					<h3 class="bor_onel_tit"><span>申请条件</span></h3>
+					<ul class="bor_onel_ul">
+						<li><img src="images/bor_pic01.png" alt="">
+							<a style="cursor:pointer" onclick="usermse()">个人信息</a>&nbsp&nbsp<span id="person1"></span>
+						</li>
+						<li><img src="images/bor_pic02.png" alt=""><a style="cursor:pointer"
+						                                              onclick="usermse()">身份认证</a>&nbsp&nbsp<span
+								id="person2"></span>
+						</li>
+						<!--<li><img src="images/bor_pic03.png" alt="">视频认证
+						</li>-->
+						<li><img src="images/bor_pic04.png" alt="">
+							无现有诉讼记录&nbsp&nbsp<span id="person3"></span>
+						</li>
+					</ul>
+					<h3 class="bor_onel_tit"><span>提交资料</span></h3>
+				</div>
+				<!-- end  -->
+				
+				<div class="bor_det_one" style="display:none;">
+					<div class="bor_det_oner fl">
+						
+						<style>
+							
+							.bor_det_oner input {
+								max-width: 160px;
+								height: 27px;
+								border: 1px solid #eee;
+								background-color: #fff;
+								padding-right: 50px;
+								border-radius: 5px;
+							}
+						
+						</style>
+						
+						<form id="myLoan" class="form">
+							<fieldset>
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">借款金额:</label>
+									<input type="text" name="money" class="form-control">
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">借款期限:</label>
+									<select name="longtime" class="form-control">
+										<option value="39">一个月</option>
+										<option value="40">三个月</option>
+										<option value="41">六个月</option>
+										<option value="42">十二个月</option>
+									</select>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">担保方式:</label>
+									<div class="form-group row">
+										<input type="text" name="house" class="form-control"
+										       style="margin: 0 10px;"><br><br>
+										<span style="line-height: 40px; margin: 0 10px;">总价值</span>
+										<input type="text" name="price" class="form-control"><br>
+									</div>
+								
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">借款用途:</label>
+									<select name="purpose" class="form-control">
+										<option value="35">教育</option>
+										<option value="36">商业</option>
+										<option value="37">医疗</option>
+										<option value="38">日常</option>
+									</select>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">还款方式:</label>
+									<select name="mode">
+										<option value="23">等额本息</option>
+										<option value="24">付息还款</option>
+									</select>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label">借款描述:</label>
+									<textarea name="remark" class="form-control"></textarea>
+								</div>
+								<div class="form-group row">
+									<a onclick="tijiao()" class="btn btn-success" style="margin: 0 20%;">提交申请</a>
+								</div>
+								<script src="https://cdn.bootcss.com/sweetalert/2.1.2/sweetalert.min.js"></script>
+								<script>
+									function tijiao() {
+										$.ajax({
+											url: "/customer/toLoan",
+											type: "post", //请求方式
+											data: $("#myLoan").serialize(),
+											dataType: "json",
+											success: function (data) {
+												swal("已提交申请,等待审核")
+													.then((value) => {
+														location.href = "borrow.html"
+													});
+											}
+										})
+									}
+								</script>
+							</fieldset>
+						</form>
+					
+					
+					</div>
+				</div>
+				
+				<!-- end  -->
+				<div class="bor_det_one" style="display:none;">
+					4
+				</div>
+				<!-- end  -->
+			</div>
+		</div>
+	</div>
 </div>
 
 <!--网站底部-->
 <div id="footer" class="ft bottom">
-    <script>
-        $(".bottom").load("bottom.html");
-    </script>
+	<script>
+		$(".bottom").load("bottom.html");
+	</script>
 </div>
 </body>
 </html>

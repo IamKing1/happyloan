@@ -34,6 +34,8 @@ public class Loan {
     @RequestMapping("toLoan")
     @ResponseBody
     public Object applyLoan(@RequestParam Map map, HttpSession session){
+        System.out.println("--------"+map);
+        System.out.println(session);
         Object customerName = session.getAttribute("CustomerName");
         if (customerName != null&&customerName!="") {
             String userName = customerName.toString();
@@ -41,7 +43,10 @@ public class Loan {
             String realId = realIdByUserName.get(0).get("ID").toString();
             map.put("realId",realId);
         }
+        System.out.println(map);
         int i = loanService.applyLoan(map);
         return i;
+
+//        return "";
     }
 }

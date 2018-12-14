@@ -1,483 +1,339 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>p2p网贷平台</title>
-    <meta name="keywords" content=""/>
-    <meta name="description" content=""/>
-    <link href="css/common.css" rel="stylesheet"/>
-    <link href="css/index.css" rel="stylesheet" type="text/css">
-    <link href="css/detail.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="script/jquery.min.js"></script>
-    <script type="text/javascript" src="script/common.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>p2p网贷平台</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="css/common.css" rel="stylesheet" />
+<link href="css/index.css" rel="stylesheet" type="text/css">
+<link href="css/detail.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="script/jquery.min.js"></script>
+<script src="script/ablumn.js"></script>
+<script src="script/plugins.js"></script>
 
+  
+  <!--vue-->
+  <link rel="stylesheet" href="/vue/vue-index.css">
+  <link rel="stylesheet" href="/element/index.css">
+  <script src="/vue/vue-index.js"></script>
+  <script type="text/javascript" src="/vue/vue.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<style type="text/css">
+		.bg-purple {
+			background: #fff;
+			height: 256px;
+		}
+		
+		body {
+			background: #F4F4F4;
+		}
+		
+		* {
+			box-sizing: border-box;
+		}
+		
+		.grid-content {
+			padding: 20px;
+			box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
+		}
+		
+		.grid-content .col {
+			text-align: center;
+			border-right: 1px solid #e5e5e5;
+		}
+		
+		.grid-content .col .colTop {
+			margin: 20px 0 10px;
+			color: #696969
+		}
+		
+		.grid-content .col .colTop strong {
+			font-size: 50px;
+		}
+		
+		.grid-content .col .colBottom {
+			font-size: 14px;
+			margin: 22px 0;
+			color: #696969;
+		}
+		
+		.grid-content .el-right .col {
+			border: 0;
+		}
+		/*列表2*/
+		
+		.grid-content2 .el-tabs--border-card {
+			border: none;
+		}
+		
+		.gird-content2 {
+			margin-top: 20px;
+			color: #666;
+		}
+		
+		.gird-content2 .col2 {
+			/*border-bottom: 1px solid #eee;*/
+			/*padding: 0 20px;*/
+		}
+		
+		.gird-content2 .col h2 {
+			height: 36px;
+			line-height: 36px;
+			/*border-bottom: 1px solid #cecece;*/
+			font-size: 18px;
+		}
+		.gird-content2 .loanGave table td,.gird-content2 .loanGave table th{
+			text-align: center;
+		}
+		.el-input-number>span{
+			height: 38px;
+		}
+		[class*=" el-icon-"], [class^=el-icon-]{
+			line-height: 40px;
+		}
+	</style>
+	<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
 <header id="thead">
-    <script>
-        $("#thead").load("head.html");
-    </script>
+  <script>
+      $("#thead").load("head.html");
+  </script>
 
 </header>
 <!--信息详细-->
-<script type="text/javascript">
-    $(function () {
 
-        var tendingId;
-        var str = window.location.search;   //location.search是从当前URL的?号开始的字符串 例如：http://www.51job.com/viewthread.jsp?tid=22720 它的search就是?
-        if (str.indexOf(name) != -1) {
-            var pos_start = str.indexOf(name) + name.length + 5;
-            var pos_end = str.indexOf("&", pos_start);
-            if (pos_end == -1) {
-                tendingId = str.substring(pos_start);
-                $("#tendingId").val(tendingId)
-            } else {
-                window.location.href = 'list.html'
-            }
-        }
-        selectAllMseege(tendingId);
-        currently(tendingId);
-    })
+<div id="app" style="margin-top: 20px;">
+	
+	<el-row type="flex" justify="center">
+		<el-col :span="15">
+			<div class="grid-content bg-purple">
+				<el-col :span="16">
+					<div class="el-left" style="height:100%;font-size: 24px;">
+						<div class="el-left-top">
+							<el-col :span="7">
+								<div class="col col1">
+									<div class="colTop" style="color: #ff7200;">
+										<strong>12</strong>%
+									</div>
+									<div class="colBottom">
+										<span>年化利率</span>
+									</div>
+								</div>
+							</el-col>
+							<el-col :span="7">
+								<div class="col col2">
+									<div class="colTop">
+										<strong>36</strong>个月
+									</div>
+									<div class="colBottom">
+										<span>借款期限</span>
+									</div>
+								</div>
+							</el-col>
+							<el-col :span="10">
+								<div class="col col3" style="border: 0;">
+									<div class="colTop">
+										&yen;<strong>136,700</strong>元
+									</div>
+									<div class="colBottom">
+										<span>借款金额</span>
+									</div>
+								</div>
+							</el-col>
+						</div>
+						<div class="el-left-bottom">
+							<el-col :span="12" :push="6">
+								<el-progress :percentage="70"></el-progress>
+							</el-col>
+						</div>
+					</div>
+				</el-col>
+				<el-col :span="8">
+					<div class="el-right" style="border-left:1px solid #e5e5e5">
+						<div class="col col-line1">
+							<p>剩余可投: <strong style="color: #ff7200;font-size: 30px;">{{allNum-num1}}</strong> 元</p>
+						</div>
+						<div class="col col-line2" style="margin: 30px 0;">
+							<template>
+								<el-input-number v-model="num1" :step="100" :max="allNum" :min="100"></el-input-number>
+							</template>
+							<el-col style="margin: 10px 0;font-size: 14px;text-align: left;margin-left: 26%;">
+								预计收入: <span style="color: red;">{{(num1*0.1945689)|numFilter}}</span> 元</el-col>
+						</div>
+						<div class="col col-line3" style="margin: 30px 0">
+							<el-row>
+								<el-button type="primary" style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
+							</el-row>
+						</div>
+					</div>
+				</el-col>
+			</div>
+			
+			<div class="gird-content2">
+				<el-tabs type="border-card">
+					<el-tab-pane label="借款人详情">
+						<el-col :span="20" :push="1">
+							<div class="col col1">
+								<h2>
+									<i class="fa fa-user-o" aria-hidden="true" style="color: #cdcdcd;"></i>
+									
+									个人信息
+								</h2>
+								<br />
+								<el-table :data="tableData2" style="width: 90%;margin: 0 auto;" border >
+									<el-table-column prop="a1" label="昵称" ></el-table-column>
+									<el-table-column prop="a2" label="性别" width="50" ></el-table-column>
+									<el-table-column prop="a3" label="手机号"></el-table-column>
+									<el-table-column prop="a4" label="最高学历"></el-table-column>
+									<el-table-column prop="a5" label="婚姻状况"></el-table-column>
+									<el-table-column prop="a6" label="房产状况"></el-table-column>
+									<el-table-column prop="a7" label="现居地"></el-table-column>
+								</el-table>
+								<br />
+							</div>
+						</el-col>
+						<el-col :span="20" :push="1">
+							<div class="col col2">
+								<h2>
+									<i class="fa fa-address-book-o" aria-hidden="true" style="color: #cdcdcd;"></i>
+									工作状况
+								</h2>
+								<br />
+								<el-table :data="job" style="width: 90%;margin: 0 auto;" border >
+									<el-table-column prop="a1" label="工作行业" ></el-table-column>
+									<el-table-column prop="a2" label="工作城市" ></el-table-column>
+									<el-table-column prop="a3" label="年收入" width="90"></el-table-column>
+									<el-table-column prop="a4" label="负债状况" width="90"></el-table-column>
+									<el-table-column prop="a5" label="征信逾期状况"></el-table-column>
+								</el-table>
+								<br />
+							</div>
+						</el-col>
+						<el-col :span="20" :push="1">
+							<div class="col col3">
+								<h2>
+									<i class="fa fa-list-alt" aria-hidden="true" style="color: #cdcdcd;"></i>
+									借款标信息
+								</h2>
+								<br />
+								<el-table :data="loanInfo" style="width: 100%;" border >
+									<el-table-column prop="a1" label="项目编号" ></el-table-column>
+									<el-table-column prop="a2" label="工作城市" ></el-table-column>
+									<el-table-column prop="a3" label="借款人昵称"></el-table-column>
+									<el-table-column prop="a4" label="借款金额" ></el-table-column>
+									<el-table-column prop="a5" label="借款期限"></el-table-column>
+									<el-table-column prop="a6" label="年化利率"></el-table-column>
+									<el-table-column prop="a7" label="起息日"></el-table-column>
+									<el-table-column prop="a8" label="借款用途"></el-table-column>
+									<el-table-column prop="a9" label="还款方式"></el-table-column>
+									<el-table-column prop="a10" label="还款来源"></el-table-column>
+									<el-table-column prop="a11" label="投标截止时间"></el-table-column>
+								</el-table>
+								<br />
+							</div>
+						</el-col>
+					</el-tab-pane>
+					<el-tab-pane label="投标记录">
+						<div class="loanGave">
+							<el-table :data="loanGave" style="width: 80%;margin: 0 auto;" border :stripe="true" >
+								<el-table-column prop="name" label="昵称" ></el-table-column>
+								<el-table-column prop="money" label="投标金额" ></el-table-column>
+								<el-table-column prop="time" label="投标日期" ></el-table-column>
+							</el-table>
+							<!--列表底部工具条和分页符-->
+							<el-row style="margin-top: 20px" type="flex" justify="end">
+								<el-col :span="18" >
+									<el-pagination
+											style="float: right"
+											@size-change="handleSizeChange"
+											@current-change="handleCurrentChange"
+											:current-page="currentPage4"
+											:page-sizes="[10, 20, 30, 50]"
+											:page-size="5"
+											layout="total, sizes, prev, pager, next, jumper"
+											:total="14">
+									</el-pagination>
+								</el-col>
+							</el-row>
+							
+						</div>
+					</el-tab-pane>
+				</el-tabs>
+			</div>
+		</el-col>
+	
+	</el-row>
 
-    function selectAllMseege(e) {
-        $.ajax({
-            url: "/release/selectAllMseege",
-            data: {
-                tendingId: e
-            },
-            success: function (data) {
-                $("#name").text(data.REALNAME);
-                $("#title").text(data.TITLE);
-
-
-                var money = data.MONEY;
-                var strMoney =FormatNum(money);
-0
-
-                $("#account").text(strMoney);
-
-            },
-            error: function () {
-                alert("项目出现BUG，未知错误")
-
-            }
-        })
-    }
-
-    function currently(e){
-        $.ajax({
-            url: "/investment/currentlyVoted",
-            data: {
-                tendingId: e
-            },
-            success: function (data) {
-                $("#currently").html(data)
-
-            },
-            error: function () {
-                alert("项目出现BUG，未知错误1111")
-
-            }
-        })
-    }
-
-    function FormatNum(str) {
-        var str = '' + str;
-        var newStr = "";
-        var count = 0;
-        if (str.indexOf(".") == -1) {
-            for (var i = str.length - 1; i >= 0; i--) { if (count % 3 == 0 && count != 0) { newStr = str.charAt(i) + "," + newStr; } else { newStr = str.charAt(i) + newStr; } count++;
-            } //str = newStr + ".00"; //自动补小数点后两位
-            str = newStr;
-        } else {
-            for (var i = str.indexOf(".") - 1; i >= 0; i--) {
-                if (count % 3 == 0 && count != 0) { newStr = str.charAt(i) + "," + newStr; } else {
-                    newStr = str.charAt(i) + newStr; //逐个字符相接起来
-                }
-                count++;
-            }
-            str = newStr + (str + "00").substr((str + "00").indexOf("."), 3);
-        }
-        return str;
-    }
-
-
-
-</script>
-<div class="item-detail wrap">
-    <div class="breadcrumbs"><a href="index.html">首页</a>&gt; <a href="#">散标投资列表</a>&gt; <span class="cur">项目详情</span>
-    </div>
-    <div class="item-detail-head clearfix" data-target="sideMenu">
-        <div class="hd"><i class="icon icon-che" title="车易贷"></i>
-            <h2 id="title"></h2>
-        </div>
-        <div class="bd clearfix">
-            <div class="data">
-                <ul>
-                    <li><span class="f16">借款金额</span><br>
-                        <span class="f30 c-333" id="account"></span>元
-                    </li>
-                    <li class="relative"><span class="f16">年利率</span><br>
-                        <span class="f30 c-orange">12.00% </span></li>
-                    <li><span class="f16">借款期限</span><br>
-                        <span class="f30 c-333">1</span>个月
-                    </li>
-                    <li><span class="c-888">借款编号：</span>20150921617</li>
-                    <li><span class="c-888">发标日期：</span>2015-09-13</li>
-                    <li><span class="c-888">保障方式：</span>100%本息垫付</li>
-                    <li><span class="c-888">还款方式：</span>按月付息,到期还本</li>
-                    <li><span class="c-888">需还本息：</span> 40,400.00元</li>
-                    <li><span class="c-888">借款用途：</span>临时周转</li>
-                    <li class="colspan"><span class="c-888 fl">投标进度：</span>
-                        <div class="progress-bar fl"><span style="width:100%"></span></div>
-                        <span class="c-green">100%</span></li>
-                    <li><span class="c-888">投资范围：</span> <span id="account_range"> 50元~
-            不限 </span></li>
-                </ul>
-            </div>
-            <div class="mod-right mod-status">
-                <div>本项目剩余投资数：<span id="currently" style="color: red"></span>元</div>
-                <form id="myform">
-                    <table>
-                        <tr>
-                            <td>请输入你要投资的数目：</td>
-                            <td><input type="text" name="money"/></td>
-                            <td><input type="hidden" name="tendingId" id="tendingId" /></td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2"><input type="button" onclick="submitb()" value="立即投资"/></td>
-                        </tr> 
-
-                    </table>
-
-                </form>
-                <script type="text/javascript">
-                    function submitb() {
-                        $.ajax({
-                            url: "/investment/remainingSum",
-                            data: $("#myform").serialize(),
-                            success: function (data) {
-                               if(data==-1){
-                                   alert("余额不足请充值，或者使用银行卡支付")
-                               }else{
-                                   window.location.reload();
-                                   alert("投资成功!")
-
-                               }
-                            }
-                        })
-                    }
-                </script>
-            </div>
-        </div>
-    </div>
-    <div class="item-detail-body clearfix mrt30 ui-tab">
-        <div class="ui-tab-nav hd"><i class="icon-cur" style="left: 39px;"></i>
-            <ul>
-                <li class="nav_li active" id="nav_1"><a href="javascript:;">借款信息</a></li>
-                <li class="nav_li" id="nav_2"><a href="javascript:;">投资记录</a> <i class="icon icon-num1"
-                                                                                 style="margin-left: -15px;"> <span
-                        id="tender_times">23</span> <em></em> </i></li>
-                <li class="nav_li" id="nav_3"><a href="javascript:;">还款列表</a></li>
-            </ul>
-        </div>
-        <div class="bd">
-            <div class="ui-tab-item active" style="display: block;">
-                <div class="borrow-info">
-                    <dl class="item">
-                        <dt>
-                            <h3>借款人介绍</h3>
-                        </dt>
-                        <dd>
-                            <div class="text">
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人信息介绍：</span></p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人<a
-                                        id="name"></a>女士，<span>1988</span>年出生，大专学历，未婚，户籍地址为四川省古蔺县，现居住于成都市成华区。</p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人工作情况：</p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;">
-                                    赵女士为成都某服装店老板，月收入<span>2</span>万元，收入居住稳定。</p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人资产介绍：</p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 赵女士有<span>1</span>辆全款长安福特福克斯汽车。
-                                </p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 详细资金用途：</p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人申请汽车质押贷款，贷款用于资金周转。</p>
-                            </div>
-                        </dd>
-                    </dl>
-                    <dl class="item">
-                        <dt>
-                            <h3>审核信息</h3>
-                        </dt>
-                        <dd>
-                            <div class="verify clearfix">
-                                <ul>
-                                    <li><i class="icon icon-4"></i><br>
-                                        身份证
-                                    </li>
-                                    <li><i class="icon icon-5"></i><br>
-                                        户口本
-                                    </li>
-                                    <li><i class="icon icon-6"></i><br>
-                                        结婚证
-                                    </li>
-                                    <li><i class="icon icon-7"></i><br>
-                                        工作证明
-                                    </li>
-                                    <li><i class="icon icon-8"></i><br>
-                                        工资卡流水
-                                    </li>
-                                    <li><i class="icon icon-9"></i><br>
-                                        收入证明
-                                    </li>
-                                    <li><i class="icon icon-10"></i><br>
-                                        征信报告
-                                    </li>
-                                    <li><i class="icon icon-11"></i><br>
-                                        亲属调查
-                                    </li>
-                                    <li><i class="icon icon-19"></i><br>
-                                        行驶证
-                                    </li>
-                                    <li><i class="icon icon-20"></i><br>
-                                        车辆登记证
-                                    </li>
-                                    <li><i class="icon icon-21"></i><br>
-                                        车辆登记发票
-                                    </li>
-                                    <li><i class="icon icon-22"></i><br>
-                                        车辆交强险
-                                    </li>
-                                    <li><i class="icon icon-23"></i><br>
-                                        车辆商业保险
-                                    </li>
-                                    <li><i class="icon icon-24"></i><br>
-                                        车辆评估认证
-                                    </li>
-                                </ul>
-                            </div>
-                        </dd>
-                    </dl>
-                    <dl class="item">
-                        <dt>
-                            <h3>风控步骤</h3>
-                        </dt>
-                        <dd>
-                            <div class="text">
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;">
-                                    调查：风控部对借款人各项信息进行了全面的电话征信，一切资料真实可靠。<span></span></p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;">
-                                    抵押物：全款长安福特福克斯汽车，车牌号：川<span>AYY***</span>，新车购买于<span>2013</span>年，裸车价<span>14</span>万，评估价<span>5</span>万。
-                                </p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 权证：汽车已入库、已办理相关手续等。 </p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 担保：质押物担保。 </p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;">
-                                    结论：此客户为老客户，上笔贷款<span>4</span>万元，标的号为<span>20150745682</span>，已结清，现因资金周转，再次申请贷款。借款人居住稳定，收入来源可靠，经风控综合评估，同意放款<span>4</span>万。
-                                </p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 保障：借款逾期<span>48</span>小时内，易贷风险准备金先行垫付。
-                                </p>
-                            </div>
-                            <div class="step clearfix">
-                                <ul>
-                                    <li><i class="icon icon-1"></i>资料审核</li>
-                                    <li><i class="icon icon-2"></i>实地调查</li>
-                                    <li><i class="icon icon-3"></i>资产评估</li>
-                                    <li class="no"><i class="icon icon-4"></i>发布借款</li>
-                                </ul>
-                            </div>
-                            <div class="conclusion f16"> 结论：经风控部综合评估， <span class="c-orange">同意放款40,000.00元；</span> <i
-                                    class="icon icon-status icon-status1"></i></div>
-                        </dd>
-                    </dl>
-                </div>
-            </div>
-            <div class="ui-tab-item" style="display: none;">
-                <div class="repayment-list"> 目前投标总额：<span class="c-orange">40,000.00 元</span>&nbsp;&nbsp;
-                    剩余投标金额：<span class="c-orange">0.00 元</span>
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                        <tbody>
-                        <tr>
-                            <th>投标人</th>
-                            <th>投标金额</th>
-                            <th>投标时间</th>
-                            <th>投标方式</th>
-                        </tr>
-                        </tbody>
-                        <tbody id="repayment_content">
-                        <tr>
-                            <td>筱***</td>
-                            <td><span class="c-orange">￥652.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>大***</td>
-                            <td><span class="c-orange">￥94.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>p***</td>
-                            <td><span class="c-orange">￥796.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>t***</td>
-                            <td><span class="c-orange">￥4,000.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>湘***</td>
-                            <td><span class="c-orange">￥5,642.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>A***</td>
-                            <td><span class="c-orange">￥3,336.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>蒲***</td>
-                            <td><span class="c-orange">￥2,582.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>c***</td>
-                            <td><span class="c-orange">￥683.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>豆***</td>
-                            <td><span class="c-orange">￥8,000.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>j***</td>
-                            <td><span class="c-orange">￥2,725.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>l***</td>
-                            <td><span class="c-orange">￥1,242.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>郑***</td>
-                            <td><span class="c-orange">￥624.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>神***</td>
-                            <td><span class="c-orange">￥100.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>快***</td>
-                            <td><span class="c-orange">￥2,279.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>一***</td>
-                            <td><span class="c-orange">￥500.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>思***</td>
-                            <td><span class="c-orange">￥54.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>b***</td>
-                            <td><span class="c-orange">￥1,027.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>林***</td>
-                            <td><span class="c-orange">￥969.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>小***</td>
-                            <td><span class="c-orange">￥81.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>V***</td>
-                            <td><span class="c-orange">￥77.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr class="page-outer">
-                            <td colspan="4" align="center">
-                                <div class="pagination clearfix"><span class="page" id="repayment_content_pager"><a
-                                        class="disabled"> 上一页 </a><a class="curr">1</a><a
-                                        href="javascript:void(0)">2</a><a href="javascript:void(0)" next="2">下一页</a><em>共2页</em>
-                    <dl class="page-select">
-                      <dt><span>1</span><i class="icon icon-down"></i></dt>
-                      <dd style="display: none;"><a href="javascript:;" total="23" spaninterval="2"
-                                                    content="repayment_content">1</a><a href="javascript:;" total="23"
-                                                                                        spaninterval="2"
-                                                                                        content="repayment_content">2</a></dd>
-                    </dl>
-                    </span></div>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-            <div class="ui-tab-item" style="display: none;">
-                <div class="repayment-list"> 已还本息：<span class="c-orange">0.00元</span>&nbsp;&nbsp;
-                    待还本息：<span class="c-orange">40,400.00元</span>&nbsp;&nbsp;(待还本息因算法不同可能会存误差，实际金额以到账金额为准！)
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tbody>
-                        <tr>
-                            <th>合约还款日期</th>
-                            <th>期数</th>
-                            <th>应还本金</th>
-                            <th>应还利息</th>
-                            <th>应还本息</th>
-                            <th>还款状态</th>
-                        </tr>
-                        <tr>
-                            <td>2015-10-13</td>
-                            <td>1</td>
-                            <td>40,000.00元</td>
-                            <td>400.00元</td>
-                            <td>40,400.00元</td>
-                            <td>还款中</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+
+<script type="text/javascript">
+	new Vue({
+		el: "#app",
+		data: {
+			num1: 100,
+			allNum: 69000,
+			tableData2:[{a1:'AF50814897',a2:'男',a3:'180******82',a4:'大专',a5:'已婚',a6:'自购房屋，无贷款',a7:'山东省东营市'}],
+			job: [{a1:'电力、燃气及水的生产和供应业',a2:'山东省东营市',a3:'10万以内',a4:'无',a5:'暂未提供'}],
+			loanInfo:[{a1:'111',a2:'借款标111',a3:'AF50814897',a4:'109400元',a5:'36个月',a6:'12.00%',a7:'放款成功次日',a8:'日常消费',a9:'等额本息',a10:'个人收入',a11:'6天1小时15分'}],
+			loanGave:[
+						{name:'CY53881599',money:'500元',time:'2018-01-02'},
+						{name:'梁钊源',money:'5000元',time:'2018-01-02'},
+						{name:'用户2ACEA865',money:'1500元',time:'2018-01-02'},
+						{name:'农夫666',money:'2000元',time:'2018-01-02'},
+						{name:'面面包包',money:'1000元',time:'2018-01-02'},
+						{name:'SA22750368',money:'800元',time:'2018-01-02'},
+						{name:'天路808',money:'8500元',time:'2018-01-02'},
+						{name:'借钱要还1',money:'2500元',time:'2018-01-02'},
+						{name:'DG17331199',money:'3500元',time:'2018-01-02'},
+						{name:'手机用户.717556',money:'4500元',time:'2018-01-02'},
+						{name:'DD93698523',money:'5600元',time:'2018-01-02'},
+						{name:'forestlin',money:'5200元',time:'2018-01-02'},
+						{name:'MM55940103',money:'5100元',time:'2018-01-02'},
+						{name:'GW49000108',money:'5000元',time:'2018-01-02'},
+					],
+			currentPage1: 5,
+			currentPage2: 5,
+			currentPage3: 5,
+			currentPage4: 4,
+			
+		},
+		methods: {
+			handleSizeChange(val) {
+				console.log(`每页 ${val} 条`);
+			},
+			handleCurrentChange(val) {
+				console.log(`当前页: ${val}`);
+			}
+		},
+		//过滤器
+		filters: {
+			//保留两位小数
+			numFilter(value) {
+				// 截取当前数据到小数点后两位
+				let realVal = Number(value).toFixed(2)
+				// num.toFixed(2)获取的是字符串
+				return Number(realVal)
+
+			}
+		}
+	})
+</script>
+
+
+
+
+
 <!--网站底部-->
 <div id="footer" class="ft bottom">
-    <script>
-        $(".bottom").load("bottom.html");
-    </script>
+  <script>
+      $(".bottom").load("bottom.html");
+  </script>
 </div>
 </body>
 </html>
