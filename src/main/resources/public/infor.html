@@ -129,7 +129,7 @@
 							<el-col :span="7">
 								<div class="col col2">
 									<div class="colTop">
-										<strong>36</strong>个月
+										<strong>{{month}}</strong>个月
 									</div>
 									<div class="colBottom">
 										<span>借款期限</span>
@@ -148,8 +148,12 @@
 							</el-col>
 						</div>
 						<div class="el-left-bottom">
-							<el-col :span="12" :push="6">
-								<el-progress :percentage="70"></el-progress>
+							<el-col :span="24" >
+								<el-col :span="4" style="font-size: 16px;" :push="3">投标进度:</el-col>
+								<el-col :span="14"  :push="2">
+									<el-progress :percentage="70" style="margin: 5px;"></el-progress>
+								</el-col>
+								
 							</el-col>
 						</div>
 					</div>
@@ -301,6 +305,7 @@
 			currentPage2: 5,
 			currentPage3: 5,
 			currentPage4: 4,
+			month:26,
 			
 		},
 		methods: {
