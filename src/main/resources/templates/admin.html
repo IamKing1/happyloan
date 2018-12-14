@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8">
 	<title>欢迎进入后台页面</title>
@@ -193,7 +193,7 @@
 				<el-menu :default-openeds="['1']" background-color=""  th:each="list,iterStat: ${list}">
 					<el-submenu th:index="${iterStat.count}" >
 						<template slot="title" th:text="${list.NAME}"><i class="el-icon-message"></i></template>
-							<div th:each="childList,iterStat1: ${list.childrenList}">
+							<div th:each="childList,iterStat1: ${list.childrenList}" >
 								<el-menu-item th:index="${iterStat.count}-${iterStat1.count}"><a th:href="${childList.URL}" target="iframe" th:text="${childList.NAME}">选项1</a></el-menu-item>
 							</div>
 						<!--<el-menu-item index="1-2"><a href="/jump/toEg2" target="iframe">选项2</a></el-menu-item>

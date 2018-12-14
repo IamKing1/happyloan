@@ -37,7 +37,7 @@ public class UserLoginController {
 
     @RequestMapping(value = "userLogin")
     public String userLogin(@RequestParam Map map, Model model, RedirectAttributes redirectAttributes) {
-        System.out.println(map);
+
         boolean rememberMe = false;
         if(map.get("rememberMe")==null){
             rememberMe=false;

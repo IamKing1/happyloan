@@ -39,6 +39,9 @@ public class functionCotrolle {
         model.addAttribute("list",list);
         return  "admin";
     }
+    @RequestMapping(value = "noHasP")
+    public String noHasP(){
 
-
+        return "unauthorized";
+    }
 }
