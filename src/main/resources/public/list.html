@@ -85,7 +85,7 @@
       <el-table-column
               label="操作">
         <template scope="scope">
-          <el-button type="success" size="big" @click="toinfor()">投资</el-button>
+          <el-button type="success" size="big" @click="toinfor(scope.row)">投资</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -146,8 +146,8 @@
 
         },
         methods:{
-            toinfor(){
-              location.href="infor.html"
+            toinfor(row){
+              location.href="infor.html?tendId="+row.ID;
             },
             toFlush:function(){
                 this.loadingData();
