@@ -151,4 +151,37 @@ public class InvestmentServiceImpl implements InvestmentService {
         int i = investmentDao.updateTendStutsToFour(tendId);
         return i;
     }
+
+
+    @Override
+    public List<Map> selectFailMarkList(Map map) {
+        List<Map> tenderingList = investmentDao.selectFailMarkList(map);
+        for (Map map1 : tenderingList) {
+            Integer tendId = Integer.valueOf(map1.get("ID").toString());
+            Integer currentlyMoney=0;
+            List<Map> moneyList = investmentDao.currentlyVoted(tendId);
+            if(moneyList!=null&&moneyList.size()>0){
+                for(int i=0;i<moneyList.size();i++){
+                    currentlyMoney+=Integer.valueOf(moneyList.get(i).get("MONEY").toString());
+                }
+            }
+            map1.put("hasMoney",currentlyMoney);
+        }
+        return tenderingList;
+
+    }
+
+    @Override
+    public Integer selectFailMarkListCount(Map map) {
+
+        return investmentDao.selectFailMarkListCount(map);
+    }
+
+    @Override
+    public int saveBorrowingInformation(Map map) {
+        Integer longTime = investmentDao.getLongTimeByTendId(map);
+        map.put("time",longTime);
+        int i = investmentDao.saveBorrowingInformation(map);
+        return i;
+    }
 }

@@ -31,7 +31,7 @@
 select b.realname,a.begintime,a.stuts,a.bid_end_time,c.money,a.id,b.id realId from tb_tendering a
 join tb_realname b on a.realname=b.id
 join tb_borrow c on a.borrow=c.id
-where a.stuts=1 or a.stuts=2
+where a.stuts=2
     </select>
 
     <select id="selectTenderingListCount" resultType="Integer">
@@ -39,7 +39,22 @@ where a.stuts=1 or a.stuts=2
 join tb_realname b on a.realname=b.id
 join tb_borrow c on a.borrow=c.id
 
-where a.stuts=1 or a.stuts=2
+where a.stuts=2
+    </select>
+
+    <select id="selectFailMarkList" resultType="map">
+        select b.realname,a.begintime,a.stuts,a.bid_end_time,c.money,a.id,b.id realId from tb_tendering a
+        join tb_realname b on a.realname=b.id
+        join tb_borrow c on a.borrow=c.id
+        where a.stuts=5
+    </select>
+
+    <select id="selectFailMarkListCount" resultType="Integer">
+        select count(*) from tb_tendering a
+        join tb_realname b on a.realname=b.id
+        join tb_borrow c on a.borrow=c.id
+
+        where a.stuts=5
     </select>
 
     <update id="updateTendStutsToThree">
@@ -62,4 +77,22 @@ where a.stuts=1 or a.stuts=2
     <update id="updateTendStutsToFour">
         update tb_tendering set stuts=4 where id= #{tendId}
     </update>
+    
+    
+    <insert id="saveBorrowingInformation" parameterType="map">
+        insert into tb_loanrecord (id,realid,money,begintime,longtime)
+         VALUES  (SEQ_BORROWMONEY_RECOS.NEXTVAL,#{REALID},#{hasMoney},trunc(sysdate),#{time})
+    </insert>
+    
+    <select id="getLongTimeByTendId" resultType="Integer" parameterType="map">
+
+       select longtime from tb_tendering a
+join tb_borrow b on a.borrow=b.id where a.id=#{ID}
+
+    </select>
+
+    <select id="deductMoney" parameterType="map" statementType="CALLABLE" resultType="java.lang.Integer">
+        call pro_batch_huankuan1(#{money,mode=IN},#{realId,mode=IN},#{mse,mode=OUT,jdbcType=INTEGER})
+    </select>
+
 </mapper>

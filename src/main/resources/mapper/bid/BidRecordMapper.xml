@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.bid.BidRecordDao">
+    <select id="getPager" resultType="map">
+        select * from (
+        select rownum rn,a.id realid,g.id brrid,g.MONEY,h.item LONGTIME,g.longtime BID_AMORTIZE,i.item REPAYMENTMETHOD,j.item PURPOSE,g.HOUSINGQUANTITY,g.TOTALPRICE,g.REMARK,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.AUDITREMARKS,a.id,a.realname,a.address,to_char(a.applicationtime,'yyyy-MM-dd') applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income
+        from tb_realname a
+        left join tb_systemcategoryitem b on a.housed=b.id
+        left join tb_systemcategoryitem c on a.academic=c.id
+        left join tb_systemcategoryitem d on a.marriage=d.id
+        left join tb_systemcategoryitem e on a.income=e.id
+        left join tb_systemcategoryitem f on a.auditorid=f.id
+        left join tb_borrow g on g.realid=a.id
+        left join tb_systemcategoryitem h on g.LONGTIME=h.id
+        left join tb_systemcategoryitem i on g.REPAYMENTMETHOD=i.id
+        left join tb_systemcategoryitem j on g.PURPOSE=j.id
+        where rownum &lt; #{end} and g.STATUS=23 and g.release = 1 ) c
+        where c.rn &gt; #{start}
+    </select>
+    <!-- 分页总数量-->
+    <select id="getPageCountr" resultType="int">
+        select count(*) from
+        tb_realname a
+        left join tb_systemcategoryitem b on a.housed=b.id
+        left join tb_systemcategoryitem c on a.academic=c.id
+        left join tb_systemcategoryitem d on a.marriage=d.id
+        left join tb_systemcategoryitem e on a.income=e.id
+        left join tb_systemcategoryitem f on a.auditorid=f.id
+        left join tb_borrow g on g.realid=a.id
+        left join tb_systemcategoryitem h on g.LONGTIME=h.id
+        left join tb_systemcategoryitem i on g.REPAYMENTMETHOD=i.id
+        left join tb_systemcategoryitem j on g.PURPOSE=j.id   where g.STATUS=23 and g.release = 1
+    </select>
+    <select id="getById1" resultType="map">
+               select rownum rn,a.id realid,g.id brrid,g.MONEY,g.longtime BID_AMORTIZE,h.item LONGTIME,i.item REPAYMENTMETHOD,j.item PURPOSE,g.HOUSINGQUANTITY,g.TOTALPRICE,g.REMARK,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.AUDITREMARKS,a.id,a.realname,a.address,a.applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income
+        from tb_realname a
+        left join tb_systemcategoryitem b on a.housed=b.id
+        left join tb_systemcategoryitem c on a.academic=c.id
+        left join tb_systemcategoryitem d on a.marriage=d.id
+        left join tb_systemcategoryitem e on a.income=e.id
+        left join tb_systemcategoryitem f on a.auditorid=f.id
+        left join tb_borrow g on g.realid=a.id
+        left join tb_systemcategoryitem h on g.LONGTIME=h.id
+        left join tb_systemcategoryitem i on g.REPAYMENTMETHOD=i.id
+        left join tb_systemcategoryitem j on g.PURPOSE=j.id   where g.STATUS=23 and g.release = 1  and a.id=#{id}
+    </select>
+    <!--添加-->
+    <insert id="add" parameterType="map">
+        insert into tb_tendering(id,realname,BID_MONEY,BEGINTIME,USERID,BID_MINIMUM,STUTS,BID_AMORTIZE,BID_END_TIME) values
+        (seq_zhaobiao_id.nextval,#{REALID},#{BID_MONEY},trunc(sysdate),#{USERID},#{BID_MINIMUM},21,#{BID_AMORTIZE},to_date(#{BID_END_TIME},'yyyy-mm-dd'))
+    </insert>
+    <update id="update" parameterType="map">
+        update (
+        select a.id realid,g.id brrid,g.release,g.MONEY,h.item LONGTIME,g.longtime BID_AMORTIZE,i.item REPAYMENTMETHOD,j.item PURPOSE,g.HOUSINGQUANTITY,g.TOTALPRICE,g.REMARK,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.AUDITREMARKS,a.id,a.realname,a.address,to_char(a.applicationtime,'yyyy-MM-dd') applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income
+        from tb_realname a
+        left join tb_systemcategoryitem b on a.housed=b.id
+        left join tb_systemcategoryitem c on a.academic=c.id
+        left join tb_systemcategoryitem d on a.marriage=d.id
+        left join tb_systemcategoryitem e on a.income=e.id
+        left join tb_systemcategoryitem f on a.auditorid=f.id
+        left join tb_borrow g on g.realid=a.id
+        left join tb_systemcategoryitem h on g.LONGTIME=h.id
+        left join tb_systemcategoryitem i on g.REPAYMENTMETHOD=i.id
+        left join tb_systemcategoryitem j on g.PURPOSE=j.id
+        where g.STATUS=23 and g.release = 1
+        ) set RELEASE=2 where REALID=#{ID}
+    </update>
+    <!--搜索检索内容-->
+    <select id="selectu" resultType="map">
+        select * from tb_user where state=10
+    </select>
+    <update id="updates" parameterType="map">
+        update (
+        select a.id realid,g.id brrid,g.release,g.MONEY,h.item LONGTIME,g.longtime BID_AMORTIZE,i.item REPAYMENTMETHOD,j.item PURPOSE,g.HOUSINGQUANTITY,g.TOTALPRICE,g.REMARK,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.AUDITREMARKS,a.id,a.realname,a.address,to_char(a.applicationtime,'yyyy-MM-dd') applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income
+        from tb_realname a
+        left join tb_systemcategoryitem b on a.housed=b.id
+        left join tb_systemcategoryitem c on a.academic=c.id
+        left join tb_systemcategoryitem d on a.marriage=d.id
+        left join tb_systemcategoryitem e on a.income=e.id
+        left join tb_systemcategoryitem f on a.auditorid=f.id
+        left join tb_borrow g on g.realid=a.id
+        left join tb_systemcategoryitem h on g.LONGTIME=h.id
+        left join tb_systemcategoryitem i on g.REPAYMENTMETHOD=i.id
+        left join tb_systemcategoryitem j on g.PURPOSE=j.id
+        where g.STATUS=23 and g.release = 2
+        ) set RELEASE=1 where REALID=#{ID}
+    </update>
+
+</mapper>

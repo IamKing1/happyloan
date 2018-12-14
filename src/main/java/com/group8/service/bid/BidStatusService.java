@@ -1,18 +1,15 @@
-package com.group8.dao.bid;
-
-import org.springframework.stereotype.Component;
+package com.group8.service.bid;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * className:BidDao
+ * className:BidStatusService
  * discriptoin:
  * author:WangPJ
- * createTime:2018-11-23 20:05
+ * createTime:2018-12-13 13:57
  */
-@Component
-public interface BidDao {
+public interface BidStatusService {
     /**
      *分页数量
      * @param map
@@ -26,19 +23,22 @@ public interface BidDao {
      * @return
      */
     int getPageCount(Map map);
-
     /**
      * 搜索检索选项
      * @return
      */
     List<Map> selects(Map map);
     List<Map> selectu(Map map);
-
     /**
-     * 修改
+     * 分页
      * @param map
      * @return
      */
-    int update(Map map);
+    List<Map> getPager(Map map);
 
+    /**
+     * 计数
+     * @return
+     */
+    int getPageCountr(Map map);
 }
