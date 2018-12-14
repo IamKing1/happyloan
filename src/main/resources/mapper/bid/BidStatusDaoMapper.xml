@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.group8.dao.bid.BidDao">
+<mapper namespace="com.group8.dao.bid.BidStatusDao">
     <!-- 分页查询-->
     <select id="getPage" resultType="map">
         select * from (
@@ -14,7 +14,7 @@
         join tb_user b on a.userid=b.userid
         join tb_systemcategoryitem c on a.bid_amortize=c.id
         join tb_systemcategoryitem d on a.stuts=d.id
-        where a.stuts=21
+        where a.stuts=48
         <if test="USERID!=null and USERID!=''">
             and a.USERID=#{USERID}
         </if>
@@ -31,7 +31,7 @@
         join tb_user b on a.userid=b.userid
         join tb_systemcategoryitem c on a.bid_amortize=c.id
         join tb_systemcategoryitem d on a.bid_state=d.id
-        where a.stuts=21
+        where a.stuts=48
         <if test="USERID!=null and USERID!=''">
             and a.USERID=#{USERID}
         </if>
@@ -47,9 +47,38 @@
     <select id="selects" resultType="map">
         select * from tb_systemcategoryitem where parentid=9
     </select>
-    <!--修改-->
-    <update id="update" parameterType="map">
-        update tb_tendering set stuts=48 where ID=#{BID_ID}
-    </update>
-
+    <select id="getPager" resultType="map">
+        select * from (
+        select rownum rn,t.* from (
+        select a.id bid_id,a.bid_money,to_char(a.BEGINTIME,'yyyy-MM-dd') bid_creation_time,
+        a.bid_minimum,d.item state,c.item cdate,to_char(a.BID_END_TIME,'yyyy-MM-dd') bid_end_time,
+        b.username,c.id,b.userid
+        from tb_tendering a
+        join tb_user b on a.userid=b.userid
+        join tb_systemcategoryitem c on a.bid_amortize=c.id
+        join tb_systemcategoryitem d on a.stuts=d.id
+        where 1=1
+        <if test="USERID!=null and USERID!=''">
+            and a.USERID=#{USERID}
+        </if>
+        <if test="BID_AMORTIZE!=null and BID_AMORTIZE!=''">
+            and BID_AMORTIZE=#{BID_AMORTIZE}
+        </if>
+        order by bid_id DESC) t where rownum &lt; #{end}) a where a.rn &gt; #{start}
+    </select>
+    <!-- 分页总数量-->
+    <select id="getPageCountr" resultType="int">
+        select count(*)
+        from tb_tendering a
+        join tb_user b on a.userid=b.userid
+        join tb_systemcategoryitem c on a.bid_amortize=c.id
+        join tb_systemcategoryitem d on a.bid_state=d.id
+        where 1=1
+        <if test="USERID!=null and USERID!=''">
+            and a.USERID=#{USERID}
+        </if>
+        <if test="BID_AMORTIZE!=null and BID_AMORTIZE!=''">
+            and BID_AMORTIZE=#{BID_AMORTIZE}
+        </if>
+    </select>
 </mapper>
