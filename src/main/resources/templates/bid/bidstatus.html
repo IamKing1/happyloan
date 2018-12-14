@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/stylebid.css">
 </head>
 <body>
-<div class="psize"><p>建标审核</p></div>
+<div class="psize"><p>已发布</p></div>
 <!--查询-->
 <div class="listye">
     <!--搜索筛选-->
@@ -49,24 +49,23 @@
                 <td>标金期数</td>
                 <td>结束时间</td>
                 <td>负责人</td>
-                <td>操作</td>
             </tr>
             <tr th:each="bid : ${bidList}">
                 <td th:text="${bid.BID_ID}"></td>
                 <td th:text="${bid.BID_MONEY}"></td>
                 <td th:text="${bid.BID_CREATION_TIME}"></td>
                 <td th:text="${bid.BID_MINIMUM}"></td>
-                <td>1111</td>
+                <td>111111</td>
                 <td th:text="${bid.STATE}"></td>
                 <td th:text="${bid.CDATE}"></td>
                 <td th:text="${bid.BID_END_TIME}"></td>
                 <td th:text="${bid.USERNAME}"></td>
-                <td >
+                <!--<td >
                     <button type="button" class="xgbtn" data-toggle="modal" id="changeMeth" data-target="#myModala" style="color: #fff;">确认
                         <input type="hidden" th:value="${bid.BID_ID}">
                     </button>
-                    <!--<button type="button" class="btn btn-danger" id="dele"><input type="hidden" th:value="${bid.BID_ID}">删除</button>-->
-                </td>
+                    &lt;!&ndash;<button type="button" class="btn btn-danger" id="dele"><input type="hidden" th:value="${bid.BID_ID}">删除</button>&ndash;&gt;
+                </td>-->
             </tr>
             <tr>
                 <td align="center" colspan="10" th:utext="${stringPage}">
@@ -76,35 +75,4 @@
     </center>
 </div>
 </body>
-<script>
-    /*
-    * 修改方法传值
-    * */
-    $(document).on("click", "#changeMeth", function () {
-        var gaina ={BID_ID:$(this).children("input[type='hidden']").val()}
-        $("#aaaaaaa").val(gaina)
-        $.ajax({
-            url : "/bidcon/update",
-            type:"POST",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(gaina),
-
-            success:function (data) {
-                if (data>0){
-                    location.href="/bidcon/list"
-
-                    alert("审核成功")
-                }else {
-                    alert("审核失败")
-                    location.href="/bidcon/list"
-                }
-            },error:function () {
-                console.log("error")
-            }
-        })
-
-
-    })
-</script>
 </html>
