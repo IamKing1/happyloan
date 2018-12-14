@@ -47,16 +47,27 @@ public interface InvestmentDao {
     int updateTendStuts(Integer tendId);
 
     /**
-     * 查询已发布表的列表
+     * 查询满标的列表
      * @return
      */
     List<Map> selectTenderingList(Map map);
 
     /**
-     * 查询已发布表的列表数量
+     * 查询满标的列表数量
      * @return
      */
     Integer selectTenderingListCount(Map map);
+    /**
+     * 查询流标的列表
+     * @return
+     */
+    List<Map> selectFailMarkList(Map map);
+
+    /**
+     * 查询流标的列表数量
+     * @return
+     */
+    Integer selectFailMarkListCount(Map map);
 
     /**
      * 招标完成，更改状态
@@ -91,5 +102,17 @@ public interface InvestmentDao {
      */
     int updateTendStutsToFour(Integer tendId);
 
+    /**
+     * 储存贷款信息
+     * @return
+     */
+    int saveBorrowingInformation(Map map);
+
+    /**
+     * 根据标的id查询借款时长
+     * @param TendId
+     * @return
+     */
+    Integer getLongTimeByTendId(Map map);
 
 }

@@ -21,22 +21,12 @@ public class BidServiceImpl implements BidService {
 
     @Override
     public List<Map> getPage(Map map) {
-        int pageNo = map.get("pageNo") ==null?1:Integer.valueOf(map.get("pageNo")+"");
-        int pageSize = map.get("pageSize") ==null?10:Integer.valueOf(map.get("pageSize")+"");
-        //计算分页的开始值和结束值
-        map.put("start",(pageNo-1)*pageSize);
-        map.put("end",pageNo*pageSize+1);
         return bidDao.getPage(map);
     }
 
     @Override
     public int getPageCount(Map map) {
         return bidDao.getPageCount(map);
-    }
-
-    @Override
-    public int add(Map map) {
-        return bidDao.add(map);
     }
 
     @Override
@@ -48,20 +38,9 @@ public class BidServiceImpl implements BidService {
     public List<Map> selectu(Map map) {
         return bidDao.selectu(map);
     }
-
-    @Override
-    public List<Map> getById(int bidid) {
-        return bidDao.getById(bidid);
-    }
-
     @Override
     public int update(Map map) {
         return bidDao.update(map);
-    }
-
-    @Override
-    public int delete(Integer id) {
-        return bidDao.delete(id);
     }
 
 

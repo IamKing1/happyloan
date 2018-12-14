@@ -68,7 +68,7 @@ public class Investment {
     }
 
     /**
-     *满标一审
+     *满标管理
      * @param map
      * @return
      */
@@ -84,20 +84,31 @@ public class Investment {
     }
 
     /**
-     * 跳转
+     * 跳转满标管理
      * @return
      */
     @RequestMapping(value = "toTenderingList")
     public String toTenderingList(){
-        return "bid/firstinstance";
+        return "bid/fullmark";
     }
 
+
+    /**
+     * 满标打钱   记录借钱信息
+     * @param map
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "updateTendStutsThree")
     public Object updateTendStutsToThree(@RequestBody Map map){
-
+        //更改状态
         int i = investmentService.updateTendStutsToThree(Integer.valueOf(map.get("ID").toString()));
+       //打钱
         int i1 = investmentService.beatMoneyToBorrower(map);
+        //记录表
+        int i2 = investmentService.saveBorrowingInformation(map);
+
+
         return i1;
     }
 
@@ -106,9 +117,33 @@ public class Investment {
     public Object failToBeSoldAtAuction(@RequestBody Map map){
 
         Integer integer = investmentService.failToBeSoldAtAuction(map);
-
         investmentService.updateTendStutsToFour(Integer.valueOf(map.get("ID").toString()));
+
         return integer;
     }
+    /**
+     * 跳转流标管理
+     * @return
+     */
+    @RequestMapping(value = "toFailmark")
+    public String toFailmark(){
 
+        return "bid/failmark";
+    }
+
+    /**
+     *流标管理
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "selectFailmarkList")
+    @ResponseBody
+    public Object selectFailmarkList(@RequestBody Map map){
+        System.out.println(map);
+        Map map1 = new HashMap();
+        map1.put("data", investmentService.selectFailMarkList(map));
+
+        map1.put("total", investmentService.selectFailMarkListCount(map));
+        return map1;
+    }
 }
