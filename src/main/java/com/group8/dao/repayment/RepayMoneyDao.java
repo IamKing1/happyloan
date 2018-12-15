@@ -20,10 +20,10 @@ public interface RepayMoneyDao {
 
     /**
      * 还款日从资金池拿钱，还给投资人
-     * @param map
+     * @param repayMoney
      * @return
      */
-    int deductMoneyToInvestment(Map map);
+    int deductMoneyToInvestment(double repayMoney);
 
 
     /**
@@ -33,9 +33,18 @@ public interface RepayMoneyDao {
      */
     List<Map> calculationProportion(Map map);
 
+    /**
+     * 计算借款人应还的金额总数
+     * @return
+     */
+    List<Map> getRepayMoneyCount(Map map);
 
 
-
+    /**
+     * 投资人回款
+     * @return
+     */
+    int moneyBack(Map map);
 
 
 }
