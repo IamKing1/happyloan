@@ -189,9 +189,7 @@
                 self.tableDatas = response.data.data;
             });
                 axios.post('/MyLoan/getIssused').then(function(response){
-                    console.log(response.data)
                     self.issued=response.data;
-                    console.log(response.data)
                 })
         },
         filters: { // el-tag类型转换
