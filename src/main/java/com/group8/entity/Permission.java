@@ -11,7 +11,17 @@ import java.util.List;
 public class Permission {
     private Integer permissionId;
     private String permissionName;
+    private String url;
+
     private List<Role> roles;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public Integer getPermissionId() {
         return permissionId;

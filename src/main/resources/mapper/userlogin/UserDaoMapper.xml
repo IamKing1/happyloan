@@ -12,5 +12,13 @@
             join tb_role c on b.roleid=c.roleid where a.id=#{userId}
     </select>
 
+    <select id="findPermissionById" resultType="permission">
+        select e.url from tb_admin a
+join tb_admin_role b on a.id=b.adminid
+join tb_role c on b.roleid=c.roleid
+join tb_role_permission d on c.roleid=d.roleid
+join tb_permission e on d.permissionid=e.id
+where a.id=#{userId}
+    </select>
 
 </mapper>

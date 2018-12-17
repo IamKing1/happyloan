@@ -43,12 +43,14 @@ public class ShiroConfig {
         filterMap.put("/css1/**", "anon");
         filterMap.put("/fonts-awesome/**", "anon");
         filterMap.put("/images/**", "anon");
+        filterMap.put("/vue/**", "anon");
         filterMap.put("/js1/**", "anon");
         filterMap.put("/script/**", "anon");
-        filterMap.put("/customer/**", "anon");*/
-        filterMap.put("/**", "anon");
+        filterMap.put("/customer/**", "anon");
+        filterMap.put("/investment/toTenderingList", "authc,roles[admin]");*/
+        //filterMap.put("/*/*", "authc");
         //设置未授权的页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/toUserLogin111");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/function/noHasP");
         //修改调整的登录页面
         shiroFilterFactoryBean.setLoginUrl("/UserLogin/toUserLogin");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);

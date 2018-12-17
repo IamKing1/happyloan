@@ -1,5 +1,7 @@
 package com.group8.shiro;
 
+import com.group8.dao.login.UserDao;
+import com.group8.entity.Permission;
 import com.group8.entity.Role;
 import com.group8.entity.User;
 import com.group8.service.login.UserService;
@@ -24,6 +26,9 @@ public class UserRealm extends AuthorizingRealm {
 
     @Autowired(required = false)
     private UserService userService;
+
+    @Autowired
+    private UserDao userDao;
     /**
      * 执行授权逻辑
      *
@@ -38,10 +43,15 @@ public class UserRealm extends AuthorizingRealm {
        // info.addStringPermission("user:add");
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
-        System.out.println(user.getUserId());
-        List<Role> userList = userService.findById(user.getUserId());
+        //查看登录用户的权限
+        List<Permission> userPermission = userDao.findPermissionById(user.getId());
+        for (Permission permission : userPermission) {
+            /*System.out.println(permission.getUrl());*/
+            info.addStringPermission(permission.getUrl());
+        }
+        //查看登录用户所拥有的角色
+        List<Role> userList = userService.findById(user.getId());
         for (Role role : userList) {
-            System.out.println(role.getRoleName());
             info.addRole(role.getRoleName());
         }
         return info;

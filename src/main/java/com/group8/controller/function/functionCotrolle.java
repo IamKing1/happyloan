@@ -31,14 +31,17 @@ public class functionCotrolle {
 
     @RequestMapping(value = "index")
     public String index(Model model){
-        List<Map> list = functionService.getList();
+   /*     List<Map> list = functionService.getList();
         for (Map map : list) {
             map.put("childrenList",functionService.getListByPid(Integer.valueOf(map.get("ID").toString())));
         }
 
-        model.addAttribute("list",list);
+        model.addAttribute("list",list);*/
         return  "admin";
     }
+    @RequestMapping(value = "noHasP")
+    public String noHasP(){
 
-
+        return "unauthorized";
+    }
 }
