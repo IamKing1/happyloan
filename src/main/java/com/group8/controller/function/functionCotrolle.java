@@ -1,12 +1,16 @@
 package com.group8.controller.function;
 
+import com.group8.entity.Role;
 import com.group8.service.function.FunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +34,11 @@ public class functionCotrolle {
      */
 
     @RequestMapping(value = "index")
-    public String index(Model model){
+    public String index(Model model,HttpSession session){
+
+        Object userName = session.getAttribute("userName");
+        System.out.println("当前登录用户为:"+userName);
+
    /*     List<Map> list = functionService.getList();
         for (Map map : list) {
             map.put("childrenList",functionService.getListByPid(Integer.valueOf(map.get("ID").toString())));
@@ -43,5 +51,32 @@ public class functionCotrolle {
     public String noHasP(){
 
         return "unauthorized";
+    }
+
+
+    /**
+     * 得到角色列表
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "AllRole")
+    public Object getAllRole(@RequestBody Map map){
+
+        System.out.println(map);
+        Map map1 = new HashMap();
+        map1.put("data",functionService.getAllRole(map));
+        map1.put("total",functionService.getAllRoleCount(map));
+        System.out.println(map1);
+
+        return map1;
+    }
+
+
+    @RequestMapping(value = "toAssignauthority")
+    public String toAssignauthority() {
+
+
+
+        return "/function/assignauthority";
     }
 }
