@@ -14,6 +14,13 @@ public class Role {
     private String remarks;
     private List<Permission> permissionList;
 
+    public List<Permission> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
+    }
 
     public Integer getRoleId() {
         return roleId;

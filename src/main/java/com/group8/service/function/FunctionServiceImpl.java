@@ -1,6 +1,8 @@
 package com.group8.service.function;
 
 import com.group8.dao.function.FunctionDao;
+import com.group8.entity.Permission;
+import com.group8.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +32,26 @@ public class FunctionServiceImpl implements FunctionService {
         List<Map> childrenList = functionDao.getListByPid(Pid);
 
         return childrenList;
+    }
+
+    @Override
+    public List<Role> getAllRole(Map map) {
+        List<Role> allRole = functionDao.getAllRole(map);
+
+        for (Role role : allRole) {
+            List<Permission> permissionListByRole = functionDao.getPermissionByRole(role);
+           if(permissionListByRole!=null&&permissionListByRole.size()>0) {
+               System.out.println(permissionListByRole);
+               role.setPermissionList(permissionListByRole);
+           }
+        }
+
+        return allRole;
+    }
+
+    @Override
+    public Integer getAllRoleCount(Map map) {
+        Integer allRoleCount = functionDao.getAllRoleCount(map);
+        return allRoleCount;
     }
 }
