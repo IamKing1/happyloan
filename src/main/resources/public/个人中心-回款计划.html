@@ -97,12 +97,12 @@
             </el-table-column>
             <el-table-column
                     prop="MO"
-                    label="已筹资金"
+                    label="应还贷款(元)"
                     width="120">
             </el-table-column>
             <el-table-column
                     prop="ACTUAL"
-                    label="应还贷款(元)"
+                    label="剩余未还"
                     width="120">
             </el-table-column>
             <el-table-column
@@ -112,7 +112,7 @@
             </el-table-column>
             <el-table-column
                     prop="STUTS"
-                    label="资金状态"
+                    label="还款状态"
                     width="100">
               <template slot-scope="scope">
                 <el-tag class="btn btn-success">{{scope.row.STUTS | formatStata2}}</el-tag>
@@ -129,9 +129,9 @@
           <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm"  label-width="350px" :rules="editFormRules" ref="editForm" hide-required-asterisk="false">
 
-              <el-form-item label="还款金额" prop="ENAME">
+              <el-form-item label="还款金额" prop="hasMoney">
                 <el-col :span="6">
-                <el-input v-model="editForm.ENAME"></el-input>
+                <el-input v-model="editForm.hasMoney"></el-input>
                 </el-col>元
               </el-form-item>
 
@@ -192,7 +192,7 @@
             goUrl: '',
             //编辑界面数据
            editForm: {
-                state:'',
+                hasMoney:''
             }
 
         },
@@ -220,7 +220,7 @@
                 return stutsMap[stuts]
             },
             formatStata2: function (stuts) {
-                const stutsMap = {3:"已发放"}
+                const stutsMap = {1:"正常还款中",2:'逾期未还'}
                 return stutsMap[stuts]
             },
         },
@@ -244,10 +244,10 @@
                     _self.loading = false;
                 }, 300);
             },
-
+            editFormRules(){},
             //表格编辑事件
             editClick:function(row) {
-                this.goUrl="";
+                this.goUrl="repayMoney/moneyBackPool";
                 this.editFormVisible = true;
                 this.editForm = Object.assign({}, row);
 

@@ -28,7 +28,7 @@ public interface MyLoanDao {
      * @param
      * @return
      */
-   List<Map> getIssused();
+   List<Map> getIssused(Map map);
     /**
      * 分页总数量
      * @param map

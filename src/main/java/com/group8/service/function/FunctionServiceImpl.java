@@ -36,12 +36,16 @@ public class FunctionServiceImpl implements FunctionService {
 
     @Override
     public List<Role> getAllRole(Map map) {
+        //查询所有的角色
         List<Role> allRole = functionDao.getAllRole(map);
 
         for (Role role : allRole) {
+            //查询次校色有的
+            System.out.println(role.getRoleId());
             List<Permission> permissionListByRole = functionDao.getPermissionByRole(role);
+
            if(permissionListByRole!=null&&permissionListByRole.size()>0) {
-               System.out.println(permissionListByRole);
+
                role.setPermissionList(permissionListByRole);
            }
         }
