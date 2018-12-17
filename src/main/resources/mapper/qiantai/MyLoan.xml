@@ -20,7 +20,7 @@
 
     <!--已发放贷款列表-->
 <select id="getIssused" resultType="map">
- select a.money,b.item longtime,d.BEGINTIME,to_char(add_months(d.BEGINTIME,b.item),'yyyy/MM/dd') as duedate,d.money as mo,c.stuts,((b.item/12)*0.12*d.money+d.money) as actual from TB_BORROW a
+ select a.money,b.item longtime,d.BEGINTIME,to_char(add_months(d.BEGINTIME,b.item),'yyyy/MM/dd') as duedate,d.money as mo,c.stuts,((b.item/12)*0.12*d.money+d.money-d.returnmoney) as actual from TB_BORROW a
       join TB_SYSTEMCATEGORYITEM b on a.LONGTIME=b.id
       join TB_TENDERING c on c.id=a.id
       join TB_LOANRECORD d on a.id=d.id
