@@ -1,9 +1,13 @@
 package com.group8.controller.LoanAudit;
 
+import com.group8.entity.User;
 import com.group8.service.LoanAudit.LoanAuditService;
+import com.group8.service.login.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +24,8 @@ public class LoanAuditController {
 
     @Autowired
     private LoanAuditService loanAuditService;
+    @Autowired
+    private UserService userService;
     /**
      * 跳转列表
      * @param map
@@ -50,8 +56,10 @@ public class LoanAuditController {
      */
     @ResponseBody
     @RequestMapping("/update")
-    public Object update(@RequestBody Map map){
-
+    public Object update(@RequestBody Map map, HttpSession session){
+        Object userName = session.getAttribute("userName");
+        map.put("adminId", userName.toString());
+        System.out.println(map);
         return loanAuditService.update(map);
     }
 

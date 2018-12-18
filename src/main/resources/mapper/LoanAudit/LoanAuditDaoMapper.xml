@@ -30,6 +30,6 @@
     </select>
     <!--审核-->
     <update id="update" parameterType="map">
-        update tb_borrow set firstinc=#{FIRSTINC},firstincname=#{FIRSTINCNAME},firstinctime=to_date(#{FIRSTINCTIME},'yyyy/MM/dd'),status=#{STATUS} where id=#{ID}
+        update tb_borrow set firstinc=#{FIRSTINC},firstincname=#{adminId},firstinctime=sysdate,status=#{STATUS} where id=#{ID}
     </update>
 </mapper>
