@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -17,7 +16,7 @@
             jytema();
 
             realname();
-
+            
         })
 
         //校验实名认证
@@ -28,8 +27,8 @@
                 url: "customer/realName", //发送请求地址
                 //请求成功后的回调函数有两个参数
                 success: function (data) {
-
-                        if(data.meg=="-1"){
+                        console.log(data.meg)
+                    if(data.meg=="-1"){
                             $("#realName").append("</span><i class=\"grzxbg p-danger\">");
                             $("#realName1").html("未认证");
                             $("#realName2").append("<a href=\"个人中心-实名认证.html\" id='renzheng'>去认证</a></span>");
@@ -40,7 +39,6 @@
                             $("#realName1").html("认证失败");
                             $("#realName2").append("<a href=\"个人中心-实名认证.html\">重新认证</a></span>");
                         }else if(data.meg=="审核中"){
-
                             $("#realName").append("<i class=\"grzxbg p-danger\"></i>");
                             $("#realName1").html(data.meg);
                             $("#realName2").append("<a >请耐心等待结果</a></span>");

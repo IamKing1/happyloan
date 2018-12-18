@@ -15,6 +15,7 @@ import static com.group8.service.IdCardService.getIdCardDetail;
  */
 
 @Controller
+@RequestMapping("idCard")
 public class IdCardController {
 
 
