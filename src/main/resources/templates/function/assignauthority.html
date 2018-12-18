@@ -38,7 +38,7 @@
     <!--列表-->
     <el-row>
         <!--列表顶部搜索和工具条-->
-        <el-row>
+        <!--<el-row>
             <el-form :inline="true" :model="searchForm" class="demo-form-inline">
                 <el-form-item label="身份证号">
                     <el-input v-model="searchForm.idNumber" placeholder="身份证号"></el-input>
@@ -58,7 +58,7 @@
                     <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
                 </el-form-item>
             </el-form>
-        </el-row>
+        </el-row>-->
 
 
         <!--列表-->
@@ -113,9 +113,12 @@
     <!--编辑界面-->
     <el-dialog title="更改权限" :visible.sync="editFormVisible" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="120px" :rules="editFormRules" ref="editForm">
-            <el-form-item label="拥有的权限" prop="permissionList">
-                <el-input v-model="editForm.permissionList"  auto-complete="off"></el-input>
+
+
+            <el-form-item label="身份证号">
+                <el-input v-model="editForm.permissionList" ></el-input>
             </el-form-item>
+
 
         </el-form>
         <div slot="footer" class="dialog-footer" style="text-align: center">
@@ -228,11 +231,11 @@
             },
             //表格编辑事件
             editClick: function (row) {
-                this.goUrl = "/auditing/realNameResult";
+                this.goUrl = "";
                 this.editFormVisible = true;
                 var _self = this;
                 this.editForm = Object.assign({}, row);
-                console.log(row)
+               /* console.log(row)*/
 
 
             },

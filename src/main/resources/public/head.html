@@ -18,7 +18,7 @@
             $.ajax({
                 type: "post", //请求方式
                 dataType: "json",
-                async: false,
+	            async: true,
                 url: "customer/jySession", //发送请求地址
                 //请求成功后的回调函数有两个参数
                 success: function (data) {
@@ -96,7 +96,7 @@
         $.ajax({
             type: "post", //请求方式
             dataType: "json",
-            async: false,
+	        async: true,
             url: "customer/jySession", //发送请求地址
             //请求成功后的回调函数有两个参数
             success: function (data) {

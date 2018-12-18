@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -97,14 +97,10 @@
             </el-table-column>
             <el-table-column
                     prop="MO"
-                    label="已筹资金(元)"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    prop="ACTUAL"
                     label="应还贷款(元)"
                     width="120">
             </el-table-column>
+
             <el-table-column
                     prop="DUEDATE"
                     label="截止日期"
@@ -112,32 +108,26 @@
             </el-table-column>
             <el-table-column
                     prop="STUTS"
-                    label="资金状态"
-                    width="100">
+                    label="还款状态"
+                    width="140">
               <template slot-scope="scope">
                 <el-tag class="btn btn-success">{{scope.row.STUTS | formatStata2}}</el-tag>
               </template>
             </el-table-column>
-             <el-table-column
-                     label="操作">
+             <el-table-column label="操作">
                <template scope="scope">
-                 <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">还款</el-button>
+                 <el-button :plain="true" v-if="scope.row.STUTS!=3" type="success" size="small" icon="edit" @click="editClick(scope.row)">还款</el-button>
+               </template>
+               <template scope="scope">
+                 <el-button :plain="true" v-if="scope.row.STUTS===3" type="success" size="small" disabled="true" icon="edit" @click="editClick(scope.row)">还款</el-button>
                </template>
              </el-table-column>
           </el-table>
           <!--编辑界面-->
-          <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
+          <el-dialog title="你确定要还款吗" :visible.sync="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm"  label-width="350px" :rules="editFormRules" ref="editForm" hide-required-asterisk="false">
-              <el-form-item label="剩余应还" prop="ACTUAL">
-                <el-col :span="6">
-                <el-input v-model="editForm.ACTUAL" disabled="true"></el-input>
-                </el-col>元
-              </el-form-item>
-              <el-form-item label="还款金额" prop="ENAME">
-                <el-col :span="6">
-                <el-input v-model="editForm.ENAME"></el-input>
-                </el-col>元
-              </el-form-item>
+
+
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -196,8 +186,7 @@
             goUrl: '',
             //编辑界面数据
            editForm: {
-                state:'',
-               ACTUAL:'',
+                hasMoney:''
             }
 
         },
@@ -225,7 +214,7 @@
                 return stutsMap[stuts]
             },
             formatStata2: function (stuts) {
-                const stutsMap = {3:"已发放"}
+                const stutsMap = {1:"未还",2:'逾期未还',3:'已还'}
                 return stutsMap[stuts]
             },
         },
@@ -249,10 +238,10 @@
                     _self.loading = false;
                 }, 300);
             },
-
+            editFormRules(){},
             //表格编辑事件
             editClick:function(row) {
-                this.goUrl="";
+                this.goUrl="repayMoney/moneyBackPool";
                 this.editFormVisible = true;
                 this.editForm = Object.assign({}, row);
 

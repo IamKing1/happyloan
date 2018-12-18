@@ -3,6 +3,7 @@ package com.group8.controller.repayment;
 import com.group8.service.repayment.RepayMoneyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,33 +24,25 @@ public class RepayMoney {
 
     @ResponseBody
     @RequestMapping(value = "moneyBackPool")
-    public Object moneyBackPool(){
+    public Object moneyBackPool(@RequestBody Map map){
 
         //还款操作  需要三个参数
-        Map map = new HashMap();
-        map.put("money",100);
-        map.put("realId",22);
-        map.put("tendId",21);
 
+        //借款人还款操作
         int i = repayMoneyService.deductMoney(map);
-
-        return i;
+    if(i<0){
+        return -1;
+    }
+        map.put("tendId",map.get("TENDID"));
+        //投资人回款操作
+        int i1 = repayMoneyService.transferMoneyToTouZiRen(map);
+        if(i1<1){
+            return -1;
+        }
+        return 1;
     }
 
 
-
-    /**
-     * 执行回款操作，从资金池拿钱，返还给投资人
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "moneyBackToPerson")
-    public Object moneyBackToPerson(){
-        Map map = new HashMap();
-          map.put("tendId",21);
-        int i = repayMoneyService.transferMoneyToTouZiRen(map);
-        return i;
-    }
 
 
 }

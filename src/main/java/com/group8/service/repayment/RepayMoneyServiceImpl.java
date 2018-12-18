@@ -22,10 +22,11 @@ public class RepayMoneyServiceImpl implements RepayMoneyService {
 
     @Override
     public int deductMoney(Map map) {
-        System.out.println(map);
-        repayMoneyDao.deductMoney(map);
-        System.out.println(repayMoneyDao.deductMoney(map));
-        return 0;
+
+        Integer integer = repayMoneyDao.deductMoney(map);
+        System.out.println(integer);
+
+        return 1;
     }
 
     @Override

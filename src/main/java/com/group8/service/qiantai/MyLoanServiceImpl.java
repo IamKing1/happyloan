@@ -1,9 +1,12 @@
 package com.group8.service.qiantai;
 
 import com.group8.dao.qiantai.MyLoanDao;
+import com.group8.service.customer.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,11 +18,14 @@ import java.util.Map;
  */
 @Service
 @SuppressWarnings("all")
-public class MyLoanServiceImpl implements
-        MyLoanService {
+public class MyLoanServiceImpl implements MyLoanService {
 
     @Autowired
     private MyLoanDao myLoanDao;
+
+    @Autowired
+    private InformationService informationService;
+
     @Override
     public List<Map> getMoney() {
         return myLoanDao.getMoney();
@@ -31,8 +37,14 @@ public class MyLoanServiceImpl implements
     }
 
     @Override
-    public List<Map> getIssused( ) {
-        return myLoanDao.getIssused();
+    public List<Map> getIssused(HttpSession session) {
+        Object customerName = session.getAttribute("CustomerName");
+        Map map = new HashMap();
+        List<Map> realIdByUserName = informationService.getRealIdByUserName(customerName.toString());
+        map.put("realId",realIdByUserName.get(0).get("ID"));
+
+
+        return myLoanDao.getIssused(map);
     }
 
     @Override
