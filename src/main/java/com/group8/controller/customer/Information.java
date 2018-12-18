@@ -144,7 +144,6 @@ public class Information {
      * @param session
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "SubmissionRealName")
     public Object SubmissionRealName(@RequestParam Map  map, HttpSession session, @RequestParam MultipartFile positive, @RequestParam MultipartFile opposite){
 
@@ -161,7 +160,7 @@ public class Information {
             /*map.put("positive",positive.getOriginalFilename());*/
         }
         int i = informationService.SubmissionRealName(map, session);
-          return i;
+          return "redirect:个人中心-实名认证.html";
     }
 
 

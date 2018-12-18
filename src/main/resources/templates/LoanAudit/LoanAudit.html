@@ -138,13 +138,6 @@
             <el-form-item label="一审意见" prop="FIRSTINC">
                 <el-input type="textarea" v-model="editForm.FIRSTINC"></el-input>
             </el-form-item>
-            <el-form-item label="一审时间">
-                <el-date-picker type="date"  placeholder="选择日期" v-model="editForm.FIRSTINCTIME"format="yyyy 年 MM 月 dd 日"
-                                value-format="yyyy/MM/dd"></el-date-picker>
-            </el-form-item>
-            <el-form-item label="一审人" prop="FIRSTINCNAME">
-                <el-input v-model="editForm.FIRSTINCNAME"></el-input>
-            </el-form-item>
             <el-form-item label="状态" prop="STATUS">
                 <el-radio-group v-model="editForm.STATUS">
                     <el-radio :label="21">通过</el-radio>
