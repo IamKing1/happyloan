@@ -77,8 +77,10 @@ public class Information {
         if (customerName!=null){
             Customer customer = informationService.getTelephoneByUserName(customerName.toString());
             List<Map> realNameList = informationService.getRealNameByUserId(customer.getUserId());
+            System.out.println("\n"+realNameList+"\n");
             if(realNameList!=null&&realNameList.size()>0){
                 Integer auditorid = Integer.valueOf(realNameList.get(0).get("AUDITORID").toString());
+                System.out.println(auditorid);
                 List<Map> realNameByUserId = informationService.getAuditorStatus(auditorid);
                 Object item = realNameByUserId.get(0).get("ITEM");
                  map.put("meg",item);
@@ -86,6 +88,7 @@ public class Information {
                 map.put("meg","-1");
             }
         }
+//        System.out.println(map);
         return  map;
     }
 
@@ -141,13 +144,11 @@ public class Information {
      * @param session
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "SubmissionRealName")
-    public String SubmissionRealName(@RequestParam Map  map, HttpSession session, @RequestParam MultipartFile positive, @RequestParam MultipartFile opposite){
+    public Object SubmissionRealName(@RequestParam Map  map, HttpSession session, @RequestParam MultipartFile positive, @RequestParam MultipartFile opposite){
 
-
-
-
-
+//        System.out.println("\n"+map+"\n");
 
         if(positive!=null&&!positive.isEmpty()){
             String s = FTPfile.upLoad(positive);
@@ -160,7 +161,7 @@ public class Information {
             /*map.put("positive",positive.getOriginalFilename());*/
         }
         int i = informationService.SubmissionRealName(map, session);
-          return "redirect:/个人中心-实名认证.html";
+          return i;
     }
 
 

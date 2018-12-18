@@ -18,17 +18,23 @@ public interface TendInfoDao {
 	 * 获取借款人信息
 	 * @return
 	 */
-	List<Map> getLoanList(Integer tendid);
+	List<Map> getLoanList(Map tendid);
 
 	/**
 	 * 获取借款金额,期数
 	 * @return
 	 */
-	List<Map> getLoanInfo();
+	List<Map> getLoanInfo(Map tendid);
 
 	/**
 	 * 获取投标人列表-昵称,钱数,时间
 	 * @return
 	 */
-	List<Map> getGaveList();
+	List<Map> getGaveList(Map map);
+
+	/**
+	 * 获取投标人的总数
+	 * @return
+	 */
+	Integer getGaveCount(Integer tendid);
 }
