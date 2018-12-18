@@ -11,4 +11,20 @@
         <select id="getListByPid" parameterType="INTEGER" resultType="map">
                  select * from tb_permission  where pid=#{Pid}
         </select>
+        
+        
+        <select id="getAllRole" resultType="role">
+            select * from tb_role
+        </select>
+
+    <select id="getAllRoleCount" resultType="Integer">
+      select COUNT(*)from tb_role
+    </select>
+
+    <select id="getPermissionByRole" parameterType="role" resultType="permission">
+        	select c.name permissionName from tb_role a
+			left join tb_role_permission b on a.roleid= b.roleid
+			join tb_permission c on b.permissionid= c.id
+			 where a.roleid=#{roleId}
+    </select>
 </mapper>

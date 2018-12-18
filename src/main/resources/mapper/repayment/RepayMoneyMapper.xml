@@ -4,6 +4,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.group8.dao.repayment.RepayMoneyDao">
     <select id="deductMoney" parameterType="map" statementType="CALLABLE" resultType="java.lang.Integer">
-        call pro_batch_huankuan1(#{money,mode=IN},#{realId,mode=IN},#{mse,mode=OUT,jdbcType=INTEGER})
+        call pro_batch_huankuan1(#{hasMoney,mode=IN},#{REALID,mode=IN},#{TENDID,mode=IN},#{mse1,mode=OUT,jdbcType=INTEGER})
     </select>
+
+
+
+
+
+    <select id="getRepayMoneyCount" parameterType="map" resultType="map">
+       select a.money,b.item from tb_loanrecord a
+join tb_systemcategoryitem b on a.longtime=b.id
+ where tendid=#{tendId}
+    </select>
+    
+    
+    <update id="deductMoneyToInvestment">
+        update tb_moneypool set money = money - #{repayMoney}
+    </update>
+    <select id="calculationProportion" resultType="map" parameterType="map">
+      select realid,round(sum(money)/(select sum(money) from tb_investmentlist )*100,6) proportion from tb_investmentlist
+      where tendid=#{tendId} group by realid
+    </select>
+
+    <update id="moneyBack" parameterType="map">
+        update tb_realname set balance = balance + #{toPersonMoney} where id=#{realId}
+    </update>
 </mapper>
