@@ -1,5 +1,7 @@
 package com.group8.dao.LoanAudit;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import java.util.Map;
  * author:万中华
  * createTime:2018-12-07 13:40
  */
+@Component
 public interface LoanAuditSecondDao {
 
     /**

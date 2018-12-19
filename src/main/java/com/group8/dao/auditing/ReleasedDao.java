@@ -1,5 +1,7 @@
 package com.group8.dao.auditing;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import java.util.Map;
  * author:万中华
  * createTime:2018-12-10 13:38
  */
+@Component
 public interface ReleasedDao {
 
     /**

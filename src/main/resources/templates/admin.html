@@ -144,6 +144,9 @@
 		.userSetting .userNameShow {
 			margin: 0 15px 0 5px;
 		}
+		.weatherInfo span{
+			margin: 0 10px 0 20px;
+		}
 	
 	</style>
 
@@ -282,90 +285,46 @@
 	//加载执行
 	$(function () {
 		//每秒执行一次
-		setInterval(getDateTime, 1000)
-		//获取天气信息
-		$.ajax({
-			type: "get",
-			url: "http://t.weather.sojson.com/api/weather/city/101180101",
-			success: function (data) {
-				// console.log(data.data.forecast[0])
-				var ymd = data.data.forecast[0].ymd; //获取年月日
-				$(".weatherTag .timeTag .ymd").html(ymd);
-				var high = (data.data.forecast[0].high).substring(2);//最高温度
-//					console.log(high)
-				var low = (data.data.forecast[0].low).substring(2);//最低温度
-				var type = data.data.forecast[0].type;//天气类型
-				var week = data.data.forecast[0].week;//星期
-				$(".weatherTag .week").html(week);
-//					console.log(type.indexOf("多云"))//包含判断 0表示包含 -1不包含
-				if (type.indexOf("多云") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-partly-cloudy-1'></i> 多云")
-				}
-				if (type.indexOf("小雨") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-rain-1'></i> 小雨")
-				}
-				if (type.indexOf("大雨") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-heavy-hail'></i> 大雨")
-				}
-				if (type.indexOf("暴雨") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-heavy-rain-1'></i> 暴雨")
-				}
-				if (type.indexOf("晴") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-sun-1'></i> 晴")
-				}
-				if (type.indexOf("雨夹雪") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-rain-and-snow'></i> 雨夹雪")
-				}
-				if (type.indexOf("暴雪") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-blizzard'></i> 暴雪")
-				}
-				if (type.indexOf("小雪") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-snow'></i> 小雪")
-				}
-				if (type.indexOf("中雪") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-snow'></i> 中雪")
-				}
-				if (type.indexOf("阴") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-mostly-cloudy-1'></i> 阴")
-				}
-
-				$(".weatherTag .weatherInfo").append("&nbsp;&nbsp;" + high + "~" + low)
-
-				// console.log("最高温度:"+high+"最低温度"+low+"天气类型"+type+"星期"+week)
-			}
-
-		});
+		setInterval(getDateTime, 1000);
+		
+		
 	})
 </script>
-<!--<script type="text/javascript" src="https://www.nowapi.com/style/jquery/1.11.3/jquery.min.js"></script>
 <script>
-	$(document).ready(function(){
+	//获取天气信息
+	$(document).ready(function() {
 		$.ajax({
-			type          : 'get',
-			async         : false,
-			url           : 'http://api.k780.com/?app=weather.future&weaid=1&appkey=38882&sign=acaf0802c727daa863fc74ff28ae8e1c&format=json&jsoncallback=data&weaid=59',
-			dataType      : 'jsonp',
-			jsonp         : 'callback',
-			jsonpCallback : 'data',
-			success       : function(data){
-				if(data.success!='1'){
-					alert(data.msgid+' '+data.msg);
-					exit;
+			type: 'get',
+			async: false,
+			url: 'http://api.k780.com/?app=weather.future&weaid=1&appkey=38882&sign=acaf0802c727daa863fc74ff28ae8e1c&format=json&jsoncallback=data&weaid=59',
+			dataType: 'jsonp',
+			jsonp: 'callback',
+			jsonpCallback: 'data',
+			success: function(data) {
+				if(data.success='1'){
+					//今天
+					let days = data.result[0].days;//今天日期  年-月-日
+					$(".weatherTag .timeTag .ymd").html(days);
+					let weather = data.result[0].weather;//今天天气
+					let temperature = data.result[0].temperature;//今天温度
+					let weather_icon1 = data.result[0].weather_icon;//今天天气图标
+					let week = data.result[0].week;//今天星期
+					$(".weatherTag .week").html(week);
+					let wind = data.result[0].wind;//今天风
+//					console.log(weather+temperature+week+wind)
+				
+					$(".weatherInfo").append("<img style='position: relative;top: 5px;' src='"+weather_icon1+"' alt='"+weather+"'> <span> "+ weather + " </span><span> "+ temperature + " </span>")
+				
+				}else{
+					consol.log("发生错误")
 				}
-				//遍历
-				var description = "";
-				for(var i in data.result){
-					var property=data.result[i];
-					description+=i+" = "+property+"\n";
-				}
-				alert(description);
 			},
-			error:function(){
-				alert('fail');
+			error: function() {
+				console.log("天气接口异常")
 			}
 		});
 	});
-</script>-->
+</script>
 
 <!--<script>
 	function changeFrameHeight(){
