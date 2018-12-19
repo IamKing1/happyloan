@@ -27,26 +27,22 @@ public class RepayMoney {
     public Object moneyBackPool(@RequestBody Map map){
 
         //还款操作  需要三个参数
-        System.out.println(map);
+
+        //借款人还款操作
         int i = repayMoneyService.deductMoney(map);
-
-        return i;
+    if(i<0){
+        return -1;
+    }
+        map.put("tendId",map.get("TENDID"));
+        //投资人回款操作
+        int i1 = repayMoneyService.transferMoneyToTouZiRen(map);
+        if(i1<1){
+            return -1;
+        }
+        return 1;
     }
 
 
-
-    /**
-     * 执行回款操作，从资金池拿钱，返还给投资人
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "moneyBackToPerson")
-    public Object moneyBackToPerson(){
-        Map map = new HashMap();
-          map.put("tendId",21);
-        int i = repayMoneyService.transferMoneyToTouZiRen(map);
-        return i;
-    }
 
 
 }

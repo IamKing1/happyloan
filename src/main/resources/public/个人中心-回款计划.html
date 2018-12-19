@@ -100,11 +100,7 @@
                     label="应还贷款(元)"
                     width="120">
             </el-table-column>
-            <el-table-column
-                    prop="ACTUAL"
-                    label="剩余未还"
-                    width="120">
-            </el-table-column>
+
             <el-table-column
                     prop="DUEDATE"
                     label="截止日期"
@@ -113,27 +109,25 @@
             <el-table-column
                     prop="STUTS"
                     label="还款状态"
-                    width="100">
+                    width="140">
               <template slot-scope="scope">
                 <el-tag class="btn btn-success">{{scope.row.STUTS | formatStata2}}</el-tag>
               </template>
             </el-table-column>
-             <el-table-column
-                     label="操作">
+             <el-table-column label="操作">
                <template scope="scope">
-                 <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">还款</el-button>
+                 <el-button :plain="true" v-if="scope.row.STUTS!=3" type="success" size="small" icon="edit" @click="editClick(scope.row)">还款</el-button>
+               </template>
+               <template scope="scope">
+                 <el-button :plain="true" v-if="scope.row.STUTS===3" type="success" size="small" disabled="true" icon="edit" @click="editClick(scope.row)">还款</el-button>
                </template>
              </el-table-column>
           </el-table>
           <!--编辑界面-->
-          <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
+          <el-dialog title="你确定要还款吗" :visible.sync="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm"  label-width="350px" :rules="editFormRules" ref="editForm" hide-required-asterisk="false">
 
-              <el-form-item label="还款金额" prop="hasMoney">
-                <el-col :span="6">
-                <el-input v-model="editForm.hasMoney"></el-input>
-                </el-col>元
-              </el-form-item>
+
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -220,7 +214,7 @@
                 return stutsMap[stuts]
             },
             formatStata2: function (stuts) {
-                const stutsMap = {1:"正常还款中",2:'逾期未还'}
+                const stutsMap = {1:"未还",2:'逾期未还',3:'已还'}
                 return stutsMap[stuts]
             },
         },
