@@ -3,18 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.group8.dao.bid.BidStatusDao">
+
+    <!--已发布-->
     <!-- 分页查询-->
     <select id="getPage" resultType="map">
         select * from (
         select rownum rn,t.* from (
         select a.id bid_id,a.bid_money,to_char(a.BEGINTIME,'yyyy-MM-dd') bid_creation_time,
         a.bid_minimum,d.item state,c.item cdate,to_char(a.BID_END_TIME,'yyyy-MM-dd') bid_end_time,
-        b.username,c.id,b.userid
+        c.id,userid
         from tb_tendering a
-        join tb_user b on a.userid=b.userid
         join tb_systemcategoryitem c on a.bid_amortize=c.id
         join tb_systemcategoryitem d on a.stuts=d.id
-        where a.stuts=48
+        where stuts=48
         <if test="USERID!=null and USERID!=''">
             and a.USERID=#{USERID}
         </if>
@@ -28,10 +29,9 @@
     <select id="getPageCount" resultType="int">
         select count(*)
         from tb_tendering a
-        join tb_user b on a.userid=b.userid
         join tb_systemcategoryitem c on a.bid_amortize=c.id
         join tb_systemcategoryitem d on a.bid_state=d.id
-        where a.stuts=48
+        where stuts=48
         <if test="USERID!=null and USERID!=''">
             and a.USERID=#{USERID}
         </if>
@@ -42,19 +42,20 @@
     </select>
     <!--搜索检索内容-->
     <select id="selectu" resultType="map">
-        select * from tb_user where state=10
+        select * from TB_ADMIN
     </select>
     <select id="selects" resultType="map">
         select * from tb_systemcategoryitem where parentid=9
     </select>
+
+    <!--总计-->
     <select id="getPager" resultType="map">
         select * from (
         select rownum rn,t.* from (
         select a.id bid_id,a.bid_money,to_char(a.BEGINTIME,'yyyy-MM-dd') bid_creation_time,
         a.bid_minimum,d.item state,c.item cdate,to_char(a.BID_END_TIME,'yyyy-MM-dd') bid_end_time,
-        b.username,c.id,b.userid
+        c.id,userid
         from tb_tendering a
-        join tb_user b on a.userid=b.userid
         join tb_systemcategoryitem c on a.bid_amortize=c.id
         join tb_systemcategoryitem d on a.stuts=d.id
         where 1=1
@@ -70,7 +71,6 @@
     <select id="getPageCountr" resultType="int">
         select count(*)
         from tb_tendering a
-        join tb_user b on a.userid=b.userid
         join tb_systemcategoryitem c on a.bid_amortize=c.id
         join tb_systemcategoryitem d on a.bid_state=d.id
         where 1=1

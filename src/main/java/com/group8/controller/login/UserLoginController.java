@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -36,7 +37,7 @@ public class UserLoginController {
 
 
     @RequestMapping(value = "userLogin")
-    public String userLogin(@RequestParam Map map, Model model, RedirectAttributes redirectAttributes) {
+    public String userLogin(@RequestParam Map map, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
         System.out.println(map);
         boolean rememberMe = false;
         if(map.get("rememberMe")==null){
@@ -52,6 +53,7 @@ public class UserLoginController {
         //3.执行登录方法
         try {
             subject.login(token);
+            session.setAttribute("userName",map.get("userName"));
             //登陆成功
         } catch (UnknownAccountException e) {
             // e.printStackTrace();
