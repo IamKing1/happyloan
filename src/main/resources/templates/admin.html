@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8">
 	<title>欢迎进入后台页面</title>
@@ -144,6 +144,9 @@
 		.userSetting .userNameShow {
 			margin: 0 15px 0 5px;
 		}
+		.weatherInfo span{
+			margin: 0 10px 0 20px;
+		}
 	
 	</style>
 
@@ -190,29 +193,54 @@
 		</el-header>
 		<el-container>
 			<el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-				<el-menu :default-openeds="['1']" background-color=""  th:each="list,iterStat: ${list}">
-					<el-submenu th:index="${iterStat.count}" >
-						<template slot="title" th:text="${list.NAME}"><i class="el-icon-message"></i></template>
-							<div th:each="childList,iterStat1: ${list.childrenList}">
-								<el-menu-item th:index="${iterStat.count}-${iterStat1.count}"><a th:href="${childList.URL}" target="iframe" th:text="${childList.NAME}">选项1</a></el-menu-item>
-							</div>
-						<!--<el-menu-item index="1-2"><a href="/jump/toEg2" target="iframe">选项2</a></el-menu-item>
-						<el-menu-item index="1-3"><a href="/jump/toEg1" target="iframe">选项3</a></el-menu-item>-->
+				<el-menu>
+					<el-submenu index="1"  shiro:hasPermission="/jump/toProductList" >
+						<template slot="title"><i class="el-icon-menu"></i>网站管理</template>
+
+						<el-menu-item shiro:hasPermission="/jump/toProductList" index="1-1"><a href="/jump/toProductList" target="iframe">角色管理</a></el-menu-item>
+						<el-menu-item shiro:hasPermission="/jump/toUserList" index="1-2"><a href="/jump/toUserList" target="iframe">部门管理</a></el-menu-item>
+						<el-menu-item shiro:hasPermission="/ysjt/advert/advertHome"  index="1-3"><a href="/ysjt/advert/advertHome" target="iframe">广告管理</a></el-menu-item>
+						<el-menu-item  shiro:hasPermission="/ysjt/systemaccount/accountflow" index="1-4"><a href="/ysjt/systemaccount/accountflow" target="iframe">平台流水</a></el-menu-item>
 					</el-submenu>
-					<!--<el-submenu index="2">
-						<template slot="title"><i class="el-icon-menu"></i>导航二</template>
-						
-						<el-menu-item index="2-1"><a href="/jump/toEg1" target="iframe">选项1</a></el-menu-item>
-						<el-menu-item index="2-2"><a href="/jump/toEg2" target="iframe">选项2</a></el-menu-item>
-						<el-menu-item index="2-3"><a href="/jump/toEg1" target="iframe">选项3</a></el-menu-item>
+
+					<el-submenu index="2" shiro:hasPermission="/jump/toProductList" >
+						<template  slot="title"><i class="el-icon-menu"  ></i>用户管理</template>
+
+						<el-menu-item index="2-1" shiro:hasPermission="/client/toClient"><a href="/client/toClient" target="iframe">用户列表</a></el-menu-item>
+						<el-menu-item index="2-2" shiro:hasPermission="/blackList/toBlack"><a href="/blackList/toBlack" target="iframe">黑名单</a></el-menu-item>
 					</el-submenu>
-					<el-submenu index="3">
-						<template slot="title"><i class="el-icon-setting"></i>导航三</template>
-						
-						<el-menu-item index="3-1"><a href="/jump/toEg1" target="iframe">选项1</a></el-menu-item>
-						<el-menu-item index="3-2"><a href="/jump/toEg2" target="iframe">选项2</a></el-menu-item>
-						<el-menu-item index="3-3"><a href="/jump/toEg1" target="iframe">选项3</a></el-menu-item>
-					</el-submenu>-->
+					<el-submenu index="3"  shiro:hasPermission="/jump/toProductList" >
+						<template slot="title"><i class="el-icon-setting"></i>员工管理</template>
+						<el-menu-item index="3-1"  shiro:hasPermission="/emp/toList" ><a href="/emp/toList" target="iframe">员工列表</a></el-menu-item>
+					</el-submenu>
+				<el-submenu index="4" shiro:hasPermission="/jump/toProductList" >
+					<template slot="title"><i class="el-icon-setting"></i>标金管理</template>
+					<el-menu-item index="4-1" shiro:hasPermission="/record/list" ><a href="/record/list" target="iframe">招标发布</a></el-menu-item>
+					<el-menu-item index="4-2" shiro:hasPermission="/status/lists" ><a href="/status/lists" target="iframe">标金总计</a></el-menu-item>
+					<el-menu-item index="4-3" shiro:hasPermission="/investment/toTenderingList" ><a href="/investment/toTenderingList" target="iframe">满标管理</a></el-menu-item>
+					<el-menu-item index="4-4" shiro:hasPermission="/investment/toFailmark" ><a href="/investment/toFailmark" target="iframe">流标管理</a></el-menu-item>
+					<el-menu-item index="4-5" shiro:hasPermission="/bidcon/list" ><a href="/bidcon/list" target="iframe">已发布</a></el-menu-item>
+				</el-submenu>
+				<el-submenu index="5" shiro:hasPermission="/jump/toProductList" >
+					<template slot="title"><i class="el-icon-setting"></i>认证管理</template>
+					<el-menu-item index="5-1" shiro:hasPermission="/auditing/toRealName" ><a href="/auditing/toRealName" target="iframe">实名认证</a></el-menu-item>
+					<el-menu-item index="5-2" shiro:hasPermission="/ysjt/backvideo/videoHome" ><a href="/ysjt/backvideo/videoHome" target="iframe">视频认证</a></el-menu-item>
+					<el-menu-item index="5-3" shiro:hasPermission="/Loan/toListLoan" ><a href="/Loan/toListLoan" target="iframe">材料认证</a></el-menu-item>
+				</el-submenu>
+				<el-submenu index="6" shiro:hasPermission="/jump/toProductList" >
+					<template slot="title"><i class="el-icon-setting"></i>审核管理</template>
+					<el-menu-item index="6-1" shiro:hasPermission="/Loan/toListLoan" ><a href="/Loan/toListLoan" target="iframe">贷款初审</a></el-menu-item>
+					<el-menu-item index="6-2" shiro:hasPermission="/loanAuditSecond/toListLoanSec" ><a href="/loanAuditSecond/toListLoanSec" target="iframe">贷款终审</a></el-menu-item>
+					<el-menu-item index="6-3" shiro:hasPermission="/bidcon/list" ><a href="/bidcon/list" target="iframe">建标审核</a></el-menu-item>
+					<el-menu-item index="6-4" shiro:hasPermission="/investment/toTenderingList" ><a href="/investment/toTenderingList" target="iframe">满标一审</a></el-menu-item>
+					<el-menu-item index="6-5" shiro:hasPermission="/ysjt/bid/thirdBid" ><a href="/ysjt/bid/thirdBid" target="iframe">满标二审</a></el-menu-item>
+					<el-menu-item index="6-6" shiro:hasPermission="/loanDis/toLoanDis" ><a href="/loanDis/toLoanDis" target="iframe">驳回列表</a></el-menu-item>
+				</el-submenu>
+					<el-submenu index="7" shiro:hasPermission="/jump/toProductList" >
+						<template slot="title"><i class="el-icon-setting"></i>权限管理</template>
+						<el-menu-item index="7-1" shiro:hasPermission="/jump/toProductList" ><a href="/function/toAssignauthority" target="iframe">权限分配</a></el-menu-item>
+						<el-menu-item index="7-2" shiro:hasPermission="/jump/toProductList" ><a href="/loanAuditSecond/toListLoanSec" target="iframe">贷款终审</a></el-menu-item>
+						</el-submenu>
 				</el-menu>
 			</el-aside>
 			<el-main style="padding: 0 0 0 30px;">
@@ -257,62 +285,46 @@
 	//加载执行
 	$(function () {
 		//每秒执行一次
-		setInterval(getDateTime, 1000)
-		//获取天气信息
-		$.ajax({
-			type: "get",
-			url: "http://t.weather.sojson.com/api/weather/city/101180101",
-			success: function (data) {
-				// console.log(data.data.forecast[0])
-				var ymd = data.data.forecast[0].ymd; //获取年月日
-				$(".weatherTag .timeTag .ymd").html(ymd);
-				var high = (data.data.forecast[0].high).substring(2);//最高温度
-//					console.log(high)
-				var low = (data.data.forecast[0].low).substring(2);//最低温度
-				var type = data.data.forecast[0].type;//天气类型
-				var week = data.data.forecast[0].week;//星期
-				$(".weatherTag .week").html(week);
-//					console.log(type.indexOf("多云"))//包含判断 0表示包含 -1不包含
-				if (type.indexOf("多云") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-partly-cloudy-1'></i> 多云")
-				}
-				if (type.indexOf("小雨") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-rain-1'></i> 小雨")
-				}
-				if (type.indexOf("大雨") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-heavy-hail'></i> 大雨")
-				}
-				if (type.indexOf("暴雨") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-heavy-rain-1'></i> 暴雨")
-				}
-				if (type.indexOf("晴") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-sun-1'></i> 晴")
-				}
-				if (type.indexOf("雨夹雪") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-rain-and-snow'></i> 雨夹雪")
-				}
-				if (type.indexOf("暴雪") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-blizzard'></i> 暴雪")
-				}
-				if (type.indexOf("小雪") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-snow'></i> 小雪")
-				}
-				if (type.indexOf("中雪") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-snow'></i> 中雪")
-				}
-				if (type.indexOf("阴") >= 0) {
-					$(".weatherTag .weatherInfo").append("<i class='pe-is-w-mostly-cloudy-1'></i> 阴")
-				}
-
-				$(".weatherTag .weatherInfo").append("&nbsp;&nbsp;" + high + "~" + low)
-
-				// console.log("最高温度:"+high+"最低温度"+low+"天气类型"+type+"星期"+week)
-			}
-
-		});
+		setInterval(getDateTime, 1000);
+		
+		
 	})
 </script>
-
+<script>
+	//获取天气信息
+	$(document).ready(function() {
+		$.ajax({
+			type: 'get',
+			async: false,
+			url: 'http://api.k780.com/?app=weather.future&weaid=1&appkey=38882&sign=acaf0802c727daa863fc74ff28ae8e1c&format=json&jsoncallback=data&weaid=59',
+			dataType: 'jsonp',
+			jsonp: 'callback',
+			jsonpCallback: 'data',
+			success: function(data) {
+				if(data.success='1'){
+					//今天
+					let days = data.result[0].days;//今天日期  年-月-日
+					$(".weatherTag .timeTag .ymd").html(days);
+					let weather = data.result[0].weather;//今天天气
+					let temperature = data.result[0].temperature;//今天温度
+					let weather_icon1 = data.result[0].weather_icon;//今天天气图标
+					let week = data.result[0].week;//今天星期
+					$(".weatherTag .week").html(week);
+					let wind = data.result[0].wind;//今天风
+//					console.log(weather+temperature+week+wind)
+				
+					$(".weatherInfo").append("<img style='position: relative;top: 5px;' src='"+weather_icon1+"' alt='"+weather+"'> <span> "+ weather + " </span><span> "+ temperature + " </span>")
+				
+				}else{
+					consol.log("发生错误")
+				}
+			},
+			error: function() {
+				console.log("天气接口异常")
+			}
+		});
+	});
+</script>
 
 <!--<script>
 	function changeFrameHeight(){

@@ -18,4 +18,10 @@ public interface RepayMoneyService {
      */
     int deductMoney(Map map);
 
+    /**
+     * 还款日把投资人的金钱返还，  本金和利息
+     * @return
+     */
+    int transferMoneyToTouZiRen(Map map);
+
 }

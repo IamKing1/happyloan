@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.qiantai.MyLoanDao">
+    <!--历史贷款总金额-->
+   <!-- <select id="getMoney" resultType="map">
+        select (select sum(money) from TB_BORROW where REALID=#{REALID} and release=2) as money,c.nickname from TB_BORROW a
+        join TB_REALNAME b on a.REALID=b.id
+        join tb_user c on b.userid=c.userid
+        where release=2
+    </select>-->
+    <!--贷款审核列表-->
+    <select id="getListLoan" resultType="map">
+  select a.money,b.item longtime,a.status,c.stuts from TB_BORROW a
+      join TB_SYSTEMCATEGORYITEM b on a.LONGTIME=b.id
+      join TB_TENDERING c on c.id=a.id
+      where RELEASE=2 and c.realname=#{realId}
+    </select>
+
+    <!--已发放贷款列表-->
+<select id="getIssused" resultType="map">
+
+
+          select d.money,d.realid,d.tendid,b.item longtime,d.BEGINTIME,to_char(add_months(d.BEGINTIME,b.item),'yyyy/MM/dd') as duedate,d.stuts,((b.item/12)*0.12*d.money+d.money) mo,((b.item/12)*0.12*d.money+d.money-d.returnmoney) as actual
+      from  TB_LOANRECORD d
+      join TB_SYSTEMCATEGORYITEM b on d.LONGTIME=b.id
+			where d.realid=#{realId}
+</select>
+<!--数量-->
+    <select id="getPageCount" resultType="int">
+        select count(*) from tb_borrow where release=2
+    </select>
+</mapper>

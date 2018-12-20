@@ -1,5 +1,8 @@
 package com.group8.dao.repayment;
 
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,6 +11,7 @@ import java.util.Map;
  * author:丁启斌
  * createTime:2018-12-14 15:57
  */
+@Component
 public interface RepayMoneyDao {
 
     /**
@@ -17,9 +21,33 @@ public interface RepayMoneyDao {
      */
     Integer deductMoney(Map map);
 
+    /**
+     * 还款日从资金池拿钱，还给投资人
+     * @param repayMoney
+     * @return
+     */
+    int deductMoneyToInvestment(double repayMoney);
 
 
+    /**
+     * 计算每个表各个投资人的比列
+     * @param map
+     * @return
+     */
+    List<Map> calculationProportion(Map map);
 
+    /**
+     * 计算借款人应还的金额总数
+     * @return
+     */
+    List<Map> getRepayMoneyCount(Map map);
+
+
+    /**
+     * 投资人回款
+     * @return
+     */
+    int moneyBack(Map map);
 
 
 }
