@@ -90,5 +90,16 @@ public interface InformationService {
      */
     int rechargeAmount(Map map);
 
-
+    /**
+     * 查询实名认证状态,用于显示实名认证页面
+     * @param customerName
+     * @return
+     */
+    List<Map>  isRealName(String  customerName);
+    /**
+     * 显示用户实名认证提交的信息
+     * @param customerName
+     * @return
+     */
+    List<Map> realNameAllInfo(String customerName);
 }

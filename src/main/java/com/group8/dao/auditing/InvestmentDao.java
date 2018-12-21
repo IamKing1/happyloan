@@ -1,5 +1,7 @@
 package com.group8.dao.auditing;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import java.util.Map;
  * author:丁启斌
  * createTime:2018-12-12 16:18
  */
+@Component
 public interface InvestmentDao {
 
     /**
@@ -110,7 +113,7 @@ public interface InvestmentDao {
 
     /**
      * 根据标的id查询借款时长
-     * @param TendId
+
      * @return
      */
     Integer getLongTimeByTendId(Map map);

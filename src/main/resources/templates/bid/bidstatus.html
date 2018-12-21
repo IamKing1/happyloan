@@ -27,7 +27,7 @@
                 <td>
                     <select name="USERID" class="form-control">
                         <option value="">--请选择--</option>
-                        <option th:each="bid : ${selectu}" th:value="${bid.USERID}" th:text="${bid.USERNAME}"></option>
+                        <option th:each="bid : ${selectu}" th:value="${bid.USERNAME}" th:text="${bid.USERNAME}"></option>
                     </select>
                 </td>
                 <td align="center">
@@ -55,11 +55,11 @@
                 <td th:text="${bid.BID_MONEY}"></td>
                 <td th:text="${bid.BID_CREATION_TIME}"></td>
                 <td th:text="${bid.BID_MINIMUM}"></td>
-                <td>111111</td>
+                <td th:text="${bid.hasMoney}"></td>
                 <td th:text="${bid.STATE}"></td>
                 <td th:text="${bid.CDATE}"></td>
                 <td th:text="${bid.BID_END_TIME}"></td>
-                <td th:text="${bid.USERNAME}"></td>
+                <td th:text="${bid.USERID}"></td>
                 <!--<td >
                     <button type="button" class="xgbtn" data-toggle="modal" id="changeMeth" data-target="#myModala" style="color: #fff;">确认
                         <input type="hidden" th:value="${bid.BID_ID}">

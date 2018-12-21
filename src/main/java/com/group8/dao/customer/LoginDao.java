@@ -2,6 +2,7 @@ package com.group8.dao.customer;
 
 import com.group8.entity.Customer;
 import com.group8.entity.Role;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * author:丁启斌
  * createTime:2018-11-22 09:05
  */
+@Component
 public interface LoginDao {
     /**
      * 用户注册

@@ -74,13 +74,16 @@ public class Information {
     public Object getRealName(HttpSession session){
         Map map = new HashMap();
         Object customerName = session.getAttribute("CustomerName");
+	    Object audutorId = session.getAttribute("audutorId");
+	    /*System.out.println("\n"+customerName+"\n");
+	    System.out.println("\n"+audutorId+"\n");*/
         if (customerName!=null){
             Customer customer = informationService.getTelephoneByUserName(customerName.toString());
             List<Map> realNameList = informationService.getRealNameByUserId(customer.getUserId());
-            System.out.println("\n"+realNameList+"\n");
+//            System.out.println("\n"+realNameList+"\n");
             if(realNameList!=null&&realNameList.size()>0){
                 Integer auditorid = Integer.valueOf(realNameList.get(0).get("AUDITORID").toString());
-                System.out.println(auditorid);
+//                System.out.println(auditorid);
                 List<Map> realNameByUserId = informationService.getAuditorStatus(auditorid);
                 Object item = realNameByUserId.get(0).get("ITEM");
                  map.put("meg",item);
@@ -144,6 +147,7 @@ public class Information {
      * @param session
      * @return
      */
+//    @ResponseBody
     @RequestMapping(value = "SubmissionRealName")
     public Object SubmissionRealName(@RequestParam Map  map, HttpSession session, @RequestParam MultipartFile positive, @RequestParam MultipartFile opposite){
 
@@ -160,7 +164,7 @@ public class Information {
             /*map.put("positive",positive.getOriginalFilename());*/
         }
         int i = informationService.SubmissionRealName(map, session);
-          return "redirect:个人中心-实名认证.html";
+          return "redirect:/realName.html";
     }
 
 
@@ -297,4 +301,31 @@ public class Information {
         map1.put("mse",i);
         return map1;
     }
+
+	/**
+	 * 查询实名认证页面的状态
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("isRealName")
+	@ResponseBody
+	public Object isRealName(HttpSession session) {
+		String  customerName = (String)session.getAttribute("CustomerName");
+//		System.out.println("\n"+customerName+"\n");
+//		System.out.println("\n"+informationService.isRealName(customerName)+"\n");
+
+		return informationService.isRealName(customerName);
+	}
+
+	@ResponseBody
+	@RequestMapping("realNameAllInfo")
+	public Object realNameAllInfo(HttpSession session){
+		String  customerName = (String)session.getAttribute("CustomerName");
+		List<Map> maps = informationService.realNameAllInfo(customerName);
+//		System.out.println(maps);
+		return maps;
+	}
+
+
+
 }

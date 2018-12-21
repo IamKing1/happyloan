@@ -1,5 +1,7 @@
 package com.group8.dao.cascade;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import java.util.Map;
  * author:丁启斌
  * createTime:2018-11-27 09:03
  */
+@Component
 public interface CascadeDao {
 
 

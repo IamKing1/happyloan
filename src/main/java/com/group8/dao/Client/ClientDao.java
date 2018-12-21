@@ -1,5 +1,7 @@
 package com.group8.dao.Client;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import java.util.Map;
  * author:万中华
  * createTime:2018-11-26 21:18
  */
+@Component
 public interface ClientDao {
 
     /**
