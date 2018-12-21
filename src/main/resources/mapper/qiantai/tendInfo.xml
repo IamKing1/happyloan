@@ -7,7 +7,7 @@
 	<!--获取借款人信息-->
 	<select id="getLoanList" resultType="map">
 
-		select b.item longtime,a.money,c.REALNAME,d.NICKNAME,c.sex,(substr(TELEPHONE,1,3)||'****'||substr(TELEPHONE,-4,4)) as TELEPHONE,e.ITEM ACADEMIC,f.item MARRIAGE,g.item HOUSED,c.ADDRESS,c.job,h.item INCOME,d.USERNAME,i.ITEM PURPOSE,j.item REPAYMENTMETHOD from TB_BORROW a
+		select b.item longtime,a.money,c.REALNAME,d.username NICKNAME,c.sex,(substr(TELEPHONE,1,3)||'****'||substr(TELEPHONE,-4,4)) as TELEPHONE,e.ITEM ACADEMIC,f.item MARRIAGE,g.item HOUSED,c.ADDRESS,c.job,h.item INCOME,d.USERNAME,i.ITEM PURPOSE,j.item REPAYMENTMETHOD from TB_BORROW a
 		join TB_SYSTEMCATEGORYITEM b on a.LONGTIME=b.id
 		join TB_REALNAME c on a.REALID=c.id
 		join TB_USER d on c.USERID=d.USERID
@@ -17,14 +17,14 @@
 		join TB_SYSTEMCATEGORYITEM h on c.INCOME=h.id
 		join TB_SYSTEMCATEGORYITEM i on a.PURPOSE=i.id
 		join TB_SYSTEMCATEGORYITEM j on a.REPAYMENTMETHOD=j.id
-		where a.id=#{tendid}
+		where a.realid=#{tendid}
 	</select>
 	<!--获取借款金额,期数-->
 	<select id="getLoanInfo" resultType="map">
 
 	select b.item longtime,a.money from TB_BORROW a
 	join TB_SYSTEMCATEGORYITEM b on a.LONGTIME=b.id
-	where a.id=#{tendid}
+	where a.realid=#{tendid}
 	</select>
 
 
