@@ -144,6 +144,15 @@ public class InformationServiceImpl implements InformationService {
         return i;
     }
 
+    @Override
+    public  List<Map> isRealName(String customerName) {
+        return informationDao.isRealName(customerName);
+    }
+
+    @Override
+    public List<Map> realNameAllInfo(String customerName) {
+        return informationDao.realNameAllInfo(customerName);
+    }
 
 
 }

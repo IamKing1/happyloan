@@ -2,6 +2,7 @@ package com.group8.dao.customer;
 
 import com.group8.entity.Customer;
 import com.group8.entity.MoneyRecords;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Map;
  * author:丁启斌
  * createTime:2018-11-24 14:44
  */
+@Component
 public interface InformationDao {
 
     /**
@@ -100,6 +102,17 @@ public interface InformationDao {
      */
     int rechargeAmountRecords(MoneyRecords records);
 
+    /**
+     * 查询实名认证状态,用于显示实名认证页面
+     * @param customerName
+     * @return
+     */
+    List<Map>  isRealName(String customerName);
 
-
+    /**
+     * 显示用户实名认证提交的信息
+     * @param customerName
+     * @return
+     */
+    List<Map> realNameAllInfo(String customerName);
 }

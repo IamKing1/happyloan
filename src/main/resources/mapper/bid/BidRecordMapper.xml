@@ -48,8 +48,8 @@
     </select>
     <!--添加-->
     <insert id="add" parameterType="map">
-        insert into tb_tendering(id,realname,BID_MONEY,BEGINTIME,USERID,BID_MINIMUM,STUTS,BID_AMORTIZE,BID_END_TIME) values
-        (seq_zhaobiao_id.nextval,#{REALID},#{BID_MONEY},trunc(sysdate),#{USERID},#{BID_MINIMUM},21,#{BID_AMORTIZE},to_date(#{BID_END_TIME},'yyyy-mm-dd'))
+        insert into tb_tendering(id,realname,BID_MONEY,BEGINTIME,USERID,BID_MINIMUM,STUTS,BID_AMORTIZE,BID_END_TIME,BORROW) values
+        (seq_zhaobiao_id.nextval,#{REALID},#{BID_MONEY},trunc(sysdate),#{USERID},#{BID_MINIMUM},21,#{BID_AMORTIZE},to_date(#{BID_END_TIME},'yyyy-mm-dd'),#{BRRID})
     </insert>
     <update id="update" parameterType="map">
         update (

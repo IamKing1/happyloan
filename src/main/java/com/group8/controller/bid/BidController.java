@@ -1,5 +1,6 @@
 package com.group8.controller.bid;
 
+import com.group8.service.auditing.InvestmentService;
 import com.group8.service.bid.BidService;
 
 import com.group8.util.PageUtil;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class BidController {
     @Autowired
     private BidService bidService;
+    @Autowired
+    private InvestmentService investmentService;
 
     /**
      * 列表分页
@@ -66,5 +69,9 @@ public class BidController {
         return i;
     }
 
+    public Object jsjsons(@RequestBody  Integer tendId){
+        int i = investmentService.hasCurrentlyVoted(tendId);
+        return i;
+    }
 
 }

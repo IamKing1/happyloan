@@ -23,6 +23,14 @@ import java.util.Map;
 public class BidStatusController {
     @Autowired
     private BidStatusService bidStatusService;
+
+    /**
+     * 已发布
+     * @param map
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/list")
     public String list(@RequestParam Map map, Model model, HttpServletRequest request){
         map.put("pageSize",7);
@@ -45,6 +53,13 @@ public class BidStatusController {
         return "bid/bidstatus";
     }
 
+    /**
+     * 总计
+     * @param map
+     * @param model
+     * @param request
+     * @return
+     */
 
     @RequestMapping("/lists")
     public String lists(@RequestParam Map map, Model model, HttpServletRequest request){

@@ -2,6 +2,7 @@ package com.group8.dao.function;
 
 import com.group8.entity.Permission;
 import com.group8.entity.Role;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Map;
  * author:丁启斌
  * createTime:2018-11-23 11:16
  */
+@Component
 public interface FunctionDao {
 
     /**

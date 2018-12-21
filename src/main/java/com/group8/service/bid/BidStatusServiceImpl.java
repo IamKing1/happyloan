@@ -1,6 +1,7 @@
 package com.group8.service.bid;
 
 import com.group8.dao.bid.BidStatusDao;
+import com.group8.service.auditing.InvestmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,17 @@ public class BidStatusServiceImpl implements BidStatusService {
 
     @Autowired
     private BidStatusDao bidStatusDao;
+    @Autowired
+    private InvestmentService investmentService;
     @Override
     public List<Map> getPage(Map map) {
-        return bidStatusDao.getPage(map);
+        List<Map> page = bidStatusDao.getPage(map);
+        for (Map map1 : page) {
+            Integer hasMoney = investmentService.hasCurrentlyVoted(Integer.valueOf(map1.get("BID_ID").toString()));
+            map1.put("hasMoney",hasMoney);
+        }
+        System.out.println("222222222"+page);
+        return page;
     }
 
     @Override
@@ -40,7 +49,13 @@ public class BidStatusServiceImpl implements BidStatusService {
 
     @Override
     public List<Map> getPager(Map map) {
-        return bidStatusDao.getPager(map);
+        List<Map> page = bidStatusDao.getPager(map);
+        for (Map map1 : page) {
+            Integer hasMoney = investmentService.hasCurrentlyVoted(Integer.valueOf(map1.get("BID_ID").toString()));
+            map1.put("hasMoney",hasMoney);
+        }
+        System.out.println("11111111111"+page);
+        return page;
     }
 
     @Override

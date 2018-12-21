@@ -213,6 +213,7 @@
 		 }*/
 	
 	</script>
+	
 </head>
 <body>
 <header id="thead">
@@ -233,19 +234,9 @@
 		
 		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 		
-		<!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
-		        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		        crossorigin="anonymous"></script>
-		<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
-		        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		        crossorigin="anonymous"></script>
-		<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		        crossorigin="anonymous"></script>-->
-		
 		
 		<link rel="stylesheet" href="https://static.h-ui.net/h-ui/3.1/css/H-ui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="css/vFrom.css">
+		<link rel="stylesheet" type="text/css" href="/css/vFrom.css">
 		
 		<script type="text/javascript" src="https://static.h-ui.net/h-ui/3.1/js/H-ui.min.js"></script>
 		<!--<script type="text/javascript" src="http://demo.h-ui.net/H-ui/3.1/lib/jquery.validation/1.14.0/jquery.validate.min.js"></script>-->
@@ -255,19 +246,6 @@
 		      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 		      crossorigin="anonymous">
 		<style>
-			/*.form input:focus {
-				box-shadow: 0 0 5px  #3bb4f2;
-			}
-			
-			.form .col-xs-12 select {
-				width: 200px;
-			}
-			.form .col-xs-12 label{
-				display: inline-block;
-			}
-			.form .col-xs-12 select {
-				float: left;
-			}*/
 			.form .form-group {
 				display: inline-block;
 				min-width: 300px;
@@ -281,14 +259,136 @@
 				width: 200px;
 			}
 		</style>
+		<script>
+			$(function () {
+				$.ajax({
+					url:"/customer/isRealName",
+					type: "post", //请求方式
+					dataType: "json",
+					success: function (data) {
+						console.log(data[0])
+						let status = data[0];
+						console.log(typeof status)
+						if(status==null){
+							$(".personal-zhsz h3 i").append("<span style='color: #f50; font-size: 16px;margin-left: 10px;'>" +
+								"</span>")
+						}else if (status == 20) {
+							$(".personal-zhsz h3 i").append("<span style='color: #f50; font-size: 16px;margin-left: 10px;'>" +
+								"实名认证失败,请重新认证</span>")
+						}else if (status == 22) {
+							$.ajax({
+								url:"/customer/realNameAllInfo",
+								type: "post", //请求方式
+								dataType: "json",
+								success: function (data) {
+									// console.log(data[0])
+									
+									let result = data[0];
+
+									$("#realName").val(result.REALNAME)
+									$("#idNumber").val(result.IDNUMBER)
+
+									if(result.SEX=='男'){
+										$("#customRadioInline1").prop("checked",true)
+									}else {
+										$("#customRadioInline2").prop("checked",true)
+									}
+
+									$("#province").empty()
+									$("#province").append("<option>"+result.PROVINCE+"</option>")
+									$("#city").empty()
+									$("#city").append("<option>"+result.CITY+"</option>")
+									$("#area").empty()
+									$("#area").append("<option>"+result.AREA+"</option>")
+
+									
+									$("#position").val(result.ADDRESS)
+									$("#education").empty()
+									$("#education").append("<option>"+result.ACADEMIC+"</option>")
+									$("#address").empty()
+									$("#address").append("<option>"+result.HOUSED+"</option>")
+									$("#marriage").empty()
+									$("#marriage").append("<option>"+result.MARRIAGE+"</option>")
+									$("#income").empty()
+									$("#income").append("<option>"+result.INCOME+"</option>")
+
+									$("#positive").val(result.POSITIVE)
+									$("#opposite").val(result.OPPOSITE)
+
+
+									$("#job").val(result.JOB)
+
+									$(".personal-zhsz input,.personal-zhsz select").prop("disabled",true);
+
+
+									$(".personal-zhsz h3 i").append("<span style='color: #f50; font-size: 16px;margin-left: 10px;'>实名认证成功</span>")
+
+								}
+							})
+						}else if(status == 21){
+							$.ajax({
+								url:"/customer/realNameAllInfo",
+								type: "post", //请求方式
+								dataType: "json",
+								success: function (data) {
+									console.log(data[0])
+									let result = data[0];
+									$("#realName").val(result.REALNAME)
+									$("#idNumber").val(result.IDNUMBER)
+
+									if(result.SEX=='男'){
+										$("#customRadioInline1").prop("checked",true)
+									}else {
+										$("#customRadioInline2").prop("checked",true)
+									}
+
+									$("#province").empty()
+									$("#province").append("<option>"+result.PROVINCE+"</option>")
+									$("#city").empty()
+									$("#city").append("<option>"+result.CITY+"</option>")
+									$("#area").empty()
+									$("#area").append("<option>"+result.AREA+"</option>")
+
+									$("#position").val(result.ADDRESS)
+									$("#education").empty()
+									$("#education").append("<option>"+result.ACADEMIC+"</option>")
+									$("#address").empty()
+									$("#address").append("<option>"+result.HOUSED+"</option>")
+									$("#marriage").empty()
+									$("#marriage").append("<option>"+result.MARRIAGE+"</option>")
+									$("#income").empty()
+									$("#income").append("<option>"+result.INCOME+"</option>")
+
+									$("#positive").val(result.POSITIVE)
+									$("#opposite").val(result.OPPOSITE)
+
+
+									$("#job").val(result.JOB)
+
+									$(".personal-zhsz input,.personal-zhsz select").prop("disabled",true);
+
+
+									$(".personal-zhsz h3 i").append("<span style='color: #f50; font-size: 16px;margin-left: 10px;'>您已提交实名认证,请等候认证结果</span>")
+
+								}
+							})
+						}
+						
+					},
+					error(data){
+						console.log(data)
+						console.log("方法错误或者没登录")
+					}
+				})
+			})
+		</script>
 		
 		<!--个人信息开始-->
-		<div class="personal-main">
-			<div class="personal-zhsz" style="min-height: 750px;">
+		<div class="personal-main" >
+			<div class="personal-zhsz" style="min-height: 780px;">
 				<h3><i>实名认证</i></h3>
 				<form action="/customer/SubmissionRealName" id="myform" method="post"
 				      enctype="multipart/form-data" class="form form-horizontal responsive">
-					
 					
 					<table>
 						<tbody>
@@ -312,18 +412,18 @@
 							</td>
 						</tr>
 						<tr>
-							<td  colspan="2">
-								<div class="form-group" >
+							<td colspan="2">
+								<div class="form-group">
 									<label for="sex" class="form-label col-xs-8">性别:</label>
 									
 									<div class="custom-control custom-radio custom-control-inline">
 										<input type="radio" id="customRadioInline1" name="sex"
-										       class="custom-control-input" disabled="true">
+										       class="custom-control-input" value="男" >
 										<label class="custom-control-label" for="customRadioInline1">男</label>
 									</div>
 									<div class="custom-control custom-radio custom-control-inline">
 										<input type="radio" id="customRadioInline2" name="sex"
-										       class="custom-control-input"  disabled="true">
+										       class="custom-control-input" value="女" >
 										<label class="custom-control-label" for="customRadioInline2">女</label>
 									</div>
 								</div>
@@ -374,7 +474,7 @@
 								<div class="form-group">
 									
 									<label for="education">婚姻状态:</label>
-									<select name="marriage" datatype="*" class="input-text radius" id="marriage">
+									<select name="marriage" datatype="*" class="custom-select" id="marriage">
 									
 									</select>
 								</div>
@@ -401,7 +501,7 @@
 						</tr>
 						<tr>
 							<td>
-								<div class="form-group" >
+								<div class="form-group">
 									<label for="income" style="display: block;">收入:</label>
 									<select name="income" datatype="*" class="custom-select" id="income">
 									
@@ -412,7 +512,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<div class="btn-upload">
+								<div class="btn-upload" style="height: 36px;">
 									<label for="positive" style="line-height: 30px;margin-right: 20px;">身份证正面</label>
 									<input class="input-text upload-url radius" datatype="*" type="text" name="positive"
 									       id="positive" readonly>
@@ -427,7 +527,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<div class="btn-upload">
+								<div class="btn-upload" style="height: 36px;">
 									<label for="positive" style="line-height: 30px;margin-right: 20px;">身份证反面</label>
 									<input class="input-text upload-url radius" datatype="*" type="text" name="opposite"
 									       id="opposite" readonly>
@@ -445,33 +545,10 @@
 						</tr>
 						</tbody>
 					</table>
-					
 				
-					
-					<!--<div class="row cl col-xs-5">-->
-					<!--<div>
-						<a>身份证正面照:</a>
-						<input type="file" name="positive"/>
-					</div>
-					<div>
-						<a>身份证反面照:</a>
-						<input type="file" name="opposite"/>
-					</div>-->
-					<!--<div class="form-group">-->
-					<!--<input type="file" class="custom-file-input mx-sm-3" id="positive">
-					<label class="custom-file-label" for="positive">Choose file</label>-->
-					
-					<!--</div>-->
-					<!--<div class="custom-file">
-						<input type="file" class="custom-file-input mx-sm-3" id="opposite">
-						<label class="custom-file-label" for="opposite">Choose file</label>
-					</div>-->
-					<!--</div>-->
-					<!--<div class="row cl col-xs-5 action">
-					
-					</div>-->
 				</form>
 			</div>
+			
 		</div>
 		<script>
 
@@ -481,10 +558,48 @@
 			})
 		</script>
 		<!-个人信息结束-->
-	
+		
 	
 	</div>
 </div>
+<script>
+	$("#idNumber").blur(function () {
+		let idcard = $(this).val();
+		$.ajax({
+			type: 'get',
+			async: false,
+			url: 'http://api.k780.com/?app=idcard.get&idcard='+idcard+'&appkey=38882&sign=acaf0802c727daa863fc74ff28ae8e1c&format=json&jsoncallback=data',
+			dataType: 'jsonp',
+			jsonp: 'callback',
+			jsonpCallback: 'data',
+			success: function (data) {
+				if (data.success = '1') {
+					console.log(data)
+					let sex =  data.result.sex;
+					console.log(sex)
+					if(sex == '男'){
+						$("#customRadioInline1").prop("checked",true)
+					}else {
+						$("#customRadioInline2").prop("checked",true)
+					}
+					let addr = data.result.att;
+					
+					console.log(addr.split("省"))
+				} else {
+					consol.log("发生错误")
+				}
+			},
+			error: function () {
+				console.log("身份证接口异常")
+			}
+		});
+	})
+		
+		
+		
+
+</script>
+
 
 <!--网站底部-->
 <div id="footer" class="ft bottom">
