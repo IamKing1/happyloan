@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,15 +27,18 @@ public class QtController {
 
     @ResponseBody
     @RequestMapping("/getList")
-    public Object getListEmp(@RequestBody Map map){
+    public Object getListEmp(@RequestBody Map map, HttpSession session){
         Map map1=new HashMap();
+        Object customerName = session.getAttribute("CustomerName");
 
         map1.put("data",qtService.getList(map));
         map1.put("total",qtService.getPageCount(map));
-        System.out.println("map-------");
-        System.out.println(map);
-        System.out.println("map1");
-        System.out.println(map);
+
+        if(customerName!=null){
+            map1.put("login",1);
+        }else{
+            map1.put("login",2);
+        }
         return map1;
     }
 }

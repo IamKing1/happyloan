@@ -44,8 +44,7 @@ public class TendInfoController {
 	public Object getLoanInfo(@RequestBody Map tendid){
 		/*Map map = new HashMap();
 		map.put("data",tendInfoService.getLoanInfo(tendid));*/
-		System.out.println("\n");
-		System.out.println(tendInfoService.getLoanInfo(tendid));
+
 		return tendInfoService.getLoanInfo(tendid);
 	}
 
@@ -72,8 +71,7 @@ public class TendInfoController {
 	@ResponseBody
 	@RequestMapping("surplusMoney")
 	public Object surplusMoney(@RequestBody Map map){
-		System.out.println(Integer.valueOf(map.get("tendid")+""));
-		return investmentService.currentlyVoted(21);
+		return investmentService.currentlyVoted(Integer.valueOf(map.get("tendid")+""));
 	}
 
 

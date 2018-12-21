@@ -68,7 +68,6 @@ public class InvestmentServiceImpl implements InvestmentService {
             }
         }
         Integer totalMoney = investmentDao.totalMoney(tendId);
-
         return totalMoney-currentlyMoney;
     }
 

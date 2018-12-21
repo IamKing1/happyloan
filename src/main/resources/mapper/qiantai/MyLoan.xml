@@ -12,10 +12,10 @@
     </select>-->
     <!--贷款审核列表-->
     <select id="getListLoan" resultType="map">
-  select a.money,b.item longtime,a.status,c.stuts from TB_BORROW a
+  select a.money,b.item longtime,a.status from TB_BORROW a
       join TB_SYSTEMCATEGORYITEM b on a.LONGTIME=b.id
-      join TB_TENDERING c on c.id=a.id
-      where RELEASE=2 and c.realname=#{realId}
+
+      where RELEASE=1 and a.realid=#{realId}
     </select>
 
     <!--已发放贷款列表-->

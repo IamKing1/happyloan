@@ -131,6 +131,7 @@
             //总记录数
             total: 800,
             goUrl: '',
+            login:""
             
         },
         created:function(){
@@ -141,6 +142,7 @@
             axios.post('/qiant/getList',{'start':start,'end':end}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.data;
+                self.login = response.data.login;
 
 
             })
@@ -148,7 +150,16 @@
         },
         methods:{
             toinfor(row){
-              location.href="infor.html?tendId="+row.ID;
+            if(this.login==1){
+                location.href="infor.html?tendId="+row.ID;
+            }else{
+              if(confirm("你还没有登录，是否前去登录")){
+                  location.href="login.html";
+                }
+
+
+            }
+
             },
             toFlush:function(){
                 this.loadingData();

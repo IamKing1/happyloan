@@ -28,7 +28,7 @@
                 <td>居住状况</td>
                 <td>学历</td>
                 <td>审核时间</td>
-                <td>操作 </td>
+                <td>操作</td>
             </tr>
             <tr th:each="bid : ${bidList}">
                 <td th:text="${bid.ID}"></td>
@@ -42,8 +42,10 @@
                 <td th:text="${bid.HOUSED}"></td>
                 <td th:text="${bid.ACADEMIC}"></td>
                 <td th:text="${bid.AUDITTIME}"></td>
-                <td >
-                    <button type="button" class="xgbtn" data-toggle="modal" id="changeMeth" data-target="#myModala" style="color: #fff;">建标
+
+                <td>
+                    <button type="button" class="xgbtn" data-toggle="modal" id="changeMeth" data-target="#myModala"
+                            style="color: #fff;">建标
                         <input type="hidden" th:value="${bid.ID}">
                     </button>
                 </td>
@@ -81,7 +83,8 @@
                             <tr>
                                 <td class="words">最低投入(万元):</td>
                                 <td>
-                                    <input type="text" id="loada" class="aa form-control" name="BID_MINIMUM" placeholder="请输入最投入金额" required="true">
+                                    <input type="text" id="loada" class="aa form-control" name="BID_MINIMUM"
+                                           placeholder="请输入最投入金额" required="true">
                                     <input type="hidden" name="REALID" id="REALID">
                                 </td>
                             </tr>
@@ -95,22 +98,24 @@
                                 </td>-->
                                 <td>
                                     <input type="hidden" name="BID_AMORTIZE" id="option" class="form-control">
-                                    <input type="text" name="LONGTIME" class="form-control" required="true" disabled="disabled">
+                                    <input type="text" name="LONGTIME" class="form-control" required="true"
+                                           disabled="disabled">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="words">结束时间:</td>
-                                <td><input type="date" name="BID_END_TIME" id="endtime" class="form-control" required="true"/></td>
+                                <td><input type="date" name="BID_END_TIME" id="endtime" class="form-control"
+                                           required="true"/></td>
                             </tr>
-                            <tr>
-                                <td class="words">负责人：</td>
-                                <td>
-                                    <select name="USERID" class="form-control" id="userx" required="true">
-                                        <option value="">--请选择--</option>
-                                        <option th:each="bid : ${selectu}" th:value="${bid.USERID}" th:text="${bid.USERNAME}"></option>
-                                    </select>
-                                </td>
-                            </tr>
+                            <!-- <tr>
+                                 <td class="words">负责人：</td>
+                                 <td>
+                                     <select name="USERID" class="form-control" id="userx" required="true">
+                                         <option value="">&#45;&#45;请选择&#45;&#45;</option>
+                                         <option th:each="bid : ${selectu}" th:value="${bid.USERID}" th:text="${bid.USERNAME}"></option>
+                                     </select>
+                                 </td>
+                             </tr>-->
                         </table>
 
                     </center>
@@ -130,7 +135,7 @@
     $(document).on("blur", ".aa", function () {
         var bulk = $("#bulka").val();
         var load = $("#loada").val();
-        if (parseInt(bulk)  < parseInt(load)) {
+        if (parseInt(bulk) < parseInt(load)) {
             alert("数额输入错误，请重新输入")
             $("#loada").val("");
             return false;
@@ -153,7 +158,7 @@
                 $("#myModala").find("[name='BID_AMORTIZE']").val(data[0].BID_AMORTIZE);
                 $("#myModala").find("[name='LONGTIME']").val(data[0].LONGTIME);
                 $("#myModala").find("[name='REALID']").val(data[0].REALID);
-            },error: function (data) {
+            }, error: function (data) {
                 console.log("error")
             }
         })
@@ -164,24 +169,32 @@
     * 添加方法传值
     * */
     $(document).on("click", "#xgtjbtn", function () {
-        var gaina= {BID_MONEY:$("#bulka").val(),BID_MINIMUM: $("#loada").val(),BID_AMORTIZE:$("#option").val(),BID_END_TIME:$("#endtime").val(),USERID:$("#userx").val(),BID_ID:$("#aaaaaaa").val(),REALID:$("#REALID").val()}
+        var gaina = {
+            BID_MONEY: $("#bulka").val(),
+            BID_MINIMUM: $("#loada").val(),
+            BID_AMORTIZE: $("#option").val(),
+            BID_END_TIME: $("#endtime").val(),
+            USERID: $("#userx").val(),
+            BID_ID: $("#aaaaaaa").val(),
+            REALID: $("#REALID").val()
+        }
         $.ajax({
-            url : "/record/add",
-            type:"POST",
+            url: "/record/add",
+            type: "POST",
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(gaina),
 
-            success:function (data) {
-                if (data>0){
-                    location.href="/record/list"
+            success: function (data) {
+                if (data > 0) {
+                    location.href = "/record/list"
 
                     alert("建标成功")
-                }else {
+                } else {
                     alert("建标失败")
-                    location.href="/record/list"
+                    location.href = "/record/list"
                 }
-            },error:function () {
+            }, error: function () {
                 console.log("error")
             }
         })
@@ -189,15 +202,15 @@
 
     })
     $(document).on("click", "#xgtjbtn", function () {
-        var gaina ={ID:$("#aaaaaaa").val()}
+        var gaina = {ID: $("#aaaaaaa").val()}
         $.ajax({
-            url : "/record/update",
-            type:"POST",
+            url: "/record/update",
+            type: "POST",
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(gaina),
-            success:function (data) {
-            },error:function () {
+            success: function (data) {
+            }, error: function () {
                 console.log("error")
             }
         })

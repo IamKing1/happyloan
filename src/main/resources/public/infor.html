@@ -312,7 +312,7 @@
 			//在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
 			let self = this;
 			axios.post('/tendInfo/getLoanInfo',{tendid:this.tendId}).then(function(response){
-				console.log(response.data[0].MONEY)
+				console.log(response.data)
 				// self.allNum = response.data;
 				self.month = response.data[0].LONGTIME;
 				self.tendNum = response.data[0].MONEY;
