@@ -19,7 +19,7 @@
         </if>
         <if test="BID_AMORTIZE!=null and BID_AMORTIZE!=''">
             and BID_AMORTIZE=#{BID_AMORTIZE}
-        </if>d
+        </if>
         order by bid_id DESC) t where rownum &lt; #{end}) a where a.rn &gt; #{start}
 
     </select>
@@ -28,7 +28,7 @@
         select count(*)
         from tb_tendering a
         join tb_systemcategoryitem c on a.bid_amortize=c.id
-        join tb_systemcategoryitem d on a.bid_state=d.id
+        join tb_systemcategoryitem d on a.stuts=d.id
         where a.stuts=21
         <if test="USERID!=null and USERID!=''">
             and a.USERID=#{USERID}

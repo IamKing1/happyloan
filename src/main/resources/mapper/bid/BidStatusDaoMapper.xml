@@ -30,7 +30,7 @@
         select count(*)
         from tb_tendering a
         join tb_systemcategoryitem c on a.bid_amortize=c.id
-        join tb_systemcategoryitem d on a.bid_state=d.id
+        join tb_systemcategoryitem d on a.stuts=d.id
         where stuts=48
         <if test="USERID!=null and USERID!=''">
             and a.USERID=#{USERID}
@@ -72,7 +72,7 @@
         select count(*)
         from tb_tendering a
         join tb_systemcategoryitem c on a.bid_amortize=c.id
-        join tb_systemcategoryitem d on a.bid_state=d.id
+        join tb_systemcategoryitem d on a.stuts=d.id
         where 1=1
         <if test="USERID!=null and USERID!=''">
             and a.USERID=#{USERID}
