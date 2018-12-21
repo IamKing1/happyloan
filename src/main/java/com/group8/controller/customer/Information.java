@@ -286,12 +286,16 @@ public class Information {
     private LoginService loginService;
 
 
-
+    /**
+     * 充值操作
+     * @param session
+     * @param money
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "rechargeAmount")
     public Object rechargeAmount(HttpSession session,Integer money){
         Map map = new HashMap();
-        System.out.println(money);
         int userId = loginService.getIdByName(session.getAttribute("CustomerName").toString());
         System.out.println(userId);
         map.put("money",money);
@@ -299,6 +303,7 @@ public class Information {
         int i = informationService.rechargeAmount(map);
         Map map1 = new HashMap();
         map1.put("mse",i);
+
         return map1;
     }
 

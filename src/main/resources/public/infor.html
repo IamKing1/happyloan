@@ -172,7 +172,7 @@
 						</div>
 						<div class="col col-line3" style="margin: 30px 0">
 							<el-row>
-								<el-button type="primary" style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
+								<el-button type="primary" @click="toubiao(num1)" style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
 							</el-row>
 						</div>
 					</div>
@@ -367,6 +367,20 @@
 			//获取URL参数值
 			getUrlKey: function(name) {
 				return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
+			},
+            toubiao(hasMoney){
+			    let _self=this;
+                axios.post("/investment/remainingSum",{"tendId":this.tendId,"money":hasMoney}).then(function(response){
+                    if(response.data>0){
+                        _self.editFormVisible = false;// 让弹出层隐藏
+                        _self.loadingData();//重新加载数据
+                    }else{
+                        _self.$message({
+                            message: '余额不足，.请充值',
+                            type: 'fail'
+                        });
+                    }
+                })
 			}
 		},
 		//过滤器

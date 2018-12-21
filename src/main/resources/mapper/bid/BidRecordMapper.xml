@@ -53,7 +53,7 @@
     </insert>
     <update id="update" parameterType="map">
         update (
-        select g.id borrow,b,a.id realid,g.id brrid,g.release,g.MONEY,h.item LONGTIME,g.longtime BID_AMORTIZE,i.item REPAYMENTMETHOD,j.item PURPOSE,g.HOUSINGQUANTITY,g.TOTALPRICE,g.REMARK,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.AUDITREMARKS,a.id,a.realname,a.address,to_char(a.applicationtime,'yyyy-MM-dd') applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income
+        select g.id borrow,b.item housed,a.id realid,g.id brrid,g.release,g.MONEY,h.item LONGTIME,g.longtime BID_AMORTIZE,i.item REPAYMENTMETHOD,j.item PURPOSE,g.HOUSINGQUANTITY,g.TOTALPRICE,g.REMARK,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.AUDITREMARKS,a.id,a.realname,a.address,to_char(a.applicationtime,'yyyy-MM-dd') applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income
         from tb_realname a
         left join tb_systemcategoryitem b on a.housed=b.id
         left join tb_systemcategoryitem c on a.academic=c.id

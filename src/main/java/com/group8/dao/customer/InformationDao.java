@@ -115,4 +115,11 @@ public interface InformationDao {
      * @return
      */
     List<Map> realNameAllInfo(String customerName);
+
+    /**
+     * 重新进行实名认证  删除已经提交过的
+     * @param userId
+     * @return
+     */
+    int deleteRealNameIsNo(Integer userId);
 }

@@ -32,7 +32,7 @@
 
 	<insert id="SubmissionRealName" parameterType="map">
   insert into tb_realname (id,userid,realname,sex,address,idnumber,academic,marriage,income,auditorid,housed,POSITIVE,OPPOSITE,JOB,APPLICATIONTIME)
-   values(seq_realname_id.nextval,#{userId},#{realName},#{sex},#{address},#{idNumber},#{education},#{marriage},#{income},21,#{housed},#{positive},#{opposite},#{job},sysdata)
+   values(seq_realname_id.nextval,#{userId},#{realName},#{sex},#{address},#{idNumber},#{education},#{marriage},#{income},21,#{housed},#{positive},#{opposite},#{job},sysdate)
     </insert>
 
 	<select id="getRealIdByUserName" resultType="map">
@@ -81,5 +81,7 @@
 		where f.username=#{customerName}
 	</select>
 
-
+<select id="deleteRealNameIsNo" resultType="Integer">
+      DELETE from tb_realname where userid=#{userId}
+</select>
 </mapper>
