@@ -15,7 +15,7 @@
   select a.money,b.item longtime,a.status from TB_BORROW a
       join TB_SYSTEMCATEGORYITEM b on a.LONGTIME=b.id
 
-      where RELEASE=1 and a.realid=#{realId}
+      where a.realid=#{realId}
     </select>
 
     <!--已发放贷款列表-->

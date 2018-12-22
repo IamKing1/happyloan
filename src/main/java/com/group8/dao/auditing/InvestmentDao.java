@@ -118,4 +118,10 @@ public interface InvestmentDao {
      */
     Integer getLongTimeByTendId(Map map);
 
+    /**
+     * 根据标的id查询借款的总金额
+     * @param tendId
+     * @return
+     */
+    Integer getMoneyByTendId(Integer tendId);
 }

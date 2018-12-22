@@ -28,8 +28,8 @@ public class Investment {
 
     /**
      * 投资
-     * @param session
-     * @param money
+     * @param
+     * @param
      * @return
      */
     @RequestMapping(value = "remainingSum")
@@ -61,9 +61,10 @@ public class Investment {
 
 
         Integer integer = investmentService.currentlyVoted(tendingId);
-
-
-        if(integer<100){
+        //查询总钱数
+        Integer moneyByTendId = investmentService.getMoneyByTendId(tendingId);
+        System.out.println("---------------------"+moneyByTendId);
+        if(integer<moneyByTendId*0.05){
             investmentService.updateTendStuts(tendingId);
         }
         return integer;

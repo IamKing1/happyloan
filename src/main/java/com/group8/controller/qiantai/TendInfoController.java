@@ -71,7 +71,18 @@ public class TendInfoController {
 	@ResponseBody
 	@RequestMapping("surplusMoney")
 	public Object surplusMoney(@RequestBody Map map){
-		return investmentService.currentlyVoted(Integer.valueOf(map.get("tendid")+""));
+		Integer tendid = Integer.valueOf(map.get("tendid") + "");
+		Integer integer = investmentService.currentlyVoted(tendid);
+		System.out.println("剩余投资的数目为："+integer);
+		//查询总钱数
+		Integer moneyByTendId = investmentService.getMoneyByTendId(tendid);
+		System.out.println("剩余投资的数目为："+moneyByTendId*0.05);
+		if(integer<(moneyByTendId*0.05)){
+			System.out.println("-----------------------");
+			investmentService.updateTendStuts(tendid);
+		}
+		return integer;
+
 	}
 
 
