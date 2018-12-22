@@ -49,6 +49,9 @@
                     prop="SEX"
                     label="性别"
                     width="100">
+                <template slot-scope="scope">
+                    <el-col>{{scope.row.SEX | formatStata1}}</el-col>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="ADDRESS"
@@ -180,6 +183,10 @@
             })
         },
         filters: { // el-tag类型转换
+            formatStata1: function (sex) {
+                const statusMap = {1:'男',2:'女'}
+                return statusMap[sex]
+            },
             // 状态显示转换
             formatStata: function (status) {
                 const statusMap = {2: '已拉黑'}
