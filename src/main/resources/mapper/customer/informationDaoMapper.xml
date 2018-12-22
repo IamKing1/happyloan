@@ -81,5 +81,7 @@
 		where f.username=#{customerName}
 	</select>
 
-
+<select id="deleteRealNameIsNo" resultType="Integer">
+      DELETE from tb_realname where userid=#{userId}
+</select>
 </mapper>

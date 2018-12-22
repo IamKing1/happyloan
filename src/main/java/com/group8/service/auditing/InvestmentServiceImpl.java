@@ -68,7 +68,6 @@ public class InvestmentServiceImpl implements InvestmentService {
             }
         }
         Integer totalMoney = investmentDao.totalMoney(tendId);
-
         return totalMoney-currentlyMoney;
     }
 
@@ -183,5 +182,12 @@ public class InvestmentServiceImpl implements InvestmentService {
         map.put("time",longTime);
         int i = investmentDao.saveBorrowingInformation(map);
         return i;
+    }
+
+    @Override
+    public Integer getMoneyByTendId(Integer tendId) {
+        Integer money= investmentDao.getMoneyByTendId(tendId);
+
+        return money;
     }
 }

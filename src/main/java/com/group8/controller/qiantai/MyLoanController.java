@@ -56,6 +56,7 @@ public class MyLoanController {
     public Object getIssused(HttpSession session){
         System.out.println(myLoanService.getIssused(session));
 
-        return myLoanService.getIssused(session);
+        List<Map> issused = myLoanService.getIssused(session);
+        return issused;
     }
 }

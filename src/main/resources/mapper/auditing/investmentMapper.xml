@@ -97,4 +97,8 @@ where tendid =#{tendId}
  group by realid
     </select>
 
+    <select id="getMoneyByTendId" resultType="Integer">
+        select bid_money from tb_tendering where id =#{tendId}
+    </select>
+
 </mapper>

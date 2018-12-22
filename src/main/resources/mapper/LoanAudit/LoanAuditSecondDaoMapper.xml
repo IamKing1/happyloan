@@ -27,6 +27,6 @@
     </select>
     <!--审核2-->
     <update id="update" parameterType="map">
-        update tb_borrow set secondinc=#{SECONDINC},secondincname=#{SECONDINCNAME},secondtime=to_date(#{SECONDTIME},'yyyy/MM/dd'),status=#{STATUS} where id=#{ID}
+        update tb_borrow set secondinc=#{SECONDINC},secondincname=#{adminId},secondtime=sysdate,status=#{STATUS} where id=#{ID}
     </update>
 </mapper>

@@ -16,26 +16,32 @@ import java.util.Map;
 
 @Service
 public class TendInfoServiceImpl implements TendInfoService {
-	@Autowired
-	private TendInfoDao tendInfoDao;
-	@Override
-	public List<Map> getLoanList(Map tendid) {
-		return tendInfoDao.getLoanList(tendid);
-	}
+    @Autowired
+    private TendInfoDao tendInfoDao;
 
-	@Override
-	public List<Map> getLoanInfo(Map tendid) {
-		return tendInfoDao.getLoanInfo(tendid);
-	}
+    @Override
+    public List<Map> getLoanList(Map tendid) {
 
-	@Override
-	public List<Map> getGaveList(Map map) {
+        List<Map> loanList = tendInfoDao.getLoanList(tendid);
+        System.out.println("--------------------"+loanList);
 
-		return tendInfoDao.getGaveList(map);
-	}
+        return loanList;
+    }
 
-	@Override
-	public Integer getGaveCount(Integer tendid) {
-		return tendInfoDao.getGaveCount(tendid);
-	}
+    @Override
+    public List<Map> getLoanInfo(Map tendid) {
+        return tendInfoDao.getLoanInfo(tendid);
+    }
+
+    @Override
+    public List<Map> getGaveList(Map map) {
+
+        List<Map> gaveList = tendInfoDao.getGaveList(map);
+        return gaveList;
+    }
+
+    @Override
+    public Integer getGaveCount(Integer tendid) {
+        return tendInfoDao.getGaveCount(tendid);
+    }
 }

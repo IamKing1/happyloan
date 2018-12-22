@@ -1,6 +1,7 @@
 package com.group8.controller.auditing;
 
 import com.group8.service.auditing.InvestmentService;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,17 +28,19 @@ public class Investment {
 
     /**
      * 投资
-     * @param session
-     * @param money
+     * @param
+     * @param
      * @return
      */
     @RequestMapping(value = "remainingSum")
     @ResponseBody
-    public Object remainingSum(HttpSession session,Integer money,Integer tendingId){
+    public Object remainingSum(HttpSession session,@RequestBody Map map){
 
-        int i = investmentService.remainingSum(session, money);
+        int i = investmentService.remainingSum(session, Integer.valueOf(map.get("money").toString()));
+        System.out.println(i);
         if(i>0){
-            int i1 = investmentService.investmentStorage(session, money, tendingId);
+            int i1 = investmentService.investmentStorage(session, Integer.valueOf(map.get("money").toString()), Integer.valueOf(map.get("tendId").toString()));
+            System.out.println(i1);
             if(i1>0){
                 return 1;
             }else{
@@ -59,9 +61,10 @@ public class Investment {
 
 
         Integer integer = investmentService.currentlyVoted(tendingId);
-
-
-        if(integer<100){
+        //查询总钱数
+        Integer moneyByTendId = investmentService.getMoneyByTendId(tendingId);
+        System.out.println("---------------------"+moneyByTendId);
+        if(integer<moneyByTendId*0.05){
             investmentService.updateTendStuts(tendingId);
         }
         return integer;
