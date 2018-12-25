@@ -331,6 +331,23 @@ public class Information {
 		return maps;
 	}
 
+    @ResponseBody
+    @RequestMapping("updateNickName")
+    public Object updateNickName(HttpSession session,String nickName){
+        String  customerName = (String)session.getAttribute("CustomerName");
+        int userId = loginService.getIdByName(customerName);
+        int i = informationService.updateNickName(userId, nickName);
 
+        return i ;
+    }
+    @RequestMapping(value = "calculationMoney")
+    @ResponseBody
+    public Object calculationMoney(HttpSession session){
+        String  customerName = (String)session.getAttribute("CustomerName");
+        int userId = loginService.getIdByName(customerName);
+        //待收本息
+        Map map = informationService.calculationMoney(userId);
+        return map;
+    }
 
 }

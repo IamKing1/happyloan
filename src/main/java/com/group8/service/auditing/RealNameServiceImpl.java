@@ -37,6 +37,9 @@ public class RealNameServiceImpl implements RealNameService {
     @Override
     public int getRealNameResult(Map map) {
         int realNameResult = realNameDao.getRealNameResult(map);
+
+
+
         return realNameResult;
     }
 }

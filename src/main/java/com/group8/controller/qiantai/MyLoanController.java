@@ -44,6 +44,7 @@ public class MyLoanController {
       map.put("realId",realIdByUserName.get(0).get("ID"));
 
         Map map1=new HashMap();
+
         map1.put("data",myLoanService.getListLoan(map));
         map1.put("total",myLoanService.getPageCount(map));
 

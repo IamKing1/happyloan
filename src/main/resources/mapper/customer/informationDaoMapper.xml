@@ -84,4 +84,36 @@
 <select id="deleteRealNameIsNo" resultType="Integer">
       DELETE from tb_realname where userid=#{userId}
 </select>
+
+    <update id="updateNickName">
+        update tb_user set  nickname=#{nickName} where userid= #{userId}
+    </update>
+
+    <select id="getPrincipalAndInterestToBeCollected" resultType="Integer">
+       select sum(a.money*(d.item*0.01)+a.money) principalAndInteres from tb_investmentlist a
+join  tb_tendering b on a.tendid=b.id
+join tb_loanrecord c on b.id=c.tendid
+join tb_systemcategoryitem d on c.longtime=d.id
+
+join tb_realname e on a.realid=e.id
+join tb_user f on e.userid=f.userid
+ where f.userid=#{userId} and c.stuts=1
+    </select>
+
+
+    <select id="getBalanceByUserId" resultType="Integer">
+        select b.balance from tb_user a
+join tb_realname b on a.userid=b.userid where a.userid=#{userId}
+    </select>
+    
+    <select id="getAccumulatedIncome" resultType="Integer">
+ select sum(a.money*(d.item*0.01)) accumulatedIncome from tb_investmentlist a
+join  tb_tendering b on a.tendid=b.id
+join tb_loanrecord c on b.id=c.tendid
+join tb_systemcategoryitem d on c.longtime=d.id
+
+join tb_realname e on a.realid=e.id
+join tb_user f on e.userid=f.userid
+ where f.userid=#{userId} and c.stuts=3
+    </select>
 </mapper>

@@ -98,33 +98,99 @@
               </span>
               <input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState"
                      value="2696547217205030168:-301641994240890871" autocomplete="off">
+            <script>
 
+                //校验是否登录
+               $(function() {
+
+                   var nickName=null;
+                   $.ajax({
+                       type: "post", //请求方式
+                       dataType: "json",
+                       async: true,
+                       url: "customer/jySession", //发送请求地址
+                       //请求成功后的回调函数有两个参数
+                       success: function (data) {
+                           $("#nickName").val(data.session);
+                           nickName=data.session;
+                       }
+                   })
+
+
+                   $.ajax({
+                       type: "post", //请求方式
+                       dataType: "json",
+                       url: "customer/calculationMoney", //发送请求地址
+                       //请求成功后的回调函数有两个参数
+                       success: function (data) {
+                           $("#benxi").html(data.principalAndInterestToBeCollected+"");
+                           $("#zong").html(data.balance+"");
+                           $("#shouyi").html(data.accumulatedIncome+"");
+                       }
+                   })
+
+
+
+
+
+                   $("#nickName").blur(function(){
+
+                      if(nickName!=this.value){
+                          $.ajax({
+                              type: "post", //请求方式
+                              dataType: "json",
+                              data:{nickName: $("#nickName").val()},
+                              url: "customer/updateNickName", //发送请求地址
+                              //请求成功后的回调函数有两个参数
+                              success: function (data) {
+                                if(data==-1){
+                                    alert("修改失败，抱歉")
+                                }
+                              }
+                          })
+                      }
+                   })
+
+               })
+
+            </script>
+                        <style>
+                            #nickName{
+                                border:1px solid transparent;
+                            }
+                            #nickName:focus{
+                                border: 1px solid #a9a9a9;
+
+                            }
+                        </style>
             </span><!-- <span class="head-icon"> <a href="#"><i title="第三方资金账户未认证" class="headiconbg headicon01"></i></a> <a
                             href="#"><i class="headiconbg headicon2"></i></a> <a href="#"><i
                             class="headiconbg headicon03"></i></a> </span>--></div>
                     <div class="user-info user-info1">
                         <ul>
-                            <li>用户名<span>tg_gpdt0139</span><span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a
+                            <li>昵称<span ><input type="text" id="nickName"></span><span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a
                                     class="pmain-log" id="signout">注销登录</a></span></li>
                            <!-- <li>安全级别<span><i class="safe-level"><i class="onlevel" style="width:40%;"></i></i></span> <a
                                     href="#">[低]</a></li>-->
                         </ul>
                     </div>
                 </div>
+
+
                 <div class="pmain-money">
                     <ul>
                         <li class="none"><span><em>账户总额</em><i id="zhze" class="markicon"></i><span class="arrow-show1"
-                                                                                                    style="display:none;">可用余额+待收本息</span><span
+                                                                                                     style="display:none;">可用余额+待收本息</span><span
                                 class="icon-show1" style="display:none;"></span></span> <span class="truemoney"><i
-                                class="f26 fb">0.00 </i> 元</span></li>
+                                class="f26 fb" id="zong"></i> 元</span></li>
                         <li><span><em>待收本息</em><i id="dsbx" class="markicon"></i><span class="arrow-show2"
                                                                                        style="display:none;">未到账的投资项目的本金、利息总额</span><span
                                 class="icon-show2" style="display:none;"></span></span> <span class="truemoney"><i
-                                class="f26 fb">0.00 </i>元</span></li>
+                                class="f26 fb" id="benxi"></i>元</span></li>
                         <li><span><em>累计收益</em><i id="ljsy" class="markicon"></i><span class="arrow-show3"
                                                                                        style="display: none;">已到账的投资收益+未到账的投资收益</span><span
                                 class="icon-show3" style="display: none;"></span></span> <span class="truemoney"><i
-                                class="f26 fb c-pink">0.00 </i> 元</span></li>
+                                class="f26 fb c-pink" id="shouyi"></i> 元</span></li>
                     </ul>
                 </div>
             </div>
