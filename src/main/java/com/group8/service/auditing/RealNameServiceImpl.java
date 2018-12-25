@@ -1,5 +1,6 @@
 package com.group8.service.auditing;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.group8.dao.auditing.RealNameDao;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,4 +59,5 @@ public class RealNameServiceImpl implements RealNameService {
         }
         return realNameResult;
     }
+
 }
