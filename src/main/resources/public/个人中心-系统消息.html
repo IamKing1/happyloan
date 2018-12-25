@@ -11,7 +11,13 @@
 <script type="text/javascript" src="script/jquery.min.js"></script>
 <script type="text/javascript" src="script/common.js"></script>
 <script src="script/user.js" type="text/javascript"></script>
-
+  <!-- 引入样式 -->
+  <script src="/vue/vue.js"></script>
+  <script type="text/javascript" src="/js1/axios.min.js"></script>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
 <header id="thead">
@@ -33,66 +39,232 @@
     <div class="personal-main">
       <div class="personal-xtxx">
         <h3><i>系统消息</i></h3>
-        <form id="form" name="form" method="post" action="">
-          <input type="hidden" name="form" value="form">
-          <span id="form:dataTable">
-          <script type="text/javascript">
-								//<![CDATA[
-									$(function(){
-										$("#pxtxx-list li").click(function(){
-											var changeStatusTag = false;
-											if($(this).children("span").hasClass("pxtxx-newmail")){
-												$(this).children("span").removeClass("fb");
-												$(this).children("span.pxtxx-newmail").removeClass("pxtxx-newmail").addClass("pxtxx-mail");	
-												changeStatusTag = true;
-											}
-											$(this).children(".pxtxx-notice").show();
-											/*var displayValue = $(this).children(".pxtxx-notice").css("display");
-											if("block"==displayValue || "inline"==displayValue){
-												$(this).css("background-color","#fff");
-												$(this).mouseover(function(){
-													$(this).css("background-color","#fff");
-												});
-												$(this).mouseout(function(){
-													$(this).css("background-color","#fff");
-												});
-											}else if("none"==$(this).children(".pxtxx-notice").css("display")){
-												$(this).css("background-color","#F8F8F8");
-												$(this).mouseover(function(){
-													$(this).css("background-color","#F8F8F8");
-												});
-												$(this).mouseout(function(){
-													$(this).css("background-color","#fff");
-												});
-												
-											}*/
-											$(this).siblings().children(".pxtxx-notice").css("display","none");
-											if(changeStatusTag){
-												$(this).children("a").click();
-												$(this).click();
-											}
-										});
-									});
-									
-								//]]>
-								</script>
-          <div id="pxtxx-tab" class="pxtxx-tab">
-            <ul>
-              <li class="on"><a  href="#" style="color:#fff;padding:5px 22px;display:block;" title="全部">全部</a> </li>
-              <li><a href="#" style="padding:5px 22px;display:block;" title="未读">未读</a> </li>
-              <li><a href="#" style="padding:5px 22px;display:block;" title="已读">已读</a> </li>
-            </ul>
-            <span class="xxsz" style="display:none;">消息设置</span> </div>
-          <div class="pxtxx-title"> <span class="pxtxx-type ml46">消息类型</span><span class="pxtxx-con">内容</span><span class="pxxtx-date">发送时间</span> </div>
-          <div id="pxtxx-list" class="pxtxx-list">
-            <ul>
-              <li><span class="pxtxx-type ml46">公司公告</span><span class="pxtxx-con">热烈祝贺阳光易贷新平台上线</span><span class="pxxtx-date">2015-10-1</span></li>
-              <li><span class="pxtxx-type ml46">公司公告</span><span class="pxtxx-con">热烈祝贺阳光易贷新平台上线</span><span class="pxxtx-date">2015-10-1</span></li>
-              <li><span class="pxtxx-type ml46">公司公告</span><span class="pxtxx-con">热烈祝贺阳光易贷新平台上线</span><span class="pxxtx-date">2015-10-1</span></li>
-            </ul>
-          </div>
-          </span>
-        </form>
+        <div id="view">
+        <el-tabs type="border-card">
+          <el-tab-pane label="未读消息">
+            <el-table
+                    :data="tableDatas"
+                    v-loading.body="loading"
+                    border>
+              <el-table-column
+                      label="类型"
+                      width="100">
+                <template slot-scope="scope">
+                  <el-col>系统消息</el-col>
+                </template>
+              </el-table-column>
+              <el-table-column
+                      prop="CONTENT"
+                      label="内容"
+                      width="400">
+
+              </el-table-column>
+              <el-table-column
+                      prop="METIME"
+                      label="时间"
+                      width="110">-
+              </el-table-column>
+
+              <el-table-column
+                      label="操作">
+                <template scope="scope">
+                  <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">查看</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+            <!--编辑界面-->
+            <el-dialog title="消息详情" :visible.sync="editFormVisible" :close-on-click-modal="false">
+              <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+                <el-form-item label="消息详情" prop="CONTENT">
+                  <el-input v-model="editForm.CONTENT" disabled="true"></el-input>
+                </el-form-item>
+              </el-form>
+              <div slot="footer" class="dialog-footer">
+                <el-button type="primary" @click.native="editSubmit" :loading="editLoading">确定</el-button>
+              </div>
+            </el-dialog>
+
+          </el-tab-pane>
+          <el-tab-pane label="已读消息">
+            <el-table
+                    :data="issued"
+                    v-loading.body="loading"
+                    border>
+              <el-table-column
+                      label="类型"
+                      width="100">
+                <template slot-scope="scope">
+                  <el-col>系统消息</el-col>
+                </template>
+              </el-table-column>
+              <el-table-column
+                      prop="CONTENT"
+                      label="内容"
+                      width="400">
+              </el-table-column>
+              <el-table-column
+                      prop="METIME"
+                      label="时间"
+                      width="110">-
+              </el-table-column>
+
+              <el-table-column
+                      label="操作">
+                <template scope="scope">
+                  <el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+
+          </el-tab-pane>
+        </el-tabs>
+        <!--列表底部工具条和分页符-->
+      <!--  <el-row style="margin-top: 20px" type="flex" justify="end">
+          <el-col :span="18" >
+            <el-pagination
+                    style="text-align:center "
+                    @size-change="pageSizeChange"
+                    @current-change="currentPageChange"
+                    :current-page="currentPage"
+                    :page-sizes="[5, 10, 15, 20]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+          </el-col>
+        </el-row>-->
+
+        </div>
+        <script type="text/javascript">
+            var view = new Vue({
+                el: '#view',
+                data: {
+                    //未读消息列表数据
+                    tableDatas: [],
+                    //已读消息列表
+                    issued:[],
+                    //显示加载中样式
+                    loading: false,
+                    //当前页
+                   /* currentPage: 1,
+                    //分页大小
+                    pageSize: 5,
+                    //总记录数
+                    total: 800,*/
+                    //删除的弹出框
+                    deleteVisible: false,
+                    //编辑界面是否显示
+                    editFormVisible: false,
+                    editLoading: false,
+                    goUrl: '',
+                    editFormRules: {
+                    },
+                    //编辑界面数据
+                    editForm: {
+                        ID:0,
+                        CONTENT:'',
+                       /* METIME:''*/
+                    }
+
+                },
+                created:function(){
+                    //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
+                    var self = this;
+                    var start =(this.currentPage-1)*this.pageSize;
+                    var end =this.currentPage*this.pageSize+1;//分页
+                    axios.post('/system/getMessages'/*,{'start':start,'end':end}*/).then(function(response){
+                      /*  self.total=response.data.total;*/
+                        self.tableDatas = response.data.data;
+                    });
+                    axios.post('/system/getMessages2').then(function(response){
+                       /* self.total=response.data.total;*/
+                        self.issued = response.data.data;
+                    });
+                },
+                methods:{
+                    //表格重新加载数据
+                    loadingData:function() {
+                        var _self = this;
+                        _self.loading = true;
+                        var self = this;
+                        var start =(this.currentPage-1)*this.pageSize;//分页数据
+                        var end =this.currentPage*this.pageSize+1;
+                        var searchForm= {
+                           /* 'start': start,
+                            'end': end,*/
+                        };
+                        axios.post('/system/getMessages', searchForm).then(function (response) {
+                          /*  _self.total = response.data.total;*/
+                            _self.tableData = response.data.data;
+                        });
+                        axios.post('/system/getMessages2', searchForm).then(function (response) {
+                         /*   _self.total = response.data.total;*/
+                            _self.issued = response.data.data;
+                        });
+                        setTimeout(function () {
+                            _self.loading = false;
+                        }, 300);
+                    },
+                    editFormRules(){},
+                    //表格编辑事件
+                    editClick:function(row) {
+                        this.goUrl="/system/update";
+                        this.editFormVisible = true;
+                        this.editForm = Object.assign({}, row);
+
+                    },
+                    //表格删除事件
+                    deleteClick:function(row) {
+                        var _self = this;
+                        this.$confirm('确认要删除吗?', '提示', {
+                            type: 'warning',
+                        }).then(function(){
+                            var  url="/system/del/"+row.ID;
+                            console.log(url)
+                            axios.get(url).then(function (response) {
+                                if(response.data>0){
+                                    _self.$message({
+                                        message:  '删除成功',
+                                        type: 'success'
+                                    });
+                                    _self.loadingData();//重新加载数据
+                                }
+                            });
+                        }).catch(function(e){
+                            if(e != "cancel")
+                                console.log("出现错误：" + e);
+                        });
+                    },
+                    //分页大小修改事件
+                    pageSizeChange:function(val) {
+                        console.log('每页 ' + val +' 条');
+                        this.pageSize = val;
+                        var _self = this;
+                        _self.loadingData();//重新加载数据
+                    },
+                    //当前页修改事件
+                    currentPageChange:function(val) {
+                        this.currentPage = val;
+                        console.log('当前页: ' + val);
+                        var _self = this;
+                        _self.loadingData();//重新加载数据
+                    },
+                    //保存点击事件
+                    editSubmit:function(){
+                        var _self = this;
+                        _self.loading = true;
+                        var formData =this.editForm;
+                        var goUrl=this.goUrl;
+                        axios.post(goUrl,formData).then(function(response){
+                            if(response.data>0){
+                                _self.editFormVisible = false;// 让弹出层隐藏
+                                _self.loadingData();//重新加载数据
+                            }
+                        })
+                    },
+                }
+            })
+        </script>
       </div>
     </div>
     <div class="clear"></div>

@@ -6,7 +6,7 @@
     <select id="getNoRealNameList" resultType="map" parameterType="map">
 
         select * from (
-        select rownum rn,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.AUDITREMARKS,a.id,a.realname,a.address,to_char(a.applicationtime,'yyyy-MM-dd') as applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income from tb_realname a
+        select rownum rn,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.userid,a.AUDITREMARKS,a.id,a.realname,a.address,to_char(a.applicationtime,'yyyy-MM-dd') as applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income from tb_realname a
         left join tb_systemcategoryitem b on a.housed=b.id
         left join tb_systemcategoryitem c on a.academic=c.id
         left join tb_systemcategoryitem d on a.marriage=d.id
@@ -33,5 +33,8 @@
         update tb_realName set AUDITREMARKS=#{mse},AUDITTIME=sysdate,AUDITORID=#{result} where id=#{ID}
 
     </update>
-
+    <!--向消息表中添加内容-->
+    <insert id="add" parameterType="map">
+        insert into tb_messages(id,userid,content,metime) values(seq_id.nextval,#{userid},#{content},sysdate)
+    </insert>
 </mapper>

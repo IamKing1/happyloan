@@ -63,7 +63,7 @@ public class Investment {
         Integer integer = investmentService.currentlyVoted(tendingId);
         //查询总钱数
         Integer moneyByTendId = investmentService.getMoneyByTendId(tendingId);
-        System.out.println("---------------------"+moneyByTendId);
+       // System.out.println("---------------------"+moneyByTendId);
         if(integer<moneyByTendId*0.05){
             investmentService.updateTendStuts(tendingId);
         }
