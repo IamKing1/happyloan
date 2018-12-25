@@ -2,3 +2,35 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group8.dao.qiantai.SystenMessage">
+    <!--未读消息列表-->
+<select id="getMessages" resultType="map">
+
+    select rownum rn, a.CONTENT,to_char(a.metime,'yyyy/MM/dd') metime,a.state,b.username from tb_messages a
+    join tb_user b on a.userid=b.userid
+    where a.state=1 and b.username=#{username}
+</select>
+    <!--未读消息数量-->
+    <select id="getPageCount" resultType="int">
+    	select count(*) from tb_messages where state=1
+    </select>
+    <!--修改状态变为2-->
+    <update id="update" parameterType="map">
+        update TB_MESSAGES set state=2
+    </update>
+    <!--已读消息列表-->
+    <select id="getMessages2" resultType="map">
+
+    select rownum rn,a.id,a.userid,a.CONTENT,to_char(a.metime,'yyyy/MM/dd') metime,a.state,b.username from tb_messages a
+    join tb_user b on a.userid=b.userid
+      where a.state=2 and b.username=#{username}
+    </select>
+    <!--已读消息数量-->
+    <select id="getPageCount2" resultType="int">
+        select count(*) from tb_messages where state=2
+    </select>
+    <!--删除已读消息-->
+    <delete id="delte" parameterType="int">
+      delete from tb_messages where id=#{ID}
+    </delete>
+</mapper>

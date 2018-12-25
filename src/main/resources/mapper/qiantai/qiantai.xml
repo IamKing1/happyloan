@@ -6,7 +6,7 @@
 
     <select id="getList" resultType="map">
         select * from(
-        select rownum rn,d.id,b.REALNAME,b.sex,d.stuts,a.housingquantity,e.item purpose,a.MONEY,c.item LONGTIME,NVL((select round((select sum(money) from TB_INVESTMENTLIST where TENDID=a.id)/(select money from TB_BORROW
+        select rownum rn,d.id,b.REALNAME,b.sex,d.stuts,a.housingquantity,e.item purpose,a.MONEY,c.item LONGTIME,NVL((select round((select sum(money) from TB_INVESTMENTLIST where TENDID=d.id)/(select money from TB_BORROW
         where id=a.id)*100,1) from dual),0) jin
         from TB_BORROW a
         join TB_REALNAME b on a.REALID=b.id

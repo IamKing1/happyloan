@@ -281,7 +281,6 @@
             axios.post('/emp/getList',{'start':start,'end':end}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.data;
-               // alert(JSON.stringify(response.data.data));
             }),
                 //部门
             axios.post('/emp/getdept').then(function (response) {
