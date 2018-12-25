@@ -38,7 +38,13 @@ public class InvestmentServiceImpl implements InvestmentService {
         map.put("realId",realId);
         map.put("money",money);
        // List<Map> mseList = investmentDao.remainingSum(map);
-        investmentDao.remainingSum(map);
+
+        Integer mse = investmentDao.remainingSum(map);
+
+
+      //  System.out.println("--------------"+map.get("mse"));
+
+
         return Integer.valueOf(map.get("mse")+"");
     }
 
@@ -54,6 +60,7 @@ public class InvestmentServiceImpl implements InvestmentService {
         map.put("money",money);
         map.put("tendId",tendId);
         int result = investmentDao.investmentStorage(map);
+
         return result;
     }
 

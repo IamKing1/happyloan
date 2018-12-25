@@ -37,10 +37,9 @@ public class Investment {
     public Object remainingSum(HttpSession session,@RequestBody Map map){
 
         int i = investmentService.remainingSum(session, Integer.valueOf(map.get("money").toString()));
-        System.out.println(i);
+
         if(i>0){
             int i1 = investmentService.investmentStorage(session, Integer.valueOf(map.get("money").toString()), Integer.valueOf(map.get("tendId").toString()));
-            System.out.println(i1);
             if(i1>0){
                 return 1;
             }else{
