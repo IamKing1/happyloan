@@ -76,7 +76,7 @@
             <el-dialog title="消息详情" :visible.sync="editFormVisible" :close-on-click-modal="false">
               <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
                 <el-form-item label="消息详情" prop="CONTENT">
-                  <el-input v-model="editForm.CONTENT"></el-input>
+                  <el-input v-model="editForm.CONTENT" disabled="true"></el-input>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
