@@ -34,4 +34,13 @@ public interface TendInfoService {
 	 * @return
 	 */
 	Integer getGaveCount(Integer tendid);
+
+
+	/**
+	 * 个人设置页面的邮箱更新
+	 * @param map
+	 * @return
+	 */
+	Integer updateEmail(Map map);
+
 }

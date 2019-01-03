@@ -63,6 +63,7 @@ public class FTPfile {
             ftp.changeWorkingDirectory(path);
             //指定上传文件的类型 二进制文件
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
+//            ftp.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
 
             // MultipartFile multipartFile=null;
             //获取文件的绝对路径

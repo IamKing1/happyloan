@@ -47,6 +47,9 @@
                     prop="SEX"
                     label="性别"
                     width="100">
+                <template slot-scope="scope">
+                    <el-col>{{scope.row.SEX | formatStata1}}</el-col>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="ADDRESS"
@@ -222,6 +225,10 @@
             formatStata: function (status) {
                 const statusMap = {20: '未审核', 21: '通过',22:'未通过'}
                 return statusMap[status]
+            },
+            formatStata1: function (sex) {
+                const statusMap = {1:'男',2:'女'}
+                return statusMap[sex]
             },
         },
         methods:{

@@ -236,7 +236,7 @@
 		
 		
 		<link rel="stylesheet" href="https://static.h-ui.net/h-ui/3.1/css/H-ui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/vFrom.css">
+		<!--<link rel="stylesheet" type="text/css" href="/css/vFrom.css">-->
 		
 		<script type="text/javascript" src="https://static.h-ui.net/h-ui/3.1/js/H-ui.min.js"></script>
 		<!--<script type="text/javascript" src="http://demo.h-ui.net/H-ui/3.1/lib/jquery.validation/1.14.0/jquery.validate.min.js"></script>-->
@@ -266,16 +266,29 @@
 					type: "post", //请求方式
 					dataType: "json",
 					success: function (data) {
-						console.log(data[0])
-						let status = data[0];
-						console.log(typeof status)
+						console.log(data)
+						let status = data[0]['AUDITORID'];
 						if(status==null){
 							$(".personal-zhsz h3 i").append("<span style='color: #f50; font-size: 16px;margin-left: 10px;'>" +
 								"</span>")
-						}else if (status == 20) {
+						}else if (status == 22) {
 							$(".personal-zhsz h3 i").append("<span style='color: #f50; font-size: 16px;margin-left: 10px;'>" +
 								"实名认证失败,请重新认证</span>")
-						}else if (status == 22) {
+							$(".personal-zhsz input,.personal-zhsz select").css("cursor","auto")
+							
+							/*认证失败之后要把原数据删除*/
+							$.ajax({
+								url:"/customer/removeRealName",
+								type: "post", //请求方式
+								dataType: "json",
+								success: function (data) {
+									console.log("删除方法")
+									console.log(data)
+								}
+							});
+							
+							
+						}else if (status == 20) {
 							$.ajax({
 								url:"/customer/realNameAllInfo",
 								type: "post", //请求方式
@@ -288,7 +301,7 @@
 									$("#realName").val(result.REALNAME)
 									$("#idNumber").val(result.IDNUMBER)
 
-									if(result.SEX=='男'){
+									if(result.SEX==1){
 										$("#customRadioInline1").prop("checked",true)
 									}else {
 										$("#customRadioInline2").prop("checked",true)
@@ -314,15 +327,10 @@
 
 									$("#positive").val(result.POSITIVE)
 									$("#opposite").val(result.OPPOSITE)
-
-
 									$("#job").val(result.JOB)
-
 									$(".personal-zhsz input,.personal-zhsz select").prop("disabled",true);
-
-
+									$(".personal-zhsz input,.personal-zhsz select").css("cursor","no-drop")
 									$(".personal-zhsz h3 i").append("<span style='color: #f50; font-size: 16px;margin-left: 10px;'>实名认证成功</span>")
-
 								}
 							})
 						}else if(status == 21){
@@ -336,7 +344,7 @@
 									$("#realName").val(result.REALNAME)
 									$("#idNumber").val(result.IDNUMBER)
 
-									if(result.SEX=='男'){
+									if(result.SEX==1){
 										$("#customRadioInline1").prop("checked",true)
 									}else {
 										$("#customRadioInline2").prop("checked",true)
@@ -366,14 +374,11 @@
 									$("#job").val(result.JOB)
 
 									$(".personal-zhsz input,.personal-zhsz select").prop("disabled",true);
-
-
+									$(".personal-zhsz input,.personal-zhsz select").css("cursor","no-drop")
 									$(".personal-zhsz h3 i").append("<span style='color: #f50; font-size: 16px;margin-left: 10px;'>您已提交实名认证,请等候认证结果</span>")
-
 								}
 							})
 						}
-						
 					},
 					error(data){
 						console.log(data)
@@ -440,10 +445,10 @@
 									<select name="province" id="province" class="custom-select" datatype="*">
 										<option>--省--</option>
 									</select>
-									<select name="city" id="city" class="custom-select">
+									<select name="city" id="city" class="custom-select"  datatype="*">
 										<option>--市--</option>
 									</select>
-									<select name="area" id="area" class="custom-select">
+									<select name="area" id="area" class="custom-select" datatype="*">
 										<option>--区--</option>
 									</select>
 								</div>
@@ -521,9 +526,7 @@
 											aria-hidden="true"></i> 浏览文件</a>
 									<input type="file" multiple name="positive" class="input-file">
 								</div>
-							
 							</td>
-						
 						</tr>
 						<tr>
 							<td colspan="2">
@@ -552,12 +555,11 @@
 		</div>
 		<script>
 
-
 			$(".form").Validform({
 				tiptype: 3,
 			})
 		</script>
-		<!-个人信息结束-->
+		<!--个人信息结束-->
 		
 	
 	</div>
