@@ -23,10 +23,9 @@ public class RepayMoneyServiceImpl implements RepayMoneyService {
     @Override
     public int deductMoney(Map map) {
 
-        Integer integer = repayMoneyDao.deductMoney(map);
-        System.out.println(integer);
+      repayMoneyDao.deductMoney(map);
 
-        return 1;
+        return Integer.valueOf(map.get("mse").toString());
     }
 
     @Override
