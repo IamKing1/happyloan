@@ -259,6 +259,7 @@
                             if(response.data>0){
                                 _self.editFormVisible = false;// 让弹出层隐藏
                                 _self.loadingData();//重新加载数据
+                                history.go(0)
                             }
                         })
                     },
