@@ -367,7 +367,6 @@ public class Information {
 	@ResponseBody
 	@RequestMapping("getIdNumEmail")
 	public Object getIdNumEmail(HttpSession session){
-
 		List<Map> getIdNumEmail = informationService.getIdNumEmail(session.getAttribute("CustomerName").toString());
 //		System.out.println("\n"+session.getAttribute("CustomerName"));
 //		System.out.println(getIdNumEmail);
