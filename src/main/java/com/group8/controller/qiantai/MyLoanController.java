@@ -55,7 +55,6 @@ public class MyLoanController {
     @ResponseBody
     @RequestMapping("/getIssused")
     public Object getIssused(HttpSession session){
-        System.out.println(myLoanService.getIssused(session));
 
         List<Map> issused = myLoanService.getIssused(session);
         return issused;
