@@ -32,7 +32,7 @@
 
 	<insert id="SubmissionRealName" parameterType="map">
   insert into tb_realname (id,userid,realname,sex,address,idnumber,academic,marriage,income,auditorid,housed,POSITIVE,OPPOSITE,JOB,APPLICATIONTIME)
-   values(seq_realname_id.nextval,#{userId},#{realName},#{sex},#{address},#{idNumber},#{education},#{marriage},#{income},21,#{housed},#{positive},#{opposite},#{job},sysdata)
+   values(seq_realname_id.nextval,#{userId},#{realName},#{sex},#{address},#{idNumber},#{education},#{marriage},#{income},21,#{housed},#{positive},#{opposite},#{job},sysdate)
     </insert>
 
 	<select id="getRealIdByUserName" resultType="map">
@@ -60,7 +60,7 @@
     </insert>
 
 
-	<select id="isRealName" resultType="int">
+	<select id="isRealName" resultType="map">
 
     select a.AUDITORID from TB_REALNAME a
     join tb_user b on a.userid=b.userid
@@ -81,5 +81,20 @@
 		where f.username=#{customerName}
 	</select>
 
+	<delete id="removeRealName">
 
+		delete from TB_REALNAME where userid = (select userid from tb_user where username = #{username})
+	</delete>
+	<select id="getIdNumEmail" resultType="map">
+
+		SELECT
+			a.EMAIL,
+			b.IDNUMBER,
+			b.AUDITORID
+		FROM
+			tb_user a
+			LEFT JOIN tb_realname b ON a.userid = b.userid
+		WHERE
+			a.username=#{username}
+	</select>
 </mapper>

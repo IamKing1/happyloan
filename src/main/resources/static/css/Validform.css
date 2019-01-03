@@ -1,32 +1,36 @@
+.Validform_checktip {
+    margin-left: 8px;
+    line-height: 20px;
+    height: 20px;
+    overflow: hidden;
+    color: #999;
+    font-size: 12px;
+}
+
 .Validform_right {
     color: #71b83d;
     padding-left: 20px;
-    /*background: url(/Public/home/images/right.png) no-repeat left center;*/
-}
-.Validform_right:before{
-    content:"\f058";
-    color: green;
+    background: url("../images/正确.png") no-repeat left center;
+    -webkit-background-size: 16px 16px;
+    background-size: 16px 16px;
 }
 
 .Validform_wrong {
     color: red;
     padding-left: 20px;
     white-space: nowrap;
-    /*background: url(/Public/home/images/error.png) no-repeat left center;*/
-    background: none !important;
-}
-.Validform_right:before{
-    content:"\f057";
-    color: red;
+    background: url("../images/错误.png") no-repeat left center;
+    -webkit-background-size: 16px 16px;
+    background-size: 16px 16px;
 }
 
 .Validform_loading {
     padding-left: 20px;
-    /*background: url(/Public/home/images/onLoad.gif) no-repeat left center;*/
+    background: url("../images/加载.png") no-repeat left center;
+    -webkit-background-size: 16px 16px;
+    background-size: 16px 16px;
 }
-.Validform_loading:before{
-    content: '\f110';
-}
+
 .Validform_error {
     background-color: #ffe7e7;
 }
@@ -83,4 +87,8 @@
     border: 1px solid #000;
     border-top: none;
     text-align: left;
+}
+
+body {
+    background: #fff;
 }

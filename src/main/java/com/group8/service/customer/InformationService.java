@@ -102,4 +102,16 @@ public interface InformationService {
      * @return
      */
     List<Map> realNameAllInfo(String customerName);
+    /**
+     * 实名认证失败,删除信息
+     * @param username
+     * @return
+     */
+    Integer removeRealName(String username);
+	/**
+	 * 获取身份证和邮箱,判断认证信息完整程度
+	 * @param username
+	 * @return
+	 */
+	List<Map> getIdNumEmail(String username);
 }

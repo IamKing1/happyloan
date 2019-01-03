@@ -41,4 +41,7 @@
 	<select id="getGaveCount" resultType="int">
 		SELECT count(*) FROM TB_INVESTMENTLIST where tendid=#{tendid}
 	</select>
+	<update id="updateEmail">
+		update tb_user set email=#{email} where username=#{username}
+	</update>
 </mapper>

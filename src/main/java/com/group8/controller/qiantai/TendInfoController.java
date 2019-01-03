@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,5 +78,18 @@ public class TendInfoController {
 		return investmentService.currentlyVoted(21);
 	}
 
+	@ResponseBody
+	@RequestMapping("updateEmail")
+	public Object updateEmail(@RequestParam String email, HttpSession session){
+		Map map = new HashMap();
+		Object username = session.getAttribute("CustomerName");
+		System.out.println("\n"+username);
+		System.out.println("\n"+email+"\n");
+		map.put("email",email);
+		map.put("username",username);
+		System.out.println(map);
+		Integer i = tendInfoService.updateEmail(map);
+		return i;
+	}
 
 }

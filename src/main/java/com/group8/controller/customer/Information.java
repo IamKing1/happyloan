@@ -151,7 +151,6 @@ public class Information {
     @RequestMapping(value = "SubmissionRealName")
     public Object SubmissionRealName(@RequestParam Map  map, HttpSession session, @RequestParam MultipartFile positive, @RequestParam MultipartFile opposite){
 
-//        System.out.println("\n"+map+"\n");
 
         if(positive!=null&&!positive.isEmpty()){
             String s = FTPfile.upLoad(positive);
@@ -164,7 +163,8 @@ public class Information {
             /*map.put("positive",positive.getOriginalFilename());*/
         }
         int i = informationService.SubmissionRealName(map, session);
-          return "redirect:/realName.html";
+
+        return "redirect:/realName.html";
     }
 
 
@@ -218,6 +218,7 @@ public class Information {
 
         }
         int i = informationService.updateHeadPortrait(map);
+        System.out.println(i);
         return "redirect:/person.html";
     }
 
@@ -326,6 +327,28 @@ public class Information {
 		return maps;
 	}
 
+	/**
+	 * 实名认证失败,删除原信息
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("removeRealName")
+	public Object removeRealName(HttpSession session){
+		Integer i = informationService.removeRealName(session.getAttribute("CustomerName").toString());
+		return i;
+	}
+	/**
+	 * 实名认证失败,删除原信息
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("getIdNumEmail")
+	public Object getIdNumEmail(HttpSession session){
 
+		List<Map> getIdNumEmail = informationService.getIdNumEmail(session.getAttribute("CustomerName").toString());
+//		System.out.println("\n"+session.getAttribute("CustomerName"));
+//		System.out.println(getIdNumEmail);
+		return getIdNumEmail;
+	}
 
 }
