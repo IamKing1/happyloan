@@ -122,4 +122,32 @@ public interface InformationDao {
      * @return
      */
     int deleteRealNameIsNo(Integer userId);
+
+    /**
+     * 修改昵称
+     * @param map
+     * @return
+     */
+    int updateNickName(Map map);
+
+    /**
+     * 得到余额
+     * @param userId
+     * @return
+     */
+    Integer getBalanceByUserId(Integer userId);
+
+    /**
+     * 待收本息
+     * @param userId
+     * @return
+     */
+    Integer getPrincipalAndInterestToBeCollected(Integer userId);
+
+    /**
+     * 累计收益
+     * @param userId
+     * @return
+     */
+    Integer getAccumulatedIncome(Integer userId);
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -157,5 +158,41 @@ public class InformationServiceImpl implements InformationService {
         return informationDao.realNameAllInfo(customerName);
     }
 
+    @Override
+    public int updateNickName(Integer userId, String nickName) {
+        Map map = new HashMap();
 
+        map.put("userId",userId);
+        map.put("nickName",nickName);
+        System.out.println(map);
+
+        int i = informationDao.updateNickName(map);
+
+        return i;
+    }
+
+    @Override
+    public Map calculationMoney(Integer userId) {
+        Map map = new HashMap();
+        //待收本息
+        Integer principalAndInterestToBeCollected = informationDao.getPrincipalAndInterestToBeCollected(userId);
+        if(principalAndInterestToBeCollected==null){
+            principalAndInterestToBeCollected=0;
+        }
+        map.put("principalAndInterestToBeCollected", principalAndInterestToBeCollected);
+        //可用余额  待收本息+余额
+        Integer balance = informationDao.getBalanceByUserId(userId);
+
+        if(balance==null){
+            balance=0;
+        }
+        map.put("balance",balance+principalAndInterestToBeCollected);
+        //累计收益
+        Integer accumulatedIncome = informationDao.getAccumulatedIncome(userId);
+        if(accumulatedIncome==null){
+            accumulatedIncome=0;
+        }
+        map.put("accumulatedIncome",accumulatedIncome);
+        return map;
+    }
 }
