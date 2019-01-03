@@ -25,7 +25,7 @@ public class QtServiceImpl implements QtService {
 
         List<Map> list = qtDao.getList(map);
 
-        System.out.println("---------------"+list);
+       // System.out.println("---------------"+list);
 
         //[{MONEY=10000, REALNAME=借款人一号, LONGTIME=12, SEX=1, HOUSINGQUANTITY=一套房子, PURPOSE=商业, ID=102, RN=1, JIN=0}]
         for (Map map1 : list) {

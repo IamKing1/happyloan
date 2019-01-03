@@ -14,7 +14,7 @@
         join TB_SYSTEMCATEGORYITEM e on e.id=a.purpose
         join TB_TENDERING d on a.id=d.borrow
         where rownum &lt;#{end}
-        ) e where rn &gt;#{start} and e.stuts =48 or e.stuts =2
+        ) e where e.rn &gt;#{start} and e.stuts =48 or e.stuts =2
     </select>
     <select id="getPageCount" resultType="int">
         select count(*) from TB_TENDERING a

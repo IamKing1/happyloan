@@ -16,4 +16,10 @@ public interface MyInvestmentService {
      * @return
      */
     List<Map> getListInvestment(Map map);
+    /**
+     * 分页总数量
+     * @param map
+     * @return
+     */
+    int getPageCount(Map map);
 }

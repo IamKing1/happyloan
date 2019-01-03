@@ -97,7 +97,7 @@ public class InformationServiceImpl implements InformationService {
         map.put("userId",userId);
         //先执行删除操作
         List<Map> customerName = informationDao.getRealIdByUserName(session.getAttribute("CustomerName").toString());
-        System.out.println(customerName);
+       // System.out.println(customerName);
         if (customerName!=null&&customerName.size()>0){
             informationDao.deleteRealNameIsNo(userId);
         }
