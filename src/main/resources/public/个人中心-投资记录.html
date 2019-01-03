@@ -10,7 +10,13 @@
 <script type="text/javascript" src="script/jquery.min.js"></script>
 <script type="text/javascript" src="script/common.js"></script>
 <script src="script/user.js" type="text/javascript"></script>
-
+  <!-- 引入样式 -->
+  <script src="/vue/vue.js"></script>
+  <script type="text/javascript" src="/js1/axios.min.js"></script>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
 <header id="thead">
@@ -34,33 +40,182 @@
     <div class="personal-main">
       <div class="personal-investnote">
         <h3><i>投资记录</i></h3>
-        <div class="investnote-money"> <span><b class="fb">累计投资</b><br>
+       <!-- <div class="investnote-money"> <span><b class="fb">累计投资</b><br>
           <i>0.00</i> 元 </span> <span><b class="fb">累计收益</b><br>
           <i class="c-pink">0.00</i> 元 </span> <span><b class="fb">待收本金</b><br>
           <i>0.00</i> 元 </span> <span class="none"><b class="fb">待收收益</b><br>
-          <i>0.00</i> 元 </span> </div>
-        <form id="form" name="form" method="post" action="">
-          <script type="text/javascript">clearPage = function() {PrimeFaces.ab({source:'form:j_idt82',formId:'form',process:'form:j_idt82',params:arguments[0]});}</script>
-          <span id="form:dataTable">
-          <div class="invest-tab">
-            <ul>
-              <li class="on"><span><a href="#" title="投标中">投标中 </a> </span> </li>
-              <li><a href="#" title="回款中">回款中 </a> </li>
-              <li><a href="#" title="已结束">已结束 </a> </li>
-            </ul>
-          </div>
-          <div class="investnote-list">
-            <div class="investnote-contitle"> <span class="investnote-w1 fb">交易时间</span> <span class="investnote-w2 fb">项目</span> <span class="investnote-w3 fb">状态</span> <span class="investnote-hbw4 fb">我的投资</span> <span class="investnote-hbw5 fb">我的收益</span> <span class="investnote-hbw6 fb">操作</span> </div>
-            <ul>
-              <li><span class="investnote-w1">2015-10-1</span><span class="investnote-w2">债权转让</span><span class="investnote-w3">已还款</span><span class="investnote-hbw4">12000.00</span> <span class="investnote-hbw5">12000.00</span> <span class="investnote-hbw6"><a href="#">删除</a></span></li>
-              <li><span class="investnote-w1">2015-10-1</span><span class="investnote-w2">债权转让</span><span class="investnote-w3">已还款</span><span class="investnote-hbw4">12000.00</span> <span class="investnote-hbw5">12000.00</span> <span class="investnote-hbw6"><a href="#">删除</a></span></li>
-              <li><span class="investnote-w1">2015-10-1</span><span class="investnote-w2">债权转让</span><span class="investnote-w3">已还款</span><span class="investnote-hbw4">12000.00</span> <span class="investnote-hbw5">12000.00</span> <span class="investnote-hbw6"><a href="#">删除</a></span></li>
-              <li><span class="investnote-w1">2015-10-1</span><span class="investnote-w2">债权转让</span><span class="investnote-w3">已还款</span><span class="investnote-hbw4">12000.00</span> <span class="investnote-hbw5">12000.00</span> <span class="investnote-hbw6"><a href="#">删除</a></span></li>
+          <i>0.00</i> 元 </span> </div>-->
+        <div id="ds">
+          <el-table :data="li"
+                    style="width: 100%"
+                    border>
+            <el-table-column
+                    prop="date"
+                    label="累计投资(/元)"
+                    width="220"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="date"
+                    label="累计收益(/元)"
+                    width="220"
+                    align="center">
+            </el-table-column>
+          </el-table>
 
-            </ul>
-          </div>
-          </span>
-        </form>
+
+        <el-table
+        :data="tableData"
+        style="width:100%"
+        :header-cell-style="getRowClass">
+        <el-table-column
+                prop="date"
+                label="交易时间"
+                width="180"
+                align="center">
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                label="项目"
+                width="180"
+                align="center">
+        </el-table-column>
+        <el-table-column
+                prop="address"
+                label="我的投资"
+                width="120"
+                align="center">
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                label="应收益"
+                width="120"
+                align="center">
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                label="状态"
+                width="120"
+                align="center">
+        </el-table-column>
+        <el-table-column
+                label="操作">
+          <template scope="scope">
+            <el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+        </el-table>
+
+          <!--列表底部工具条和分页符-->
+          <el-row style="margin-top: 20px" type="flex" justify="end">
+            <el-col :span="18" >
+              <el-pagination
+                      style="text-align: center"
+                      @size-change="pageSizeChange"
+                      @current-change="currentPageChange"
+                      :current-page="currentPage"
+                      :page-sizes="[5, 10, 15,20]"
+                      :page-size="pageSize"
+                      layout="total, sizes, prev, pager, next, jumper"
+                      :total="total">
+              </el-pagination>
+            </el-col>
+          </el-row>
+        </div>
+        <script>
+            var aaa=new Vue({
+                el:'#ds',
+                data: {
+                    tableData: [],
+                    li:[],
+                    //显示加载中样式
+                    loading: false,
+                    //当前页
+                    currentPage: 1,
+                    //分页大小
+                    pageSize: 5,
+                    //总记录数
+                    total: 800,
+                    goUrl: '',
+                },
+                created:function(){
+                    //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
+                    var self = this;
+                    var start =(this.currentPage-1)*this.pageSize;
+                    var end =this.currentPage*this.pageSize+1;//分页
+                    axios.post('',{'start':start,'end':end}).then(function(response){
+                        self.total=response.data.total;
+                        self.tableData = response.data.data;
+
+
+                    })
+
+                },
+                methods:{
+                    getRowClass({row,column,rowIndex,columnIndex}){
+                        if(rowIndex==0){
+                            return 'background:#f1f1f1'
+                        }else{
+                            return ''
+                        }
+                    },
+
+                    //表格重新加载数据
+                    loadingData:function() {
+                        var _self = this;
+                        _self.loading = true;
+                        var self = this;
+                        var start =(this.currentPage-1)*this.pageSize;
+                        var end =this.currentPage*this.pageSize+1;
+                        var searchForm={
+                            'start':start,
+                            'end':end,}
+                        axios.post('',searchForm).then(function(response){
+                            _self.total=response.data.total;
+                            _self.tableData = response.data.data;
+                        })
+                        setTimeout(function(){
+                            _self.loading = false;
+                        },300);
+                    },
+                    //分页大小修改事件
+                    pageSizeChange:function(val) {
+                        console.log('每页 ' + val +' 条');
+                        this.pageSize = val;
+                        var _self = this;
+                        _self.loadingData();//重新加载数据
+                    },
+                    //当前页修改事件
+                    currentPageChange:function(val) {
+                        this.currentPage = val;
+                        console.log('当前页: ' + val);
+                        var _self = this;
+                        _self.loadingData();//重新加载数据
+                    },
+                    //表格删除事件
+                    deleteClick:function(row) {
+                        var _self = this;
+                        this.$confirm('确认删除吗?', '提示', {
+                            type: 'warning'
+                        }).then(function(){
+                            var  url="";
+                            axios.get(url).then(function (response) {
+                                if(response.data>0){
+                                    _self.$message({
+                                        message: row.EMPID + '删除成功',
+                                        type: 'success'
+                                    });
+                                    _self.loadingData();//重新加载数据
+                                }
+                            });
+                        }).catch(function(e){
+                            if(e != "cancel")
+                                console.log("出现错误：" + e);
+                        });
+                    },
+                },
+            })
+        </script>
       </div>
     </div>
     <div class="clear"></div>

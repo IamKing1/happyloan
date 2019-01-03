@@ -129,4 +129,39 @@ public interface InformationDao {
 	 * @return
 	 */
 	List<Map> getIdNumEmail(String username);
+
+    /**
+     * 重新进行实名认证  删除已经提交过的
+     * @param userId
+     * @return
+     */
+    int deleteRealNameIsNo(Integer userId);
+
+    /**
+     * 修改昵称
+     * @param map
+     * @return
+     */
+    int updateNickName(Map map);
+
+    /**
+     * 得到余额
+     * @param userId
+     * @return
+     */
+    Integer getBalanceByUserId(Integer userId);
+
+    /**
+     * 待收本息
+     * @param userId
+     * @return
+     */
+    Integer getPrincipalAndInterestToBeCollected(Integer userId);
+
+    /**
+     * 累计收益
+     * @param userId
+     * @return
+     */
+    Integer getAccumulatedIncome(Integer userId);
 }

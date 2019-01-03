@@ -46,8 +46,7 @@ public class TendInfoController {
 	public Object getLoanInfo(@RequestBody Map tendid){
 		/*Map map = new HashMap();
 		map.put("data",tendInfoService.getLoanInfo(tendid));*/
-		System.out.println("\n");
-		System.out.println(tendInfoService.getLoanInfo(tendid));
+
 		return tendInfoService.getLoanInfo(tendid);
 	}
 
@@ -74,8 +73,18 @@ public class TendInfoController {
 	@ResponseBody
 	@RequestMapping("surplusMoney")
 	public Object surplusMoney(@RequestBody Map map){
-		System.out.println(Integer.valueOf(map.get("tendid")+""));
-		return investmentService.currentlyVoted(21);
+		Integer tendid = Integer.valueOf(map.get("tendid") + "");
+		Integer integer = investmentService.currentlyVoted(tendid);
+		System.out.println("剩余投资的数目为："+integer);
+		//查询总钱数
+		Integer moneyByTendId = investmentService.getMoneyByTendId(tendid);
+		System.out.println("剩余投资的数目为："+moneyByTendId*0.05);
+		if(integer<(moneyByTendId*0.05)){
+			System.out.println("-----------------------");
+			investmentService.updateTendStuts(tendid);
+		}
+		return integer;
+
 	}
 
 	@ResponseBody

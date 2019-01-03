@@ -49,5 +49,18 @@ public interface RepayMoneyDao {
      */
     int moneyBack(Map map);
 
+    /**\
+     * 得到到期的贷款   按期给投资人打钱
+     * @return
+     */
+    List<Map>   getExpireLoan();
+
+    /**
+     * 回款 已还款更改状态
+     * @param tendId
+     * @return
+     */
+    int updateLoanState(Map map);
+
 
 }

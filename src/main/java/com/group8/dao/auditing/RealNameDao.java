@@ -35,4 +35,11 @@ public interface RealNameDao {
      */
     int getRealNameResult(Map map);
 
+    /**
+     * 向消息表中添加内容
+     * @param map
+     * @return
+     */
+    int add(Map map);
+
 }

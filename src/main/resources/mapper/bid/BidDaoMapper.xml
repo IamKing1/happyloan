@@ -9,9 +9,8 @@
         select rownum rn,t.* from (
         select a.id bid_id,a.bid_money,to_char(a.BEGINTIME,'yyyy-MM-dd') bid_creation_time,
         a.bid_minimum,d.item state,c.item cdate,to_char(a.BID_END_TIME,'yyyy-MM-dd') bid_end_time,
-        b.username,c.id,b.userid
+        a.userid,c.id
         from tb_tendering a
-        join tb_user b on a.userid=b.userid
         join tb_systemcategoryitem c on a.bid_amortize=c.id
         join tb_systemcategoryitem d on a.stuts=d.id
         where a.stuts=21
@@ -28,9 +27,8 @@
     <select id="getPageCount" resultType="int">
         select count(*)
         from tb_tendering a
-        join tb_user b on a.userid=b.userid
         join tb_systemcategoryitem c on a.bid_amortize=c.id
-        join tb_systemcategoryitem d on a.bid_state=d.id
+        join tb_systemcategoryitem d on a.stuts=d.id
         where a.stuts=21
         <if test="USERID!=null and USERID!=''">
             and a.USERID=#{USERID}
@@ -42,7 +40,7 @@
     </select>
     <!--搜索检索内容-->
     <select id="selectu" resultType="map">
-        select * from tb_user where state=10
+        select * from TB_ADMIN
     </select>
     <select id="selects" resultType="map">
         select * from tb_systemcategoryitem where parentid=9

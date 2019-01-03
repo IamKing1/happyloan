@@ -1,6 +1,7 @@
 package com.group8.service.bid;
 
 import com.group8.dao.bid.BidDao;
+import com.group8.service.auditing.InvestmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,19 @@ public class BidServiceImpl implements BidService {
     @Autowired
     private BidDao bidDao;
 
+    @Autowired
+    private InvestmentService investmentService;
     @Override
     public List<Map> getPage(Map map) {
-        return bidDao.getPage(map);
+
+
+
+        List<Map> page = bidDao.getPage(map);
+        for (Map map1 : page) {
+            Integer hasMoney = investmentService.hasCurrentlyVoted(Integer.valueOf(map1.get("BID_ID").toString()));
+            map1.put("hasMoney",hasMoney);
+        }
+        return page;
     }
 
     @Override

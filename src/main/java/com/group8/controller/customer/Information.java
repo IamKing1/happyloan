@@ -287,12 +287,16 @@ public class Information {
     private LoginService loginService;
 
 
-
+    /**
+     * 充值操作
+     * @param session
+     * @param money
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "rechargeAmount")
     public Object rechargeAmount(HttpSession session,Integer money){
         Map map = new HashMap();
-        System.out.println(money);
         int userId = loginService.getIdByName(session.getAttribute("CustomerName").toString());
         System.out.println(userId);
         map.put("money",money);
@@ -300,6 +304,7 @@ public class Information {
         int i = informationService.rechargeAmount(map);
         Map map1 = new HashMap();
         map1.put("mse",i);
+
         return map1;
     }
 
@@ -327,6 +332,24 @@ public class Information {
 		return maps;
 	}
 
+    @ResponseBody
+    @RequestMapping("updateNickName")
+    public Object updateNickName(HttpSession session,String nickName){
+        String  customerName = (String)session.getAttribute("CustomerName");
+        int userId = loginService.getIdByName(customerName);
+        int i = informationService.updateNickName(userId, nickName);
+
+        return i ;
+    }
+    @RequestMapping(value = "calculationMoney")
+    @ResponseBody
+    public Object calculationMoney(HttpSession session){
+        String  customerName = (String)session.getAttribute("CustomerName");
+        int userId = loginService.getIdByName(customerName);
+        //待收本息
+        Map map = informationService.calculationMoney(userId);
+        return map;
+    }
 	/**
 	 * 实名认证失败,删除原信息
 	 * @return

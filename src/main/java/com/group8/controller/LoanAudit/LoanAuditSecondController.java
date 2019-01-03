@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,8 +54,10 @@ public class LoanAuditSecondController {
      */
     @ResponseBody
     @RequestMapping("/update")
-    public Object update(@RequestBody Map map){
-
+    public Object update(@RequestBody Map map, HttpSession session){
+        Object userName = session.getAttribute("userName");
+        map.put("adminId", userName.toString());
+        System.out.println(map);
         return loanAuditSecondService.update(map);
     }
 

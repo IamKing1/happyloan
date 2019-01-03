@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 /**
  * className:BidRecordController
@@ -25,7 +26,7 @@ public class BidRecordController {
     private BidRecordService bidRecordService;
 
     @RequestMapping("/list")
-    public String list(@RequestParam Map map, Model model, HttpServletRequest request){
+    public String list(@RequestParam Map map, Model model, HttpServletRequest request, HttpSession session){
         map.put("pageSize",7);
         int pageNo = map.get("pageNo") ==null?1:Integer.valueOf(map.get("pageNo")+"");
         int pageSize = map.get("pageSize") ==null?10:Integer.valueOf(map.get("pageSize")+"");
@@ -35,9 +36,10 @@ public class BidRecordController {
 
         String stringPage = new PageUtil(pageNo, 5, bidRecordService.getPageCountr(map), request).getStringPage();
 
+
+        session.setAttribute("sessionValue",session);
+
         model.addAttribute("stringPage",stringPage);
-        List<Map> selectu = bidRecordService.selectu(map);
-        model.addAttribute("selectu",selectu);
         model.addAttribute("bidList",bidRecordService.getPager(map));
 
 
@@ -57,9 +59,11 @@ public class BidRecordController {
     @ResponseBody
     @RequestMapping("/add")
     public Object add(@RequestBody Map map){
+        System.out.println("11111111111111111"+map);
         int i = bidRecordService.add(map);
         return i;
     }
+
 
     /**
      * 获取修改内容
@@ -70,6 +74,7 @@ public class BidRecordController {
     @RequestMapping("/getid")
     public List<Map> getById(@RequestParam Integer id){
         List<Map> byId = bidRecordService.getById1(id);
+
         return byId;
     }
     /**

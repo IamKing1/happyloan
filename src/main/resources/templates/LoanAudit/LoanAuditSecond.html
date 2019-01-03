@@ -47,6 +47,9 @@
                     prop="SEX"
                     label="性别"
                     width="100">
+                <template slot-scope="scope">
+                    <el-col>{{scope.row.SEX | formatStata1}}</el-col>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="MARRIAGE"
@@ -144,13 +147,6 @@
             <el-form-item label="一审意见" prop="FIRSTINC">
                 <el-input type="textarea" v-model="editForm.FIRSTINC" disabled="true"></el-input>
             </el-form-item>
-            <el-form-item label="二审人" prop="SECONDINCNAME">
-                <el-input v-model="editForm.SECONDINCNAME"></el-input>
-            </el-form-item>
-            <el-form-item label="二审时间">
-                <el-date-picker type="date"  placeholder="选择日期" v-model="editForm.SECONDTIME"format="yyyy 年 MM 月 dd 日"
-                                value-format="yyyy/MM/dd"></el-date-picker>
-            </el-form-item>
             <el-form-item label="二审意见" prop="SECONDINC">
                 <el-input type="textarea" v-model="editForm.SECONDINC"></el-input>
             </el-form-item>
@@ -164,7 +160,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click.native="editFormVisible = false">取消</el-button>
-            <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+            <el-button type="primary" @click.native="editSubmit('editForm')" :loading="editLoading">提交</el-button>
         </div>
     </el-dialog>
 </div>
@@ -204,8 +200,11 @@
             goUrl: '',
             //校验
             editFormRules: {
-                name: [
+                SECONDINCNAME: [
                     {required: true, message: '请输入姓名', trigger: 'blur'}
+                ],
+                SECONDINC: [
+                    {required: true, message: '请输入你的意见', trigger: 'blur'}
                 ]
             },
             //编辑界面数据
@@ -239,6 +238,10 @@
             formatStata: function (status) {
                 const statusMap = {21: '未审核'}
                 return statusMap[status]
+            },
+            formatStata1: function (sex) {
+                const statusMap = {1:'男',2:'女'}
+                return statusMap[sex]
             },
         },
         methods:{
@@ -290,22 +293,29 @@
                 _self.loadingData();//重新加载数据
             },
             //保存点击事件
-            editSubmit:function(){
+            editSubmit(formName) {
                 var _self = this;
-                _self.loading = true;
-                var formData =this.editForm;
-                var goUrl=this.goUrl;
-                axios.post(goUrl,formData).then(function(response){
-                    if(response.data>0){
-                        _self.editFormVisible = false;// 让弹出层隐藏
-                        _self.loadingData();//重新加载数据
-                    }else{
-                        _self.$message({
-                            message: '更新失败',
-                            type: 'fail'
-                        });
+                _self.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        _self.loading = true;
+                        var formData =this.editForm;
+                        var goUrl=this.goUrl;
+                        axios.post(goUrl,formData).then(function(response){
+                            if(response.data>0){
+                                _self.editFormVisible = false;// 让弹出层隐藏
+                                _self.loadingData();//重新加载数据
+                            }else{
+                                _self.$message({
+                                    message: '更新失败',
+                                    type: 'fail'
+                                });
+                            }
+                        })
+                    } else {
+                        //console.log("222")
+                        return false;
                     }
-                })
+                });
             },
         }
     })

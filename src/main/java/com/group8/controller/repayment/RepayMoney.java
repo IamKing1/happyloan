@@ -33,12 +33,7 @@ public class RepayMoney {
     if(i<0){
         return -1;
     }
-        map.put("tendId",map.get("TENDID"));
-        //投资人回款操作
-        int i1 = repayMoneyService.transferMoneyToTouZiRen(map);
-        if(i1<1){
-            return -1;
-        }
+
         return 1;
     }
 

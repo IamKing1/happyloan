@@ -114,4 +114,18 @@ public interface InformationService {
 	 * @return
 	 */
 	List<Map> getIdNumEmail(String username);
+
+    /**
+     * 修改昵称
+     * @param userId,nickName
+     * @return
+     */
+    int updateNickName(Integer userId,String nickName);
+
+    /**
+     * 计算 本息  余额  累计收益
+     * @param userId
+     * @return
+     */
+    Map calculationMoney(Integer userId);
 }

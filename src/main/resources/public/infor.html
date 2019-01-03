@@ -173,8 +173,9 @@
 						<div class="col col-line3" style="margin: 30px 0">
 							<el-row>
 								<el-button v-if="this.allNum < 0" type="primary" :disabled="true"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
-								<el-button v-if="this.allNum >= 0" type="primary"   style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
+								<el-button v-if="this.allNum >= 0" type="primary"  @click="toubiao(num1)"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
 								
+								<!--<el-button type="primary" style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>-->
 							</el-row>
 						</div>
 					</div>
@@ -317,7 +318,7 @@
 			//在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
 			let self = this;
 			axios.post('/tendInfo/getLoanInfo',{tendid:this.tendId}).then(function(response){
-				console.log(response.data[0].MONEY)
+				console.log(response.data)
 				// self.allNum = response.data;
 				self.month = response.data[0].LONGTIME;
 				self.tendNum = response.data[0].MONEY;
@@ -372,6 +373,24 @@
 			//获取URL参数值
 			getUrlKey: function(name) {
 				return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
+			},
+            toubiao(hasMoney){
+			    let _self=this;
+                axios.post("/investment/remainingSum",{"tendId":this.tendId,"money":hasMoney}).then(function(response){
+                    if(response.data>0){
+                        _self.$message({
+                            message: '投资成功',
+                            type: 'success'
+                        });
+                        _self.editFormVisible = false;// 让弹出层隐藏
+                        _self.num1=100;
+                    }else{
+                        _self.$message({
+                            message: '余额不足，.请充值',
+                            type: 'fail'
+                        });
+                    }
+                })
 			},
 			numChange(){
 				// console.log(this.num1)

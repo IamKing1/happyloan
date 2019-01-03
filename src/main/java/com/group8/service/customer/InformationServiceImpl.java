@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,8 +95,17 @@ public class InformationServiceImpl implements InformationService {
         Customer customer = loginDao.getByName(session.getAttribute("CustomerName").toString());
         Integer userId = customer.getUserId();
         map.put("userId",userId);
-        System.out.println(map);
+        //先执行删除操作
+        List<Map> customerName = informationDao.getRealIdByUserName(session.getAttribute("CustomerName").toString());
+        System.out.println(customerName);
+        if (customerName!=null&&customerName.size()>0){
+            informationDao.deleteRealNameIsNo(userId);
+        }
         int i = informationDao.SubmissionRealName(map);
+       //{realName=借款人一号,
+        // idNumber=410926199810194279, sex=1, province=150000, city=150500, area=150525, position=阿萨德,
+        // education=46, marriage=12, housed=5, job=建筑工人, income=16, positive=fc5d22f3-ad55-4604-8c64-e76c38e7b9e0.jpg,
+        // opposite=67e34fd6-e3ab-4402-b376-ee7b2975033b.jpg, address=内蒙古自治区,通辽市,奈曼旗,阿萨德, userId=95}
 
         return i;
     }
@@ -132,14 +142,8 @@ public class InformationServiceImpl implements InformationService {
             moneyRecords.setUserId(Integer.valueOf(map.get("userId").toString()));
             moneyRecords.setThing("个人信息充值操作");
             moneyRecords.setType(1);
-            System.out.println("------------------");
 
-            System.out.println(moneyRecords.getRecords());
-            System.out.println(moneyRecords.getThing());
-            System.out.println(moneyRecords.getType());
-            System.out.println(moneyRecords.getUserId());
             informationDao.rechargeAmountRecords(moneyRecords);
-            System.out.println("------------------");
         }
         return i;
     }
@@ -164,5 +168,41 @@ public class InformationServiceImpl implements InformationService {
     	return informationDao.getIdNumEmail(username);
 	}
 
+    @Override
+    public int updateNickName(Integer userId, String nickName) {
+        Map map = new HashMap();
 
+        map.put("userId",userId);
+        map.put("nickName",nickName);
+        System.out.println(map);
+
+        int i = informationDao.updateNickName(map);
+
+        return i;
+    }
+
+    @Override
+    public Map calculationMoney(Integer userId) {
+        Map map = new HashMap();
+        //待收本息
+        Integer principalAndInterestToBeCollected = informationDao.getPrincipalAndInterestToBeCollected(userId);
+        if(principalAndInterestToBeCollected==null){
+            principalAndInterestToBeCollected=0;
+        }
+        map.put("principalAndInterestToBeCollected", principalAndInterestToBeCollected);
+        //可用余额  待收本息+余额
+        Integer balance = informationDao.getBalanceByUserId(userId);
+
+        if(balance==null){
+            balance=0;
+        }
+        map.put("balance",balance+principalAndInterestToBeCollected);
+        //累计收益
+        Integer accumulatedIncome = informationDao.getAccumulatedIncome(userId);
+        if(accumulatedIncome==null){
+            accumulatedIncome=0;
+        }
+        map.put("accumulatedIncome",accumulatedIncome);
+        return map;
+    }
 }

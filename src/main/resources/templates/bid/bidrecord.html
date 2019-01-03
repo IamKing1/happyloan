@@ -13,7 +13,6 @@
 <!--查询-->
 <div class="listye">
     <!--搜索筛选-->
-
     <center>
         <table class="table table-hover" id="bidtable">
             <tr>
@@ -74,8 +73,7 @@
                             <tr>
                                 <td class="words">满标金额(万元):</td>
                                 <td>
-                                    <input type="text" id="bulka" class="form-control" name="BID_MONEY"
-                                           placeholder="请输入满标金额" required="true" disabled="disabled">
+                                    <input type="text" id="bulka" class="form-control" name="BID_MONEY" placeholder="请输入满标金额" required="true" disabled="disabled">
                                 </td>
                             </tr>
                             <tr>
@@ -101,14 +99,14 @@
                             <tr>
                                 <td class="words">结束时间:</td>
                                 <td><input type="date" name="BID_END_TIME" id="endtime" class="form-control" required="true"/></td>
+                                <td><input type="hidden" name="BRRID" id="brr"></td>
                             </tr>
                             <tr>
                                 <td class="words">负责人：</td>
                                 <td>
-                                    <select name="USERID" class="form-control" id="userx" required="true">
-                                        <option value="">--请选择--</option>
-                                        <option th:each="bid : ${selectu}" th:value="${bid.USERID}" th:text="${bid.USERNAME}"></option>
-                                    </select>
+
+                                    <input name="USERID" class="form-control" id="userx" th:value="${session.sessionValue.getAttribute('userName')}"
+                                           required="true" disabled="disabled">
                                 </td>
                             </tr>
                         </table>
@@ -153,6 +151,7 @@
                 $("#myModala").find("[name='BID_AMORTIZE']").val(data[0].BID_AMORTIZE);
                 $("#myModala").find("[name='LONGTIME']").val(data[0].LONGTIME);
                 $("#myModala").find("[name='REALID']").val(data[0].REALID);
+                $("#myModala").find("[name='BRRID']").val(data[0].BRRID);
             },error: function (data) {
                 console.log("error")
             }
@@ -164,7 +163,8 @@
     * 添加方法传值
     * */
     $(document).on("click", "#xgtjbtn", function () {
-        var gaina= {BID_MONEY:$("#bulka").val(),BID_MINIMUM: $("#loada").val(),BID_AMORTIZE:$("#option").val(),BID_END_TIME:$("#endtime").val(),USERID:$("#userx").val(),BID_ID:$("#aaaaaaa").val(),REALID:$("#REALID").val()}
+        var gaina= {BID_MONEY:$("#bulka").val(),BID_MINIMUM: $("#loada").val(),BID_AMORTIZE:$("#option").val(),BID_END_TIME:$("#endtime").val(),USERID:$("#userx").val(),BID_ID:$("#aaaaaaa").val(),REALID:$("#REALID").val(),BRRID:$("#brr").val()}
+        console.log(gaina)
         $.ajax({
             url : "/record/add",
             type:"POST",

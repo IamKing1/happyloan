@@ -11,9 +11,20 @@ import java.util.List;
 public class Permission {
     private Integer permissionId;
     private String permissionName;
+    private Integer pid;
+
     private String url;
 
     private List<Role> roles;
+
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
 
     public String getUrl() {
         return url;

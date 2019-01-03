@@ -54,22 +54,26 @@
       <el-table-column
               prop="REALNAME"
               label="借款人"
-              width="100">
+              width="100"
+              align="center">
       </el-table-column>
 
       <el-table-column
               prop="MONEY"
               label="借款金额(元)"
-              width="120">
+              width="120"
+              align="center">
       </el-table-column>
       <el-table-column
               prop="LONGTIME"
-              label="借款期限"
-              width="120">
+              label="借款期限(月)"
+              width="120"
+              align="center">
       </el-table-column>
       <el-table-column
               label="年利率"
-              width="120">
+              width="120"
+              align="center">
         <template scope="scope">
           <el-button :plain="true" type="primary" size="small" icon="edit">12%</el-button>
         </template>
@@ -131,6 +135,7 @@
             //总记录数
             total: 800,
             goUrl: '',
+            login:""
             
         },
         created:function(){
@@ -141,6 +146,7 @@
             axios.post('/qiant/getList',{'start':start,'end':end}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.data;
+                self.login = response.data.login;
 
 
             })
@@ -148,7 +154,16 @@
         },
         methods:{
             toinfor(row){
-              location.href="infor.html?tendId="+row.ID;
+            if(this.login==1){
+                location.href="infor.html?tendId="+row.ID;
+            }else{
+              if(confirm("你还没有登录，是否前去登录")){
+                  location.href="login.html";
+                }
+
+
+            }
+
             },
             toFlush:function(){
                 this.loadingData();

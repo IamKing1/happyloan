@@ -115,8 +115,9 @@
         <el-form :model="editForm" label-width="120px" :rules="editFormRules" ref="editForm">
 
 
-            <el-form-item label="身份证号">
-                <el-input v-model="editForm.permissionList" ></el-input>
+            <el-form-item label="权限列表">
+
+
             </el-form-item>
 
 
@@ -133,16 +134,18 @@
 
 
 <script>
+
     var app = new Vue({
         el: '#app',
         data: {
             message: '权限管理'
         }
-    });
 
+    });
 
     var tableView = new Vue({
         el: '#tableView',
+
         data: {
             //列表数据
             tableData: [],
@@ -178,7 +181,11 @@
                 result:'',
                 mse:''
             },
-            radio:'1'
+            list:[
+
+            ],
+            radio:'1',
+
         },
         created: function () {
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
@@ -187,7 +194,7 @@
             var end = this.currentPage * this.pageSize + 1;
 
             axios.post('/function/AllRole', {'start': start, 'end': end}).then(function (response) {
-                 console.log(response.data);
+
                 //alert(response.data.total);
                 /*
                                 console.log(response.data.total);
@@ -235,7 +242,10 @@
                 this.editFormVisible = true;
                 var _self = this;
                 this.editForm = Object.assign({}, row);
-               /* console.log(row)*/
+                    this.list=this.editForm.permissionList;
+                   console.log(this.list)
+
+
 
 
             },
