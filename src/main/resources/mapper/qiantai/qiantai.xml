@@ -18,6 +18,6 @@
     </select>
     <select id="getPageCount" resultType="int">
         select count(*) from TB_TENDERING a
-        join tb_borrow b on a.id=b.id where a.stuts =48 or a.stuts =2
+        join tb_borrow b on a.borrow=b.id where a.stuts =48 or a.stuts =2
     </select>
 </mapper>
