@@ -23,10 +23,9 @@ public class RepayMoneyServiceImpl implements RepayMoneyService {
     @Override
     public int deductMoney(Map map) {
 
-        Integer integer = repayMoneyDao.deductMoney(map);
-        System.out.println(integer);
+      repayMoneyDao.deductMoney(map);
 
-        return 1;
+        return Integer.valueOf(map.get("mse").toString());
     }
 
     @Override
@@ -40,7 +39,7 @@ public class RepayMoneyServiceImpl implements RepayMoneyService {
             //借钱的长短
             Integer longtime = Integer.valueOf(repayMoneyCount.get(0).get("ITEM").toString());
             //应该还的总额   利息 + 本金
-            int repayMoney = (int) (money + money * (longtime * 0.01));
+            int repayMoney = (int) (money + money * (longtime * 0.02));
             map.put("repayMoney", repayMoney);
             //从资金池拿钱归还
             int repayMoneyPool = repayMoneyDao.deductMoneyToInvestment(repayMoney);

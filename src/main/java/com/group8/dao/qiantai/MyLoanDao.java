@@ -38,4 +38,11 @@ public interface MyLoanDao {
      * @return
      */
     int getPageCount(Map map);
+
+    /**
+     * 计算出预期的金额
+     * @param tendId
+     * @return
+     */
+    int getYuQiMoney(Integer tendId);
 }

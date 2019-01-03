@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * className:ScheduledService
- * discriptoin:
+ * discriptoin: 定时任务
  * author:丁启斌
  * createTime:2018-12-25 17:51
  */
@@ -44,6 +44,18 @@ public class ScheduledService {
 
             }
         }
+    }
+
+    @Scheduled(cron = "0 0 12 * * ?")
+    public void yuqi() {
+
+        List<Map> beOverdueList = repayMoneyDao.getBeOverdueList();
+        if(beOverdueList!=null&&beOverdueList.size()>0){
+            for (Map map : beOverdueList) {
+                repayMoneyDao.updateStutsToTwo(map);
+            }
+        }
+
     }
 
 }

@@ -60,7 +60,7 @@
     </insert>
 
 
-	<select id="isRealName" resultType="int">
+	<select id="isRealName" resultType="map">
 
     select a.AUDITORID from TB_REALNAME a
     join tb_user b on a.userid=b.userid
@@ -81,6 +81,22 @@
 		where f.username=#{customerName}
 	</select>
 
+	<delete id="removeRealName">
+
+		delete from TB_REALNAME where userid = (select userid from tb_user where username = #{username})
+	</delete>
+	<select id="getIdNumEmail" resultType="map">
+
+		SELECT
+			a.EMAIL,
+			b.IDNUMBER,
+			b.AUDITORID
+		FROM
+			tb_user a
+			LEFT JOIN tb_realname b ON a.userid = b.userid
+		WHERE
+			a.username=#{username}
+	</select>
 <select id="deleteRealNameIsNo" resultType="Integer">
       DELETE from tb_realname where userid=#{userId}
 </select>
@@ -105,7 +121,7 @@ join tb_user f on e.userid=f.userid
         select b.balance from tb_user a
 join tb_realname b on a.userid=b.userid where a.userid=#{userId}
     </select>
-    
+
     <select id="getAccumulatedIncome" resultType="Integer">
  select sum(a.money*(d.item*0.01)) accumulatedIncome from tb_investmentlist a
 join  tb_tendering b on a.tendid=b.id

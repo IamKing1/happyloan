@@ -40,8 +40,14 @@ public class TendInfoServiceImpl implements TendInfoService {
         return gaveList;
     }
 
-    @Override
-    public Integer getGaveCount(Integer tendid) {
-        return tendInfoDao.getGaveCount(tendid);
-    }
+	@Override
+	public Integer getGaveCount(Integer tendid) {
+		return tendInfoDao.getGaveCount(tendid);
+	}
+
+	@Override
+	public Integer updateEmail(Map map) {
+		return tendInfoDao.updateEmail(map);
+	}
+
 }

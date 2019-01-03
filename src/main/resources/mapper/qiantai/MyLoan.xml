@@ -29,4 +29,10 @@
     <select id="getPageCount" resultType="int">
         select count(*) from tb_borrow where release=2
     </select>
+    
+    <select id="getYuQiMoney" resultType="Integer">
+        select (trunc(sysdate)-add_months(a.BEGINTIME,b.item))*0.01*money yuqi from tb_loanrecord a
+			join  TB_SYSTEMCATEGORYITEM b on a.LONGTIME=b.id
+			where a.tendid=#{TENDID}
+    </select>
 </mapper>

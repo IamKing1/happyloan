@@ -117,6 +117,20 @@ public interface InformationDao {
     List<Map> realNameAllInfo(String customerName);
 
     /**
+     * 实名认证失败,删除信息
+     * @param username
+     * @return
+     */
+    Integer removeRealName(String username);
+
+	/**
+	 * 获取身份证和邮箱,判断认证信息完整程度
+	 * @param username
+	 * @return
+	 */
+	List<Map> getIdNumEmail(String username);
+
+    /**
      * 重新进行实名认证  删除已经提交过的
      * @param userId
      * @return

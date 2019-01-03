@@ -158,6 +158,17 @@ public class InformationServiceImpl implements InformationService {
         return informationDao.realNameAllInfo(customerName);
     }
 
+	@Override
+	public Integer removeRealName(String username) {
+		return informationDao.removeRealName(username);
+	}
+
+	@Override
+	public List<Map> getIdNumEmail(String username) {
+		return informationDao.getIdNumEmail(username);
+	}
+
+
     @Override
     public int updateNickName(Integer userId, String nickName) {
         Map map = new HashMap();
