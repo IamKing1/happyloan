@@ -34,6 +34,7 @@ public class MyInvestmentController {
     @RequestMapping("/getMyInvestment")
     public Object getMyInvestment(@RequestBody Map map, HttpSession session){
 
+        //通过session获取用户名
         map.put("username", session.getAttribute("CustomerName"));
         Map map1=new HashMap();
         map1.put("data",myInvestmentService.getListInvestment(map));
@@ -41,5 +42,31 @@ public class MyInvestmentController {
         return map1;
     }
 
+    /**
+     * 累计投资和收益
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getDetails")
+    public Object getDeatils( Map map,HttpSession session){
+        map.put("username",session.getAttribute("CustomerName"));
+        Map map2=new HashMap();
+        map2.put("data",myInvestmentService.getDetails(map));
+        //System.out.println("--------++++"+map2);
+        return map2;
+    }
+
+    /**
+     * 用户进行删除操作
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/update")
+    public Object Update(@RequestBody Map map){
+        System.out.println("========"+myInvestmentService.update(map));
+        return myInvestmentService.update(map);
+
+    }
 
 }

@@ -60,4 +60,22 @@ public class MyInvestmentServiceImpl implements MyInvestmentService {
         return myInvestment.getPageCount(map);
     }
 
+    /**
+     * 累计投资金额和收益
+     * @return
+     */
+    @Override
+    public List<Map> getDetails(Map map) {
+        return myInvestment.getDetails(map);
+    }
+    /**
+     * 用户前台对投资记录的删除操作
+     * @param map
+     * @return
+     */
+    @Override
+    public int update(Map map) {
+        return myInvestment.update(map);
+    }
+
 }

@@ -17,6 +17,15 @@
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <!-- 引入组件库 -->
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+    .top{
+      height: 120px;
+      background-color: #fff;
+    }
+    .el-dialog{
+      width: 13%;
+    }
+  </style>
 </head>
 <body>
 <header id="thead">
@@ -36,6 +45,7 @@
     </div>
     <style type="text/css">
 		.invest-tab .on  a{color:#fff;}
+
 	</style>
     <div class="personal-main">
       <div class="personal-investnote">
@@ -46,24 +56,27 @@
           <i>0.00</i> 元 </span> <span class="none"><b class="fb">待收收益</b><br>
           <i>0.00</i> 元 </span> </div>-->
         <div id="ds">
+          <div class="top">
           <template>
           <el-table :data="li"
                     style="width: 100%"
-                    border>
+                    border
+                    :header-cell-style="getRowClass">
             <el-table-column
-                    prop=""
+                    prop="LEIJI"
                     label="累计投资(/元)"
-                    width="220"
+                    width="240"
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop=""
+                    prop="INCOME"
                     label="累计应收益(/元)"
-                    width="220"
+                    width="240"
                     align="center">
             </el-table-column>
           </el-table>
           </template>
+          </div>
 
           <template>
         <el-table
@@ -107,9 +120,10 @@
                 label="操作"
                 align="center">
           <template scope="scope">
-            <el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">删除</el-button>
+            <el-button :plain="true" type="danger" size="small" icon="edit" @click="editClick(scope.row)">删除</el-button>
           </template>
         </el-table-column>
+
         </el-table>
           </template>
           <!--列表底部工具条和分页符-->
@@ -127,6 +141,20 @@
               </el-pagination>
             </el-col>
           </el-row>
+          <!--编辑界面-->
+
+          <el-dialog :visible.sync="editFormVisible" :close-on-click-modal="false">
+            <el-form :model="editForm"  label-width="150px"  ref="editForm">
+              <!--<el-form-item label="你确定要删除吗">
+
+              </el-form-item>-->
+              <div>你确定要删除吗?</div>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click.native="editFormVisible = false">取消</el-button>
+              <el-button type="primary" @click.native="editSubmit" :loading="editLoading">确定</el-button>
+            </div>
+          </el-dialog>
         </div>
         <script>
             var aaa=new Vue({
@@ -143,7 +171,18 @@
                     //总记录数
                     total: 800,
                     goUrl: '',
+                    //删除的弹出框
+                    deleteVisible: false,
+                    //编辑界面是否显示
+                    editFormVisible: false,
+                    editLoading: false,
+
+                    //编辑界面数据
+                    editForm: {
+                        ID:'',
+                    }
                 },
+
                 created:function(){
                     //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
                     var self = this;
@@ -152,6 +191,9 @@
                     axios.post('/MyInvestment/getMyInvestment',{'start':start,'end':end}).then(function(response){
                         self.total=response.data.total;
                         self.tableData = response.data.data;
+                    }),
+                    axios.post('/MyInvestment/getDetails').then(function(response){
+                        self.li = response.data.data;
                     })
 
                 },
@@ -202,26 +244,31 @@
                         var _self = this;
                         _self.loadingData();//重新加载数据
                     },
-                    //表格删除事件
-                    deleteClick:function(row) {
+                    //表格编辑事件
+                    editClick:function(row) {
+                        this.goUrl="/MyInvestment/update";
+                        console.log(row)
+                        this.editFormVisible = true;
+                        this.editForm = Object.assign({}, row);
+
+                    },
+                    //保存点击事件
+                    editSubmit:function(){
                         var _self = this;
-                        this.$confirm('确认删除吗?', '提示', {
-                            type: 'warning'
-                        }).then(function(){
-                            var  url="";
-                            axios.get(url).then(function (response) {
-                                if(response.data>0){
-                                    _self.$message({
-                                        message: row.EMPID + '删除成功',
-                                        type: 'success'
-                                    });
-                                    _self.loadingData();//重新加载数据
-                                }
-                            });
-                        }).catch(function(e){
-                            if(e != "cancel")
-                                console.log("出现错误：" + e);
-                        });
+                        _self.loading = true;
+                        var formData =this.editForm;
+                        var goUrl=this.goUrl;
+                        axios.post(goUrl,formData).then(function(response){
+                            if(response.data>0){
+                                _self.editFormVisible = false;// 让弹出层隐藏
+                                _self.loadingData();//重新加载数据
+                            }else{
+                                _self.$message({
+                                    message: '删除失败',
+                                    type: 'fail'
+                                });
+                            }
+                        })
                     },
                 },
             })
