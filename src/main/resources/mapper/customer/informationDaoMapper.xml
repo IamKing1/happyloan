@@ -113,7 +113,7 @@ join tb_systemcategoryitem d on c.longtime=d.id
 
 join tb_realname e on a.realid=e.id
 join tb_user f on e.userid=f.userid
- where f.userid=#{userId} and c.stuts=1
+ where f.userid=#{userId} and /*c.stuts=1*/ c.state=1
     </select>
 
 
@@ -131,5 +131,16 @@ join tb_systemcategoryitem d on c.longtime=d.id
 join tb_realname e on a.realid=e.id
 join tb_user f on e.userid=f.userid
  where f.userid=#{userId} and c.stuts=3
+    </select>
+
+    <select id="getAmountInInvestment" resultType="Integer">
+ select a.money,g.state,k.userid
+        from tb_investmentlist a
+        join tb_tendering b on a.tendid=b.id
+        left join tb_borrow c on b.borrow=c.id
+        left join tb_loanrecord g on g.tendid=b.id
+        left join TB_REALNAME h on a.REALID=h.id
+        join tb_user k on h.userid=k.userid
+		where k.userid=#{userId} and b.stuts=48 or b.stuts=5
     </select>
 </mapper>

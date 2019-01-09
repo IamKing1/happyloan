@@ -204,6 +204,12 @@ public class InformationServiceImpl implements InformationService {
             accumulatedIncome=0;
         }
         map.put("accumulatedIncome",accumulatedIncome);
+        //投资中金额，项目还在招标中,未确认满标的
+        Integer amountInInvestment = informationDao.getAmountInInvestment(userId);
+        if(amountInInvestment==null){
+            amountInInvestment=0;
+        }
+        map.put("amountInInvestment",amountInInvestment);
         return map;
     }
 }

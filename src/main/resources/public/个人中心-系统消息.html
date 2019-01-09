@@ -197,8 +197,6 @@
                         var start =(this.currentPage-1)*this.pageSize;//分页数据
                         var end =this.currentPage*this.pageSize+1;
                         var searchForm= {
-                           /* 'start': start,
-                            'end': end,*/
                         };
                         axios.post('/system/getMessages', searchForm).then(function (response) {
                           /*  _self.total = response.data.total;*/

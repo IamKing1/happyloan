@@ -16,9 +16,9 @@
         left join tb_loanrecord g on g.tendid=b.id
         left join TB_REALNAME h on a.REALID=h.id
         join tb_user k on h.userid=k.userid
-        where rownum &lt;#{end}
+        where rownum &lt;#{end} and k.username=#{username} and a.readstate=1
         ) i
-        where i.rn &gt;#{start} and i.username=#{username} and i.readstate=1
+        where i.rn &gt;#{start}
 
     </select>
     <!--分页-->

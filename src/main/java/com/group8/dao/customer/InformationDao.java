@@ -164,4 +164,11 @@ public interface InformationDao {
      * @return
      */
     Integer getAccumulatedIncome(Integer userId);
+
+    /**
+     * 投资中金额，投资的项目还在招标中
+     * @param userId
+     * @return
+     */
+    Integer getAmountInInvestment(Integer userId);
 }
