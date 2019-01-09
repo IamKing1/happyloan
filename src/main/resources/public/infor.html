@@ -198,7 +198,11 @@
 								<br />
 								<el-table :data="tableData2" style="width: 90%;margin: 0 auto;" border >
 									<el-table-column prop="NICKNAME" label="借款人姓名" ></el-table-column>
-									<el-table-column prop="SEX" label="性别" width="50" ></el-table-column>
+									<el-table-column prop="SEX" label="性别" width="50" >
+										<template slot-scope="scope">
+											<el-col>{{scope.row.SEX | formatStata1}}</el-col>
+										</template>
+									</el-table-column>
 									<el-table-column prop="TELEPHONE" label="手机号"></el-table-column>
 									<el-table-column prop="ACADEMIC" label="最高学历"></el-table-column>
 									<el-table-column prop="MARRIAGE" label="婚姻状况"></el-table-column>
@@ -218,7 +222,7 @@
 								<el-table :data="job" style="width: 90%;margin: 0 auto;" border >
 									<el-table-column prop="JOB" label="工作行业" ></el-table-column>
 									<el-table-column prop="ADDRESS" label="工作城市" ></el-table-column>
-									<el-table-column prop="INCOME" label="年收入" ></el-table-column>
+									<el-table-column prop="INCOME" label="年收入(/元)" ></el-table-column>
 									<el-table-column label="负债状况">
 										<template scope="scope">
 											<el-col>无</el-col>
@@ -316,6 +320,7 @@
 			progress:20,
 			login:""
 		},
+
 		mounted(){
 			//把URL值绑定给tendid
 			this.tendId=this.getUrlKey("tendId")
@@ -441,7 +446,11 @@
 				// num.toFixed(2)获取的是字符串
 				return Number(realVal)
 
-			}
+			},
+            formatStata1: function (sex) {
+                const statusMap = {1:'男',2:'女'}
+                return statusMap[sex]
+            }
 		}
 	})
 	

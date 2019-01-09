@@ -21,8 +21,8 @@
     <!--列表顶部搜索和工具条-->
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-            <el-form-item label="名称">
-                <el-input v-model="searchForm.ename" placeholder="名称"></el-input>
+            <el-form-item label="姓名">
+                <el-input v-model="searchForm.ename" placeholder="请输入姓名"></el-input>
             </el-form-item>
             <el-form-item label="部门名称">
                 <el-select v-model="searchForm.deptid" placeholder="部门名称">
@@ -140,7 +140,9 @@
                 <el-input v-model="editForm.ENAME"></el-input>
             </el-form-item>
             <el-form-item label="性别" prop="SEX">
-                <el-input v-model="editForm.SEX" auto-complete="off"></el-input>
+                <el-select v-model="editForm.SEX" placeholder="请选择">
+                    <el-option  v-for="item in bie" :key="item.SEX" :label="item.label" :value="item.SEX"></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item label="年龄"  prop="AGE">
                 <el-input-number v-model="editForm.AGE" :min="16" :max="70"></el-input-number>
@@ -155,7 +157,9 @@
                 <el-input v-model="editForm.EIDENT" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="学历" prop="EDUC">
-                <el-input v-model="editForm.EDUC" auto-complete="off"></el-input>
+                <el-select v-model="editForm.EDUC" placeholder="请选择">
+                    <el-option  v-for="item in edu" :key="item.EDUC" :label="item.label" :value="item.EDUC"></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item label="入职日期" prop="HIREDATE">
                 <el-date-picker type="date"  placeholder="选择日期" v-model="editForm.HIREDATE"format="yyyy 年 MM 月 dd 日"
@@ -204,6 +208,11 @@
             options:[],
             //职位数据
             opp:[],
+            //学历下拉框
+            edu:[{EDUC:'小学',label:'小学'},{EDUC:'中学',label:'中学'},{EDUC:'高中',label:'高中'},{EDUC:'本科',label:'本科'},
+                {EDUC:'专科',label:'专科'},{EDUC:'本科',label:'本科'},{EDUC:'研究生',label:'研究生'},{EDUC:'博士',label:'博士'},],
+            //性别下拉框
+            bie:[{SEX:'男',label:'男'},{SEX:'女',label:'女'}],
             //显示加载中样式
             loading: false,
             //搜索表单
@@ -234,7 +243,7 @@
                     {required: true, message: '请输入性别', trigger: 'blur'}
                 ],
                 EPHONE:[
-                    {type:'number',required: true, message: '请输入手机号', trigger: 'blur'},
+                    {required: true, message: '请输入手机号', trigger: 'blur'},
                     {pattern:/^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/, message: '请输入正确的手机号', trigger: 'blur' }
                 ],
                 EMAIL:[
@@ -245,7 +254,7 @@
                     { required: true, message: '请输入学历', trigger: 'blur' }
                 ],
                 HIREDATE:[
-                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+                    { type: 'string', required: true, message: '请选择日期', trigger: 'change' }
                 ],
                 LIVING:[
                     { required: true, message: '请填写住址', trigger: 'blur' },
@@ -460,7 +469,6 @@
                             }
                         })
                     } else {
-                        //console.log("222")
                         return false;
                     }
                 });

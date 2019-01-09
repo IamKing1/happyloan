@@ -123,7 +123,7 @@ public interface InformationService {
     int updateNickName(Integer userId,String nickName);
 
     /**
-     * 计算 本息  余额  累计收益
+     * 计算 本息  余额  累计收益  投资中（未确认满标的项目）
      * @param userId
      * @return
      */

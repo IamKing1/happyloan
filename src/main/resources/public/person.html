@@ -38,7 +38,7 @@
 <!--个人中心-->
 <div class="wrapper wbgcolor">
     <div class="w1200 personal">
-       <!-- <div class="credit-ad"><img src="images/clist1.jpg" width="1200" height="96"></div>-->
+      <!--  <div class="credit-ad"><img src="images/clist1.jpg" width="1200" height="96"></div>-->
         <div id="personal-left" class="personal-left">
             <script>
                 $("#personal-left").load("personalleft.html");
@@ -64,10 +64,19 @@
                     width: 0px;
                     height: 0px;
                 }
+                .pmain-money li{
+                    width:160px;
+                }
+                .pmain-money ul{
+                    width:843px;
+                }
+                .fl #outLogin{
+                    font-size: 18px;
+                }
             </style>
             <div class="pmain-profile">
                 <div class="pmain-welcome">
-                       <!-- <span class="fl"><span id="outLogin">晚上好，</span>tg_gpdt0139 喝一杯下午茶，让心情放松一下~</span>-->
+                        <span class="fl"><span id="outLogin"></span></span>
                      <!--   <span class="fr">上次登录时间：2015-09-11 14:05:07 </span>-->
                 </div>
                 <div class="pmain-user">
@@ -123,9 +132,14 @@
                        url: "customer/calculationMoney", //发送请求地址
                        //请求成功后的回调函数有两个参数
                        success: function (data) {
-                           $("#benxi").html(data.principalAndInterestToBeCollected+"");
-                           $("#zong").html(data.balance+"");
-                           $("#shouyi").html(data.accumulatedIncome+"");
+                           $("#benxi").html(data.principalAndInterestToBeCollected + "");
+                           $("#zong").html(data.balance + "");
+                           $("#shouyi").html(data.accumulatedIncome + "");
+                           if (data.amountInInvestment == undefined) {
+                               $("#tz").html(0);
+                           } else {
+                               $("#tz").html(data.amountInInvestment + "");
+                           }
                        }
                    })
 
@@ -163,15 +177,11 @@
 
                             }
                         </style>
-            </span><!-- <span class="head-icon"> <a href="#"><i title="第三方资金账户未认证" class="headiconbg headicon01"></i></a> <a
-                            href="#"><i class="headiconbg headicon2"></i></a> <a href="#"><i
-                            class="headiconbg headicon03"></i></a> </span>--></div>
+            </span></div>
                     <div class="user-info user-info1">
                         <ul>
                             <li>昵称<span ><input type="text" id="nickName"></span><span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a
                                     class="pmain-log" id="signout">注销登录</a></span></li>
-                           <!-- <li>安全级别<span><i class="safe-level"><i class="onlevel" style="width:40%;"></i></i></span> <a
-                                    href="#">[低]</a></li>-->
                         </ul>
                     </div>
                 </div>
@@ -180,18 +190,61 @@
                 <div class="pmain-money">
                     <ul>
                         <li class="none"><span><em>账户总额</em><i id="zhze" class="markicon"></i><span class="arrow-show1"
-                                                                                                     style="display:none;">可用余额+待收本息</span><span
+                                                                                                     style="display:none;">可用余额<!--+待收本息--></span><span
                                 class="icon-show1" style="display:none;"></span></span> <span class="truemoney"><i
                                 class="f26 fb" id="zong"></i> 元</span></li>
                         <li><span><em>待收本息</em><i id="dsbx" class="markicon"></i><span class="arrow-show2"
-                                                                                       style="display:none;">未到账的投资项目的本金、利息总额</span><span
+                                                                                       style="display:none;">未到账的投资项目的本金+利息总额</span><span
                                 class="icon-show2" style="display:none;"></span></span> <span class="truemoney"><i
                                 class="f26 fb" id="benxi"></i>元</span></li>
                         <li><span><em>累计收益</em><i id="ljsy" class="markicon"></i><span class="arrow-show3"
                                                                                        style="display: none;">已到账的投资收益+未到账的投资收益</span><span
                                 class="icon-show3" style="display: none;"></span></span> <span class="truemoney"><i
                                 class="f26 fb c-pink" id="shouyi"></i> 元</span></li>
+
+                        <li><span><em>投资中金额</em><i id="tzzje" class="markicon"></i><span class="arrow-show4"
+                                                                                       style="display: none;">已投资的项目金额，项目还在招标中</span><span
+                                class="icon-show4" style="display: none;"></span></span> <span class="truemoney"><i
+                                class="f26 fb c-pink" style="color:#f50;" id="tz">0</i> 元</span></li>
+
                     </ul>
+                    <script>
+                        $("#tzzje").mouseover(function () {
+                            $(this).siblings("span").css("display","block")
+                        })
+                        $("#tzzje").mouseout(function () {
+                            $(this).siblings("span").css("display","none")
+                        })
+                    </script>
+                    <style>
+                        .pmain-money ul>li:nth-child(3)>span>.arrow-show3{
+                            left:420px;
+                        }
+                        .pmain-money ul>li:nth-child(3)>span>.icon-show3{
+                            left: 450px;
+                        }
+                        .pmain-money .arrow-show4 {
+                            position: absolute;
+                            top: -13px;
+                            left: 700px;
+                            background: #FFFBE9;
+                            border: 1px solid #FBF3D1;
+                            height: 30px;
+                            line-height: 30px;
+                            padding: 0 12px;
+                            display: block;
+                            font-size: 12px;
+                        }
+                        .pmain-money .icon-show4{
+                            position: absolute;
+                            top: 18px;
+                            left: 758px;
+                            background: url("/images/grzx.png") -75px -240px;
+                            width: 19px;
+                            height: 7px;
+                            display: block;
+                        }
+                    </style>
                 </div>
             </div>
             <script type="text/javascript">
@@ -212,17 +265,17 @@
 
                     var myDate = new Date();
                     var h = myDate.getHours();
-                    if (h > 11 && h < 19) {
-                        $("#outLogin").html("下午好，");
-                    } else if (h > 18) {
-                        $("#outLogin").html("晚上好，");
+                    if (h >=12 && h < 19) {
+                        $("#outLogin").html("下午好,听说喝杯下午茶会使自己更放松");
+                    } else if (h >= 19) {
+                        $("#outLogin").html("晚上好,下班了做点丰富生活的事情");
                     } else {
-                        $("#outLogin").html("上午好，");
+                        $("#outLogin").html("上午好,一日之计在于晨哦");
                     }
                 });
                 //]]>
             </script>
-            <div class="pmain-connent">
+         <!--   <div class="pmain-connent">
                 <div id="pmain-contab" class="pmain-contab">
                     <ul>
                         <li id="pmain-contab1" class="on">回款计划</li>
@@ -283,7 +336,7 @@
                         <div class="pmain-morebtn" style="border-top:0;margin-top:0"></div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
         <div class="clear"></div>
     </div>

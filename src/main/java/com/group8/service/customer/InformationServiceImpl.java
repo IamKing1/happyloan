@@ -97,7 +97,7 @@ public class InformationServiceImpl implements InformationService {
         map.put("userId",userId);
         //先执行删除操作
         List<Map> customerName = informationDao.getRealIdByUserName(session.getAttribute("CustomerName").toString());
-        System.out.println(customerName);
+       // System.out.println(customerName);
         if (customerName!=null&&customerName.size()>0){
             informationDao.deleteRealNameIsNo(userId);
         }
@@ -204,6 +204,12 @@ public class InformationServiceImpl implements InformationService {
             accumulatedIncome=0;
         }
         map.put("accumulatedIncome",accumulatedIncome);
+        //投资中金额，项目还在招标中,未确认满标的
+        Integer amountInInvestment = informationDao.getAmountInInvestment(userId);
+        if(amountInInvestment==null){
+            amountInInvestment=0;
+        }
+        map.put("amountInInvestment",amountInInvestment);
         return map;
     }
 }

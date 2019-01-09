@@ -6,7 +6,7 @@
     <!--未读消息列表-->
 <select id="getMessages" resultType="map">
 
-    select rownum rn, a.CONTENT,to_char(a.metime,'yyyy/MM/dd') metime,a.state,b.username from tb_messages a
+    select rownum rn, a.CONTENT,to_char(a.metime,'yyyy/MM/dd') metime,a.id,a.state,b.username from tb_messages a
     join tb_user b on a.userid=b.userid
     where a.state=1 and b.username=#{username}
 </select>
@@ -16,7 +16,7 @@
     </select>
     <!--修改状态变为2-->
     <update id="update" parameterType="map">
-        update TB_MESSAGES set state=2
+        update TB_MESSAGES set state=2 where id=#{id}
     </update>
     <!--已读消息列表-->
     <select id="getMessages2" resultType="map">

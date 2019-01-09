@@ -341,6 +341,7 @@ public class Information {
 
         return i ;
     }
+
     @RequestMapping(value = "calculationMoney")
     @ResponseBody
     public Object calculationMoney(HttpSession session){
@@ -350,6 +351,7 @@ public class Information {
         Map map = informationService.calculationMoney(userId);
         return map;
     }
+
 	/**
 	 * 实名认证失败,删除原信息
 	 * @return
