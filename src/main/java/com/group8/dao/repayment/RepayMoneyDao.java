@@ -76,4 +76,11 @@ public interface RepayMoneyDao {
      */
     int updateStutsToTwo(Map map);
 
+    /**
+     * 根据tendid查询信息
+     * @param tendId
+     * @return
+     */
+    List<Map> getRealMoneyByTendId(Integer tendId);
+
 }

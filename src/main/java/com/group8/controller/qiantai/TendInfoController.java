@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public class TendInfoController {
 	@ResponseBody
 	@RequestMapping("getLoanList")
 	public Object getLoanList(@RequestBody Map tendid){
+
 		Map map = new HashMap();
 		map.put("data",tendInfoService.getLoanList(tendid));
 		return map;
@@ -55,11 +57,20 @@ public class TendInfoController {
 	 */
 	@ResponseBody
 	@RequestMapping("getGaveList")
-	public Object getGaveList(@RequestBody Map map){
+	public Object getGaveList(@RequestBody Map map,HttpSession session){
 //		System.out.println(map.get("tendid"));
+
+
 		Map map1 = new HashMap();
 		map1.put("total",tendInfoService.getGaveCount(Integer.valueOf(map.get("tendid")+"")));
 		map1.put("data",tendInfoService.getGaveList(map));
+		Object customerName = session.getAttribute("CustomerName");
+
+		if(customerName!=null){
+			map1.put("login",1);
+		}else{
+			map1.put("login",2);
+		}
 		return map1;
 	}
 
@@ -78,7 +89,6 @@ public class TendInfoController {
 		Integer moneyByTendId = investmentService.getMoneyByTendId(tendid);
 		System.out.println("剩余投资的数目为："+moneyByTendId*0.05);
 		if(integer<(moneyByTendId*0.05)){
-			System.out.println("-----------------------");
 			investmentService.updateTendStuts(tendid);
 		}
 		return integer;

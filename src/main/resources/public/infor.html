@@ -151,7 +151,10 @@
 							<el-col :span="24" >
 								<el-col :span="4" style="font-size: 16px;" :push="3">投标进度:</el-col>
 								<el-col :span="14"  :push="2">
-									<el-progress :percentage="70" style="margin: 5px;"></el-progress>
+									<!--<template scope="scope">-->
+										<!--<el-progress :width="80" :percentage="progress"></el-progress>-->
+									<!--</template>-->
+									<el-progress :percentage="progress"></el-progress>
 								</el-col>
 								
 							</el-col>
@@ -161,18 +164,21 @@
 				<el-col :span="8">
 					<div class="el-right" style="border-left:1px solid #e5e5e5">
 						<div class="col col-line1">
-							<p>剩余可投: <strong style="color: #ff7200;font-size: 30px;">{{allNum-num1}}</strong> 元</p>
+							<p>剩余可投: <strong style="color: #ff7200;font-size: 30px;">{{allNum-num1<0?0:allNum-num1}}</strong> 元</p>
 						</div>
 						<div class="col col-line2" style="margin: 30px 0;">
 							<template>
-								<el-input-number v-model="num1" :step="500" :max="allNum" :min="100"></el-input-number>
+								<el-input-number v-model="num1" :step="100" :change="numChange()" :max="allNum" :min="100"></el-input-number>
 							</template>
 							<el-col style="margin: 10px 0;font-size: 14px;text-align: left;margin-left: 26%;">
 								预计收入: <span style="color: red;">{{(num1*0.1945689)|numFilter}}</span> 元</el-col>
 						</div>
 						<div class="col col-line3" style="margin: 30px 0">
 							<el-row>
-								<el-button type="primary" @click="toubiao(num1)" style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
+								<el-button v-if="this.allNum < 0" type="primary" :disabled="true"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
+								<el-button v-if="this.allNum >= 0" type="primary"  @click="toubiao(num1)"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
+								
+								<!--<el-button type="primary" style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>-->
 							</el-row>
 						</div>
 					</div>
@@ -282,17 +288,22 @@
 </div>
 
 <script type="text/javascript">
+	
 	let vue = new Vue({
 		el: "#app",
 		data: {
 			num1: 100,
-			allNum: 69000,
+			allNum: 900,
 			tendNum:130000,
 			tableData2:[],
 			job: [],
-			loanInfo:[{a1:'111',a2:'借款标111',a3:'AF50814897',a4:'109400元',a5:'36个月',a6:'12.00%',a7:'放款成功次日',a8:'日常消费',a9:'等额本息',a10:'个人收入',a11:'6天1小时15分'}],
-			loanGave:[
-					],
+			loanInfo:[
+				{a1:'111',a2:'借款标111',a3:'AF50814897',
+					a4:'109400元',a5:'36个月',a6:'12.00%',
+					a7:'放款成功次日',a8:'日常消费',a9:'等额本息',
+					a10:'个人收入',a11:'6天1小时15分'
+				}],
+			loanGave:[],
 			//当前页
 			currentPage:1,
 			//分页大小
@@ -302,7 +313,8 @@
 			month:36,
 			goUrl:'',
 			tendId:0,
-			
+			progress:20,
+			login:""
 		},
 		mounted(){
 			//把URL值绑定给tendid
@@ -312,7 +324,7 @@
 			//在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
 			let self = this;
 			axios.post('/tendInfo/getLoanInfo',{tendid:this.tendId}).then(function(response){
-				console.log(response.data)
+				// console.log(response.data)
 				// self.allNum = response.data;
 				self.month = response.data[0].LONGTIME;
 				self.tendNum = response.data[0].MONEY;
@@ -321,6 +333,16 @@
 				// console.log(response.data)
 				self.allNum = response.data;
 			});
+
+			//投资进度
+			axios.post('/customer/getProgress',{tendid:this.tendId}).then(function(response){
+				// self.progress = response.data.data;
+				// console.log(sele.progress)
+				console.log("获取投资进度")
+				console.log(response.data[0]['JIN'])
+				self.progress = response.data[0]['JIN'];
+			});
+			
 			axios.post('/tendInfo/getLoanList',{tendid:this.tendId}).then(function(response){
 				self.tableData2 = response.data.data;
 				self.job = response.data.data;
@@ -332,17 +354,18 @@
 			axios.post('/tendInfo/getGaveList',{tendid:this.tendId,'start':start,'end':end}).then(function(response){
 				self.total = response.data.total;
 				self.loanGave = response.data.data;
+				self.login=response.data.login;
 			})
 		},
 		methods: {
 			//表格重新加载数据
 			loadingData:function() {
-				var _self = this;
+				let _self = this;
 				_self.loading = true;
-				var self = this;
-				self.tendId
-				var start =(this.currentPage-1)*this.pageSize;
-				var end =this.currentPage*this.pageSize+1;
+				let self = this;
+				// self.tendId
+				let start =(this.currentPage-1)*this.pageSize;
+				let end =this.currentPage*this.pageSize+1;
 				axios.post('/tendInfo/getGaveList',{tendid:self.tendId,'start':start,'end':end}).then(function(response){
 					_self.total=response.data.total;
 					_self.loanGave = response.data.data;
@@ -355,13 +378,13 @@
 			},
 			handleSizeChange(val) {
 				this.pageSize = val;
-				var _self = this;
+				let _self = this;
 				_self.loadingData();//重新加载数据
 			},
 			handleCurrentChange(val) {
 				this.currentPage = val;
 				console.log('当前页: ' + val);
-				var _self = this;
+				let _self = this;
 				_self.loadingData();//重新加载数据
 			},
 			//获取URL参数值
@@ -369,9 +392,12 @@
 				return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
 			},
             toubiao(hasMoney){
+			    if(this.login==1){
 			    let _self=this;
                 axios.post("/investment/remainingSum",{"tendId":this.tendId,"money":hasMoney}).then(function(response){
-                    if(response.data>0){
+                    console.log(response.data)
+                	
+                	if(response.data>0){
                         _self.$message({
                             message: '投资成功',
                             type: 'success'
@@ -385,6 +411,25 @@
                         });
                     }
                 })
+			}else{
+			        if(confirm("你还没有登录，是否前去登录")){
+                        location.href="login.html";
+                    }
+				}
+            },
+			numChange(){
+				// console.log(this.num1)
+			},
+			aaa(){
+				temp=100;
+				this.allNum-=temp;
+				if(this.allNum<500){
+					temp=this.allNum;
+					console.log("剩余可投:" + temp)
+				}else {
+					temp=100;
+				}
+				return temp;
 			}
 		},
 		//过滤器
