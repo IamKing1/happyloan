@@ -75,7 +75,7 @@
               width="120"
               align="center">
         <template scope="scope">
-          <el-button :plain="true" type="primary" size="small" icon="edit">12%</el-button>
+          <el-button :plain="true" type="primary" size="small" icon="edit">20%</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -91,7 +91,7 @@
 
         <template scope="scope">
           <el-button v-if="scope.row.JIN<=99" type="primary" size="big" @click="toinfor(scope.row)">投资</el-button>
-          <el-button v-if="scope.row.JIN>99" type="success" plain size="big" @click="toinfor(scope.row)">已满标</el-button>
+          <el-button v-if="scope.row.JIN>99.9" type="success" plain size="big" @click="toinfor(scope.row)">已满标</el-button>
         </template>
       </el-table-column>
     </el-table>
