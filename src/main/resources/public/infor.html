@@ -151,7 +151,10 @@
 							<el-col :span="24" >
 								<el-col :span="4" style="font-size: 16px;" :push="3">投标进度:</el-col>
 								<el-col :span="14"  :push="2">
-									<el-progress :percentage="70" style="margin: 5px;"></el-progress>
+									<!--<template scope="scope">-->
+										<!--<el-progress :width="80" :percentage="progress"></el-progress>-->
+									<!--</template>-->
+									<el-progress :percentage="progress"></el-progress>
 								</el-col>
 								
 							</el-col>
@@ -174,7 +177,7 @@
 							<el-row>
 								<el-button v-if="this.allNum < 0" type="primary" :disabled="true"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
 								<el-button v-if="this.allNum >= 0" type="primary"  @click="toubiao(num1)"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
-								
+
 								<!--<el-button type="primary" style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>-->
 							</el-row>
 						</div>
@@ -304,6 +307,7 @@
 </div>
 
 <script type="text/javascript">
+
 	let vue = new Vue({
 		el: "#app",
 		data: {
@@ -328,6 +332,8 @@
 			month:36,
 			goUrl:'',
 			tendId:0,
+			progress:20,
+			login:""
 		},
 
 		mounted(){
@@ -338,7 +344,7 @@
 			//在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
 			let self = this;
 			axios.post('/tendInfo/getLoanInfo',{tendid:this.tendId}).then(function(response){
-				console.log(response.data)
+				// console.log(response.data)
 				// self.allNum = response.data;
 				self.month = response.data[0].LONGTIME;
 				self.tendNum = response.data[0].MONEY;
@@ -347,6 +353,16 @@
 				// console.log(response.data)
 				self.allNum = response.data;
 			});
+
+			//投资进度
+			axios.post('/customer/getProgress',{tendid:this.tendId}).then(function(response){
+				// self.progress = response.data.data;
+				// console.log(sele.progress)
+				console.log("获取投资进度")
+				console.log(response.data[0]['JIN'])
+				self.progress = response.data[0]['JIN'];
+			});
+
 			axios.post('/tendInfo/getLoanList',{tendid:this.tendId}).then(function(response){
 				self.tableData2 = response.data.data;
 				self.job = response.data.data;
@@ -362,6 +378,7 @@
 			axios.post('/tendInfo/getGaveList',{tendid:this.tendId,'start':start,'end':end}).then(function(response){
 				self.total = response.data.total;
 				self.loanGave = response.data.data;
+				self.login=response.data.login;
 			})
 		},
 		methods: {
@@ -399,9 +416,12 @@
 				return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
 			},
             toubiao(hasMoney){
+			    if(this.login==1){
 			    let _self=this;
                 axios.post("/investment/remainingSum",{"tendId":this.tendId,"money":hasMoney}).then(function(response){
-                    if(response.data>0){
+                    console.log(response.data)
+
+                	if(response.data>0){
                         _self.$message({
                             message: '投资成功',
                             type: 'success'
@@ -415,7 +435,12 @@
                         });
                     }
                 })
-			},
+			}else{
+			        if(confirm("你还没有登录，是否前去登录")){
+                        location.href="login.html";
+                    }
+				}
+            },
 			numChange(){
 				// console.log(this.num1)
 			},

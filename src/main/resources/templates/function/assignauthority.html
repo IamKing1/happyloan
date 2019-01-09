@@ -84,7 +84,7 @@
             <el-table-column
                     label="操作">
                 <template scope="scope">
-                    <el-button :plain="true" type="success" size="small" icon="edit"  @click="editClick(scope.row)">授权
+                    <el-button :plain="true" type="success" size="small" icon="edit"   @click="editClick(scope.row)">授权
                     </el-button>
 
                 </template>
@@ -116,10 +116,16 @@
 
 
             <el-form-item label="权限列表">
-
-
+                <el-tree ref="tree"
+                         :data="treeData"
+                         show-checkbox
+                         node-key="id"
+                         default-expand-all
+                         :default-checked-keys="checkedKeys"
+                         @check-change="getSelected"
+                        >
+                </el-tree>
             </el-form-item>
-
 
         </el-form>
         <div slot="footer" class="dialog-footer" style="text-align: center">
@@ -149,8 +155,11 @@
         data: {
             //列表数据
             tableData: [],
+            idds:"",
             //显示加载中样式
             loading: false,
+            checkedKeys:[],
+            treeData:[],
             //搜索表单
             searchForm: {
                 idNumber: '',
@@ -204,11 +213,29 @@
                 self.total = response.data.total;
                 self.tableData = response.data.data;
                 // self.multipleSelection=response.data.data;
+
+            }),
+                axios.post('/function/getAllPermission').then(function(response){
+                self.treeData = response.data;
             })
+
         },
         methods: {
+            getSelected:function(e){
+                var ids="";
+                var treeData = this.$refs.tree.getCheckedNodes();
+
+                for (var i = 0; i < treeData.length; i++) {
+                    var obj = treeData[i];
+                    //alert(obj.label);
+                    ids+=obj.id+",";
+                }
+                this.idds=ids;
+            },
             //表格重新加载数据
             loadingData: function () {
+
+
                 var _self = this;
                 _self.loading = true;
                 var self = this;
@@ -229,7 +256,8 @@
                     _self.total = response.data.total;
                   _self.tableData = response.data.data;
                     //_self.multipleSelection=response.data.data;
-                })
+                }),
+
                 /*    console.log(_self.currentPage);*/
                 setTimeout(function () {
                     console.info("加载数据成功");
@@ -238,16 +266,23 @@
             },
             //表格编辑事件
             editClick: function (row) {
-                this.goUrl = "";
+
+                //每次进来就清空数组里边的东西
+                this.checkedKeys.splice(0, this.checkedKeys.length);
+                this.goUrl = "/function/savePermission";
                 this.editFormVisible = true;
                 var _self = this;
+                if(_self.$refs.tree!=undefined){
+                    _self.$refs.tree.setCheckedKeys([]);
+                }
                 this.editForm = Object.assign({}, row);
                     this.list=this.editForm.permissionList;
-                   console.log(this.list)
-
-
-
-
+                    if(this.list!=null) {
+                        for (var i = 0; i < this.list.length; i++) {
+                            var obj = this.list[i];
+                            _self.checkedKeys.push(obj.permissionId)
+                        }
+                    }
             },
             //表格查询事件
             searchClick: function () {
@@ -289,7 +324,7 @@
                 _self.loading = true;
                 var formData =this.editForm;
                 var goUrl=this.goUrl;
-                axios.post(goUrl,formData).then(function(response){
+                axios.post(goUrl,{ids:this.idds,roleId:this.editForm.roleId}).then(function(response){
                     if(response.data>0){
                         _self.editFormVisible = false;// 让弹出层隐藏
                         _self.loadingData();//重新加载数据

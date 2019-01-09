@@ -47,7 +47,6 @@ public class MyLoanServiceImpl implements MyLoanService {
         List<Map> issused = myLoanDao.getIssused(map);
         if(issused!=null&&issused.size()>0) {
             for (Map map1 : issused) {
-                System.out.println(map1);
                 //查询出预期的项目
              if(Integer.valueOf(map1.get("STUTS").toString()).equals(2)){
                     //计算出逾期这段时间应还的金额
