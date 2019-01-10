@@ -50,8 +50,8 @@
                 <td>结束时间</td>
                 <td>负责人</td>
             </tr>
-            <tr th:each="bid : ${bidList}">
-                <td th:text="${bid.BID_ID}"></td>
+            <tr th:each="bid,index : ${bidList}">
+                <td th:text="${index.count}"></td>
                 <td th:text="${bid.BID_MONEY}"></td>
                 <td th:text="${bid.BID_CREATION_TIME}"></td>
                 <td th:text="${bid.BID_MINIMUM}"></td>
