@@ -130,7 +130,7 @@
           </el-table>
           <!--编辑界面-->
           <el-dialog title="你确定要还款吗" :visible.sync="editFormVisible" :close-on-click-modal="false">
-            <el-form :model="editForm"  label-width="100px" :rules="editFormRules" ref="editForm" hide-required-asterisk="false"></el-form>
+            <el-form :model="editForm"  label-width="100px" :rules="editFormRules" ref="editForm"></el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click.native="editFormVisible = false">取消</el-button>
               <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
@@ -176,6 +176,7 @@
                   editFormVisible: false,
                   editLoading: false,
                   goUrl: '',
+                  editFormRules:{},
                   //编辑界面数据
                   editForm: {
                       hasMoney:''
@@ -259,14 +260,16 @@
                       var formData =this.editForm;
                       var goUrl=this.goUrl;
                       axios.post(goUrl,formData).then(function(response){
-                          if(response.data>0){
+                     if(response.data>0){
                               _self.editFormVisible = false;// 让弹出层隐藏
                               _self.loadingData();//重新加载数据
                           }else{
                               _self.$message({
-                                  message: '更新失败',
+                                  message: '余额不足',
                                   type: 'fail'
                               });
+                         _self.editFormVisible = false;// 让弹出层隐藏
+                         _self.loadingData();//重新加载数据
                           }
                       })
                   },
