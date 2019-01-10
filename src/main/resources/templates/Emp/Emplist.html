@@ -147,7 +147,7 @@
 
     <!--编辑界面-->
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-        <el-form :model="editForm"  label-width="80px" :rules="editFormRules" ref="editForm" hide-required-asterisk="false">
+        <el-form :model="editForm"  label-width="80px" :rules="editFormRules" ref="editForm" :hide-required-asterisk="true">
             <el-form-item label="姓名" prop="ENAME">
                 <el-input v-model="editForm.ENAME"></el-input>
             </el-form-item>
@@ -222,7 +222,7 @@
             opp:[],
             //学历下拉框
             edu:[{EDUC:'小学',label:'小学'},{EDUC:'中学',label:'中学'},{EDUC:'高中',label:'高中'},{EDUC:'本科',label:'本科'},
-                {EDUC:'专科',label:'专科'},{EDUC:'本科',label:'本科'},{EDUC:'研究生',label:'研究生'},{EDUC:'博士',label:'博士'},],
+                {EDUC:'专科',label:'专科'},{EDUC:'研究生',label:'研究生'},{EDUC:'博士',label:'博士'},],
             //性别下拉框
             bie:[{SEX:'男',label:'男'},{SEX:'女',label:'女'}],
             //显示加载中样式
