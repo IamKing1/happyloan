@@ -107,9 +107,9 @@ public class Investment {
      */
     @ResponseBody
     @RequestMapping(value = "updateTendStutsThree")
-    public Object updateTendStutsToThree(@RequestBody Map map){
+    public Object updateTendStutsToThree(@RequestBody Map map,HttpSession session){
         //更改状态
-        int i = investmentService.updateTendStutsToThree(Integer.valueOf(map.get("ID").toString()));
+        int i = investmentService.updateTendStutsToThree(Integer.valueOf(map.get("ID").toString()),session);
        //打钱
         int i1 = investmentService.beatMoneyToBorrower(map);
         //记录表
@@ -146,7 +146,6 @@ public class Investment {
     @RequestMapping(value = "selectFailmarkList")
     @ResponseBody
     public Object selectFailmarkList(@RequestBody Map map){
-        System.out.println(map);
         Map map1 = new HashMap();
         map1.put("data", investmentService.selectFailMarkList(map));
 

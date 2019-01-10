@@ -20,4 +20,12 @@
         select count(*) from TB_TENDERING a
         join tb_borrow b on a.borrow=b.id where a.stuts =48 or a.stuts =2
     </select>
+    
+    <select id="getCountMoney" resultType="map">
+         select sum(money) money from TB_INVESTMENTLIST
+    </select>
+    
+    <select id="getCountClient" resultType="map">
+         select count(username) username from TB_USER
+    </select>
 </mapper>

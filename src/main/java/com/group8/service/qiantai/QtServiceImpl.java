@@ -72,4 +72,15 @@ public class QtServiceImpl implements QtService {
     public int getPageCount(Map map) {
         return qtDao.getPageCount(map);
     }
+
+
+    @Override
+    public List<Map> getCountMoney() {
+        return qtDao.getCountMoney();
+    }
+
+    @Override
+    public List<Map> getCountClient() {
+        return qtDao.getCountClient();
+    }
 }

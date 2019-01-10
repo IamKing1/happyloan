@@ -18,4 +18,15 @@ public interface QtService {
      * @return
      */
     int getPageCount(Map map);
+    /**
+     * 累计投资金额
+     * @return
+     */
+    List<Map> getCountMoney();
+
+    /**
+     * 注册人数
+     * @return
+     */
+    List<Map> getCountClient();
 }

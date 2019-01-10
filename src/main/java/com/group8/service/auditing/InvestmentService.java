@@ -60,7 +60,7 @@ public interface InvestmentService {
      * @param tendId
      * @return
      */
-    int updateTendStutsToThree(Integer tendId);
+    int updateTendStutsToThree(Integer tendId,HttpSession session);
     /**
      * 招标完成，给借款人打钱
      * @param map

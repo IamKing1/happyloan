@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +26,11 @@ public class QtController {
     @Autowired
     private QtService qtService;
 
+    /**
+     * 我要投资
+     * @param map
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getList")
     public Object getListEmp(@RequestBody Map map){
@@ -35,4 +41,28 @@ public class QtController {
 
         return map1;
     }
+
+    /**
+     * 累计投资金额
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getCountMoney")
+    public Object getCountMoney(){
+
+        List<Map> countMoney = qtService.getCountMoney();
+        return countMoney;
+    }
+
+    /**
+     * 注册人数
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getCountClient")
+    public Object getCountClient(){
+        List<Map> countClient = qtService.getCountClient();
+        return countClient;
+    }
+
 }
