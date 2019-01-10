@@ -222,4 +222,10 @@ public class InformationServiceImpl implements InformationService {
     public List<Map> getIdNumberList() {
         return informationDao.getIdNumberList();
     }
+
+    @Override
+    public List<Map> judgeMark(Integer tendid) {
+
+        return informationDao.judgeMark(tendid);
+    }
 }

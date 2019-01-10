@@ -28,7 +28,6 @@ public class BidStatusServiceImpl implements BidStatusService {
             Integer hasMoney = investmentService.hasCurrentlyVoted(Integer.valueOf(map1.get("BID_ID").toString()));
             map1.put("hasMoney",hasMoney);
         }
-        System.out.println("222222222"+page);
         return page;
     }
 
@@ -54,7 +53,6 @@ public class BidStatusServiceImpl implements BidStatusService {
             Integer hasMoney = investmentService.hasCurrentlyVoted(Integer.valueOf(map1.get("BID_ID").toString()));
             map1.put("hasMoney",hasMoney);
         }
-        System.out.println("11111111111"+page);
         return page;
     }
 

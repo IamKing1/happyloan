@@ -139,4 +139,11 @@ public interface InformationService {
      * @return
      */
     List<Map> getIdNumberList();
+
+    /**
+     * 判断此标是否属于自己
+     * @param tendid
+     * @return
+     */
+    List<Map> judgeMark(Integer tendid);
 }

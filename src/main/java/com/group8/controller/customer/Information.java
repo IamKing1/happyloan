@@ -5,7 +5,6 @@ import com.group8.entity.Customer;
 import com.group8.service.customer.InformationService;
 import com.group8.service.customer.LoginService;
 import com.group8.util.FTPfile;
-import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -383,7 +382,7 @@ public class Information {
 	@ResponseBody
 	@RequestMapping("getProgress")
 	public Object getProgress(@RequestBody Map tendid) {
-		System.out.println("----------tendid"+tendid);
+
 		return informationService.getProgress(tendid);
 	}
 
@@ -408,5 +407,23 @@ public class Information {
 	}
 
 
+
+    /**
+     * 判断是不是本人的标
+     * @param tendid
+     * @param session
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "judgeMark")
+	public Object judgeMark(@RequestBody Map tendid,HttpSession session){
+        List<Map> list = informationService.judgeMark(Integer.valueOf(tendid.get("tendid").toString()));
+        String customerName = session.getAttribute("CustomerName").toString();
+
+        if(list.get(0).get("USERNAME").equals(customerName)){
+            return -1;
+        }
+        return 1;
+    }
 
 }

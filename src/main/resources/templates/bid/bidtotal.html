@@ -50,13 +50,14 @@
                 <td>结束时间</td>
                 <td>负责人</td>
             </tr>
-            <tr th:each="bid : ${bidList}">
-                <td th:text="${bid.BID_ID}"></td>
+            <tr th:each="bid,index : ${bidList}">
+                <td th:text="${index.count}"></td>
                 <td th:text="${bid.BID_MONEY}"></td>
                 <td th:text="${bid.BID_CREATION_TIME}"></td>
                 <td th:text="${bid.BID_MINIMUM}"></td>
                 <td th:text="${bid.hasMoney}"></td>
-                <td th:text="${bid.STATE}"></td>
+                <td ><span th:if="${bid.STATE}==审核中">审核中</span><span th:if="${bid.STATE}==审核失败">审核失败</span><span th:if="${bid.STATE}==高中">满标</span>
+                    <span th:if="${bid.STATE}==无">流标</span><span th:if="${bid.STATE}==本科">满标</span><span th:if="${bid.STATE}==研究生">流标</span></td>
                 <td th:text="${bid.CDATE}"></td>
                 <td th:text="${bid.BID_END_TIME}"></td>
                 <td th:text="${bid.USERID}"></td>

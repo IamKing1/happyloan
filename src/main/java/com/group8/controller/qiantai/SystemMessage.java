@@ -50,8 +50,8 @@ public class SystemMessage {
      */
     @ResponseBody
     @RequestMapping("/update")
-    public Object update( Map map){
-
+    public Object update(@RequestBody Map map){
+        System.out.println("map+++++++"+map);
         return systemMessageService.update(map);
     }
 
@@ -67,7 +67,6 @@ public class SystemMessage {
         map.put("username", session.getAttribute("CustomerName"));
         Map map1=new HashMap();
         map1.put("data",systemMessageService.getMessages2(map));
-      /*  map1.put("total",systemMessageService.getPageCount2(map));*/
         return map1;
     }
 
@@ -80,7 +79,7 @@ public class SystemMessage {
     @RequestMapping("/del/{id}")
     public Object del(@PathVariable int id){
 
-        System.out.println("-----====++++"+id);
+        //System.out.println("-----====++++"+id);
         return systemMessageService.delte(id);
     }
 }

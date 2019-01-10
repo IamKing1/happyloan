@@ -1,7 +1,9 @@
 package com.group8.service.auditing;
 
 import com.group8.dao.auditing.InvestmentDao;
+import com.group8.dao.auditing.RealNameDao;
 import com.group8.dao.customer.InformationDao;
+import com.group8.service.customer.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,12 @@ public class InvestmentServiceImpl implements InvestmentService {
 
     @Autowired
     private InvestmentService InvestmentService;
+
+    @Autowired
+    private LoginService loginService;
+
+    @Autowired
+    private RealNameDao realNameDao;
 
 
     @Override
@@ -121,9 +129,20 @@ public class InvestmentServiceImpl implements InvestmentService {
         return investmentDao.selectTenderingListCount(map);
     }
 
+
     @Override
-    public int updateTendStutsToThree(Integer tendId) {
-        return investmentDao.updateTendStutsToThree(tendId);
+    public int updateTendStutsToThree(Integer tendId,HttpSession session ) {
+        int i = investmentDao.updateTendStutsToThree(tendId);
+        Map map=new HashMap();
+        if(i>0){
+            map.put("content","尊敬的用户，您的贷款已发放，请注意查收,注意贷款期限，及时还款，祝您生活愉快");
+            Integer userId = investmentDao.getUserId(tendId);
+            map.put("userid",userId);
+            //调用添加方法
+            int add1 = realNameDao.add(map);
+        }
+
+        return i;
     }
 
     @Override
