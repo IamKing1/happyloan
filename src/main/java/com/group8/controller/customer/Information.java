@@ -382,8 +382,26 @@ public class Information {
 	@ResponseBody
 	@RequestMapping("getProgress")
 	public Object getProgress(@RequestBody Map tendid) {
-		System.out.println("----------tendid"+tendid);
+
 		return informationService.getProgress(tendid);
 	}
+
+    /**
+     * 判断是不是本人的标
+     * @param tendid
+     * @param session
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "judgeMark")
+	public Object judgeMark(@RequestBody Map tendid,HttpSession session){
+        List<Map> list = informationService.judgeMark(Integer.valueOf(tendid.get("tendid").toString()));
+        String customerName = session.getAttribute("CustomerName").toString();
+
+        if(list.get(0).get("USERNAME").equals(customerName)){
+            return -1;
+        }
+        return 1;
+    }
 
 }

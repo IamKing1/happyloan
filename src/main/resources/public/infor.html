@@ -159,18 +159,18 @@
 					</div>
 				</el-col>
 				<el-col :span="8">
-					<div class="el-right" style="border-left:1px solid #e5e5e5">
+					<div class="el-right" id="el-right"  style="border-left:1px solid #e5e5e5">
 						<div class="col col-line1">
 							<p>剩余可投: <strong style="color: #ff7200;font-size: 30px;">{{allNum-num1<0?0:allNum-num1}}</strong> 元</p>
 						</div>
-						<div class="col col-line2" style="margin: 30px 0;">
+						<div class="col col-line2"  style="margin: 30px 0;">
 							<template>
 								<el-input-number v-model="num1" :step="100" :change="numChange()" :max="allNum" :min="100"></el-input-number>
 							</template>
 							<el-col style="margin: 10px 0;font-size: 14px;text-align: left;margin-left: 26%;">
 								预计收入: <span style="color: red;">{{(num1*0.12)|numFilter}}</span> 元</el-col>
 						</div>
-						<div class="col col-line3" style="margin: 30px 0">
+						<div class="col col-line3"  style="margin: 30px 0">
 							<el-row>
 								<el-button v-if="this.allNum < 0" type="primary" :disabled="true"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
 								<el-button v-if="this.allNum >= 0" type="primary"  @click="toubiao(num1)"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
@@ -358,6 +358,14 @@
 				console.log(response.data[0]['JIN'])
 				self.progress = response.data[0]['JIN'];
 			});
+            //判断此标是否属于自己
+            axios.post('/customer/judgeMark',{tendid:this.tendId}).then(function(response){
+
+					if(response.data==-1){
+
+						$("#el-right").html("")
+					}
+            });
 			
 
 

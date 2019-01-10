@@ -153,4 +153,12 @@
          join tb_user k on h.userid=k.userid
 		where k.userid=#{userId} and b.stuts=48 or b.stuts=5
     </select>
+
+
+	<select id="judgeMark" resultType="map">
+		select c.username from tb_tendering a
+join tb_realname b on a.realname=b.id
+join tb_user c on b.userid=c.userid
+ where a.id=#{tendid}
+	</select>
 </mapper>
