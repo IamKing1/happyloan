@@ -37,7 +37,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //添加Shiro 内置过滤器
         Map<String, String> filterMap = new LinkedHashMap<>();
-        /*filterMap.put("/UserLogin/toUserLogin", "anon");
+        filterMap.put("/UserLogin/toUserLogin", "anon");
         filterMap.put("/UserLogin/userLogin", "anon");
         filterMap.put("/css/**", "anon");
         filterMap.put("/css1/**", "anon");
@@ -47,7 +47,7 @@ public class ShiroConfig {
         filterMap.put("/js1/**", "anon");
         filterMap.put("/script/**", "anon");
         filterMap.put("/customer/**", "anon");
-        filterMap.put("/investment/toTenderingList", "authc,roles[admin]");*/
+        filterMap.put("/investment/toTenderingList", "authc,roles[admin]");
         //filterMap.put("/*/*", "authc");
         //设置未授权的页面
         shiroFilterFactoryBean.setUnauthorizedUrl("/function/noHasP");

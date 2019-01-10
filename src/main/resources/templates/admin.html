@@ -199,8 +199,8 @@
 
 						<el-menu-item shiro:hasPermission="/jump/toProductList" index="1-1"><a href="/jump/toProductList" target="iframe">角色管理</a></el-menu-item>
 						<el-menu-item shiro:hasPermission="/jump/toUserList" index="1-2"><a href="/jump/toUserList" target="iframe">部门管理</a></el-menu-item>
-						<el-menu-item shiro:hasPermission="/ysjt/advert/advertHome"  index="1-3"><a href="/ysjt/advert/advertHome" target="iframe">广告管理</a></el-menu-item>
-						<el-menu-item  shiro:hasPermission="/ysjt/systemaccount/accountflow" index="1-4"><a href="/ysjt/systemaccount/accountflow" target="iframe">平台流水</a></el-menu-item>
+						<!--<el-menu-item shiro:hasPermission="/ysjt/advert/advertHome"  index="1-3"><a href="/ysjt/advert/advertHome" target="iframe">广告管理</a></el-menu-item>
+						<el-menu-item  shiro:hasPermission="/ysjt/systemaccount/accountflow" index="1-4"><a href="/ysjt/systemaccount/accountflow" target="iframe">平台流水</a></el-menu-item>-->
 					</el-submenu>
 
 					<el-submenu index="2" shiro:hasPermission="/jump/toProductList" >
@@ -224,22 +224,22 @@
 				<el-submenu index="5" shiro:hasPermission="/jump/toProductList" >
 					<template slot="title"><i class="el-icon-setting"></i>认证管理</template>
 					<el-menu-item index="5-1" shiro:hasPermission="/auditing/toRealName" ><a href="/auditing/toRealName" target="iframe">实名认证</a></el-menu-item>
-					<el-menu-item index="5-2" shiro:hasPermission="/ysjt/backvideo/videoHome" ><a href="/ysjt/backvideo/videoHome" target="iframe">视频认证</a></el-menu-item>
-					<el-menu-item index="5-3" shiro:hasPermission="/Loan/toListLoan" ><a href="/Loan/toListLoan" target="iframe">材料认证</a></el-menu-item>
+					<!--<el-menu-item index="5-2" shiro:hasPermission="/ysjt/backvideo/videoHome" ><a href="/ysjt/backvideo/videoHome" target="iframe">视频认证</a></el-menu-item>
+					<el-menu-item index="5-3" shiro:hasPermission="/Loan/toListLoan" ><a href="/Loan/toListLoan" target="iframe">材料认证</a></el-menu-item>-->
 				</el-submenu>
 				<el-submenu index="6" shiro:hasPermission="/jump/toProductList" >
 					<template slot="title"><i class="el-icon-setting"></i>审核管理</template>
 					<el-menu-item index="6-1" shiro:hasPermission="/Loan/toListLoan" ><a href="/Loan/toListLoan" target="iframe">贷款初审</a></el-menu-item>
 					<el-menu-item index="6-2" shiro:hasPermission="/loanAuditSecond/toListLoanSec" ><a href="/loanAuditSecond/toListLoanSec" target="iframe">贷款终审</a></el-menu-item>
 					<el-menu-item index="6-3" shiro:hasPermission="/bidcon/list" ><a href="/bidcon/list" target="iframe">建标审核</a></el-menu-item>
-					<el-menu-item index="6-4" shiro:hasPermission="/investment/toTenderingList" ><a href="/investment/toTenderingList" target="iframe">满标一审</a></el-menu-item>
-					<el-menu-item index="6-5" shiro:hasPermission="/ysjt/bid/thirdBid" ><a href="/ysjt/bid/thirdBid" target="iframe">满标二审</a></el-menu-item>
+					<!--<el-menu-item index="6-4" shiro:hasPermission="/investment/toTenderingList" ><a href="/investment/toTenderingList" target="iframe">满标一审</a></el-menu-item>
+					<el-menu-item index="6-5" shiro:hasPermission="/ysjt/bid/thirdBid" ><a href="/ysjt/bid/thirdBid" target="iframe">满标二审</a></el-menu-item>-->
 					<el-menu-item index="6-6" shiro:hasPermission="/loanDis/toLoanDis" ><a href="/loanDis/toLoanDis" target="iframe">驳回列表</a></el-menu-item>
 				</el-submenu>
 					<el-submenu index="7" shiro:hasPermission="/jump/toProductList" >
 						<template slot="title"><i class="el-icon-setting"></i>权限管理</template>
 						<el-menu-item index="7-1" shiro:hasPermission="/function/AllRole" ><a href="/function/toAssignauthority" target="iframe">权限分配</a></el-menu-item>
-						<el-menu-item index="7-2" shiro:hasPermission="/function/role" ><a href="/loanAuditSecond/toListLoanSec" target="iframe">角色分配</a></el-menu-item>
+						<!--<el-menu-item index="7-2" shiro:hasPermission="/function/role" ><a href="/loanAuditSecond/toListLoanSec" target="iframe">角色分配</a></el-menu-item>-->
 						</el-submenu>
 				</el-menu>
 			</el-aside>
