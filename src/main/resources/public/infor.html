@@ -151,10 +151,7 @@
 							<el-col :span="24" >
 								<el-col :span="4" style="font-size: 16px;" :push="3">投标进度:</el-col>
 								<el-col :span="14"  :push="2">
-									<!--<template scope="scope">-->
-										<!--<el-progress :width="80" :percentage="progress"></el-progress>-->
-									<!--</template>-->
-									<el-progress :percentage="progress"></el-progress>
+									<el-progress :percentage="70" style="margin: 5px;"></el-progress>
 								</el-col>
 								
 							</el-col>
@@ -307,7 +304,6 @@
 </div>
 
 <script type="text/javascript">
-
 	let vue = new Vue({
 		el: "#app",
 		data: {
@@ -344,7 +340,7 @@
 			//在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
 			let self = this;
 			axios.post('/tendInfo/getLoanInfo',{tendid:this.tendId}).then(function(response){
-				// console.log(response.data)
+				console.log(response.data)
 				// self.allNum = response.data;
 				self.month = response.data[0].LONGTIME;
 				self.tendNum = response.data[0].MONEY;
@@ -362,6 +358,8 @@
 				console.log(response.data[0]['JIN'])
 				self.progress = response.data[0]['JIN'];
 			});
+			
+
 
 			axios.post('/tendInfo/getLoanList',{tendid:this.tendId}).then(function(response){
 				self.tableData2 = response.data.data;
@@ -422,6 +420,8 @@
                     console.log(response.data)
 
                 	if(response.data>0){
+                    console.log(response.data)
+                	
                         _self.$message({
                             message: '投资成功',
                             type: 'success'

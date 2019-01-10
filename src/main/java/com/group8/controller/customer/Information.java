@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,7 +53,7 @@ public class Information {
         Object customerName = session.getAttribute("CustomerName");
         if (customerName != null&&customerName!=""){
             Customer customer = informationService.getTelephoneByUserName(customerName.toString());
-            //System.out.println(customer.getEmail());
+            System.out.println(customer.getEmail());
             if (customer != null) {
                 map.put("customer", customer);
             } else {
@@ -202,12 +203,12 @@ public class Information {
     @RequestMapping("/addPortraitToFTP")
     public Object add2(HttpSession session,@RequestParam MultipartFile pic){
 
-       // System.out.println("----------"+pic);
+        System.out.println("----------"+pic);
         Map map = new HashMap();
         if(pic!=null&&!pic.isEmpty()){
             String s = FTPfile.upLoad(pic);
 
-            //System.out.println(s);
+            System.out.println(s);
             map.put("filePath",s);
             map.put("fileName",pic.getOriginalFilename());
         }
@@ -218,7 +219,7 @@ public class Information {
 
         }
         int i = informationService.updateHeadPortrait(map);
-       // System.out.println(i);
+        System.out.println(i);
         return "redirect:/person.html";
     }
 
@@ -298,7 +299,7 @@ public class Information {
     public Object rechargeAmount(HttpSession session,Integer money){
         Map map = new HashMap();
         int userId = loginService.getIdByName(session.getAttribute("CustomerName").toString());
-       // System.out.println(userId);
+        System.out.println(userId);
         map.put("money",money);
         map.put("userId",userId);
         int i = informationService.rechargeAmount(map);
@@ -341,7 +342,6 @@ public class Information {
 
         return i ;
     }
-
     @RequestMapping(value = "calculationMoney")
     @ResponseBody
     public Object calculationMoney(HttpSession session){
@@ -351,7 +351,6 @@ public class Information {
         Map map = informationService.calculationMoney(userId);
         return map;
     }
-
 	/**
 	 * 实名认证失败,删除原信息
 	 * @return
@@ -363,7 +362,7 @@ public class Information {
 		return i;
 	}
 	/**
-	 * 实名认证失败,删除原信息
+	 * 添加验证邮箱
 	 * @return
 	 */
 	@ResponseBody
@@ -373,6 +372,18 @@ public class Information {
 //		System.out.println("\n"+session.getAttribute("CustomerName"));
 //		System.out.println(getIdNumEmail);
 		return getIdNumEmail;
+	}
+
+	/**
+	 * 获取投资进度
+	 * @param tendid
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("getProgress")
+	public Object getProgress(@RequestBody Map tendid) {
+		System.out.println("----------tendid"+tendid);
+		return informationService.getProgress(tendid);
 	}
 
 }

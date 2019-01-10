@@ -33,6 +33,7 @@ public class InvestmentServiceImpl implements InvestmentService {
     public int remainingSum(HttpSession session,Integer money) {
         Map map = new HashMap();
         Object customerName = session.getAttribute("CustomerName");
+//        System.out.println("---------"+customerName+"--------");
         List<Map> realNameList = informationDao.getRealIdByUserName(customerName.toString());
         Integer realId = Integer.valueOf(realNameList.get(0).get("ID").toString());
         map.put("realId",realId);

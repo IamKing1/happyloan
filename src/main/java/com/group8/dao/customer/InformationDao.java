@@ -166,6 +166,13 @@ public interface InformationDao {
     Integer getAccumulatedIncome(Integer userId);
 
     /**
+     * 获取投资进度
+     * @param tendid
+     * @return
+     */
+    List<Map> getProgress(Map tendid);
+
+    /**
      * 投资中金额，投资的项目还在招标中
      * @param userId
      * @return

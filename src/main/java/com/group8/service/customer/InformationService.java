@@ -128,4 +128,10 @@ public interface InformationService {
      * @return
      */
     Map calculationMoney(Integer userId);
+    /**
+     * 获取投资进度
+     * @param tendid
+     * @return
+     */
+    List<Map> getProgress(Map tendid);
 }

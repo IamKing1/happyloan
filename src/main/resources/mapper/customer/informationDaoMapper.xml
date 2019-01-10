@@ -97,41 +97,54 @@
 		WHERE
 			a.username=#{username}
 	</select>
-<select id="deleteRealNameIsNo" resultType="Integer">
+	<select id="deleteRealNameIsNo" resultType="Integer">
       DELETE from tb_realname where userid=#{userId}
 </select>
 
-    <update id="updateNickName">
+	<update id="updateNickName">
         update tb_user set  nickname=#{nickName} where userid= #{userId}
     </update>
 
-    <select id="getPrincipalAndInterestToBeCollected" resultType="Integer">
+	<select id="getPrincipalAndInterestToBeCollected" resultType="Integer">
        select sum(a.money*(d.item*0.01)+a.money) principalAndInteres from tb_investmentlist a
-join  tb_tendering b on a.tendid=b.id
-join tb_loanrecord c on b.id=c.tendid
-join tb_systemcategoryitem d on c.longtime=d.id
+		join  tb_tendering b on a.tendid=b.id
+		join tb_loanrecord c on b.id=c.tendid
+		join tb_systemcategoryitem d on c.longtime=d.id
 
+		join tb_realname e on a.realid=e.id
+		join tb_user f on e.userid=f.userid
+		 where f.userid=#{userId} and c.stuts=1
 join tb_realname e on a.realid=e.id
 join tb_user f on e.userid=f.userid
  where f.userid=#{userId} and /*c.stuts=1*/ c.state=1
     </select>
 
 
-    <select id="getBalanceByUserId" resultType="Integer">
+	<select id="getBalanceByUserId" resultType="Integer">
         select b.balance from tb_user a
-join tb_realname b on a.userid=b.userid where a.userid=#{userId}
+	join tb_realname b on a.userid=b.userid where a.userid=#{userId}
     </select>
 
-    <select id="getAccumulatedIncome" resultType="Integer">
- select sum(a.money*(d.item*0.01)) accumulatedIncome from tb_investmentlist a
-join  tb_tendering b on a.tendid=b.id
-join tb_loanrecord c on b.id=c.tendid
-join tb_systemcategoryitem d on c.longtime=d.id
+	<select id="getAccumulatedIncome" resultType="Integer">
+		 select sum(a.money*(d.item*0.01)) accumulatedIncome from tb_investmentlist a
+		join  tb_tendering b on a.tendid=b.id
+		join tb_loanrecord c on b.id=c.tendid
+		join tb_systemcategoryitem d on c.longtime=d.id
 
-join tb_realname e on a.realid=e.id
-join tb_user f on e.userid=f.userid
- where f.userid=#{userId} and c.stuts=3
+		join tb_realname e on a.realid=e.id
+		join tb_user f on e.userid=f.userid
+		 where f.userid=#{userId} and c.stuts=3
     </select>
+	<select id="getProgress" resultType="map">
+
+		select NVL((select round((select sum(money) from TB_INVESTMENTLIST where TENDID=d.id)/(select money from TB_BORROW
+		where id=a.id)*100,1) from dual),0) jin
+		from TB_BORROW a
+		join TB_REALNAME b on a.REALID=b.id
+		join TB_TENDERING d on a.id=d.borrow
+		where d.id=#{tendid}
+
+	</select>
 
     <select id="getAmountInInvestment" resultType="Integer">
  select a.money,g.state,k.userid

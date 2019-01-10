@@ -212,4 +212,9 @@ public class InformationServiceImpl implements InformationService {
         map.put("amountInInvestment",amountInInvestment);
         return map;
     }
+
+    @Override
+    public  List<Map> getProgress(Map tendid) {
+        return informationDao.getProgress(tendid);
+    }
 }
