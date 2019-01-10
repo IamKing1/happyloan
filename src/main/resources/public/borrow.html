@@ -267,36 +267,6 @@
 					.bor_det_one .bor_onel_ul li{
 						margin: 10px 30px;
 					}
-					/*.bor_det_one .bor_onel_ul li:nth-child(1):before{
-						content: '1';
-						background: #05B5E6;
-						color: #fff;
-						text-align: center;
-						line-height: 23px;
-						display: inline-block;
-						width: 23px;
-						border-radius: 23px;
-					}
-					.bor_det_one .bor_onel_ul li:nth-child(2):before{
-						content: '2';
-						background: #05B5E6;
-						color: #fff;
-						text-align: center;
-						line-height: 23px;
-						display: inline-block;
-						width: 23px;
-						border-radius: 23px;
-					}
-					.bor_det_one .bor_onel_ul li:nth-child(3):before{
-						content: '3';
-						background: #05B5E6;
-						color: #fff;
-						text-align: center;
-						line-height: 23px;
-						display: inline-block;
-						width: 23px;
-						border-radius: 23px;
-					}*/
 					.acc-type{
 						width: 300px;
 						margin: 0 auto;
@@ -350,7 +320,7 @@
 						
 						</style>
 
-						<form id="myLoan" class="form">
+						<form id="myLoan" class="form" action="/customer/toLoan">
 						
 						</form>
 						
@@ -360,6 +330,12 @@
 								demo.ajaxPost(false,false,'/customer/toLoan')
 								
 							});
+							/*$(document).on("click","#submitBtn",function(){
+								
+								demo.ajaxPost();
+								return false;
+							});*/
+							
 						</script>
 						<script>
 							/*function tijiao() {
