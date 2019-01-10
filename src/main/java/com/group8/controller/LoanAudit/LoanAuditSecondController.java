@@ -57,7 +57,7 @@ public class LoanAuditSecondController {
     public Object update(@RequestBody Map map, HttpSession session){
         Object userName = session.getAttribute("userName");
         map.put("adminId", userName.toString());
-        System.out.println(map);
+       // System.out.println(map);
         return loanAuditSecondService.update(map);
     }
 
