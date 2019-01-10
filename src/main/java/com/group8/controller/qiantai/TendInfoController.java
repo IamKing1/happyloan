@@ -88,7 +88,7 @@ public class TendInfoController {
 		System.out.println("剩余投资的数目为："+integer);
 		//查询总钱数
 		Integer moneyByTendId = investmentService.getMoneyByTendId(tendid);
-		System.out.println("剩余投资的数目为："+moneyByTendId*0.05);
+		System.out.println("借钱金额为："+moneyByTendId);
 		if(integer<(moneyByTendId*0.05)){
 			investmentService.updateTendStuts(tendid);
 		}

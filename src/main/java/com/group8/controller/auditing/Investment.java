@@ -51,22 +51,26 @@ public class Investment {
 
     /**
      * 查询本标剩余投资数目
-     * @param tendingId
+     * @param tendid
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "currentlyVoted")
-    public Object currentlyVoted(Integer tendingId){
+    public Object currentlyVoted(@RequestBody Integer tendid){
 
 
-        Integer integer = investmentService.currentlyVoted(tendingId);
+        Integer integer = investmentService.currentlyVoted(tendid);
+
         //查询总钱数
-        Integer moneyByTendId = investmentService.getMoneyByTendId(tendingId);
+        Integer moneyByTendId = investmentService.getMoneyByTendId(tendid);
+
        // System.out.println("---------------------"+moneyByTendId);
         if(integer<moneyByTendId*0.05){
-            investmentService.updateTendStuts(tendingId);
+            System.out.println("生效了~！！！！！！！！！！！！！！！！！！！！！");
+            investmentService.updateTendStuts(tendid);
+            return 1;
         }
-        return integer;
+        return -1;
     }
 
     /**
