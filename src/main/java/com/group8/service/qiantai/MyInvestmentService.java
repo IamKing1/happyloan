@@ -16,4 +16,21 @@ public interface MyInvestmentService {
      * @return
      */
     List<Map> getListInvestment(Map map);
+    /**
+     * 分页总数量
+     * @param map
+     * @return
+     */
+    int getPageCount(Map map);
+    /**
+     * 获取累计投资金额和应收益金额
+     * @return
+     */
+    List<Map> getDetails(Map map);
+    /**
+     * 用户前台对投资记录的删除操作
+     * @param map
+     * @return
+     */
+    int update(Map map);
 }

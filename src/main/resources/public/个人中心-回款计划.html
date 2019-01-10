@@ -18,6 +18,11 @@
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <!-- 引入组件库 -->
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+    .el-dialog{
+      width: 14%;
+    }
+  </style>
 </head>
 <body>
 <header id="thead">
@@ -52,18 +57,21 @@
               <el-table-column
                       prop="MONEY"
                       label="贷款金额(元)"
-                      width="220">
+                      width="220"
+                      align="center">
               </el-table-column>
               <el-table-column
                       prop="LONGTIME"
                       label="贷款时长（月）"
-                      width="220">
+                      width="220"
+                      align="center">
               </el-table-column>
 
               <el-table-column
                       prop="STATUS"
                       label="审核状态"
-                      width="120">
+                      width="120"
+                      align="center">
                 <template slot-scope="scope">
                   <el-tag class="btn btn-success">{{scope.row.STATUS | formatStata}}</el-tag>
                 </template>
@@ -80,45 +88,52 @@
             <el-table-column
                     prop="MONEY"
                     label="贷款金额(元)"
-                    width="120">
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="LONGTIME"
                     label="贷款时长(月)"
-                    width="120">
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="MO"
                     label="应还贷款(元)"
-                    width="120">-
+                    width="120"
+                    align="center">
             </el-table-column>
 
             <el-table-column
                     prop="DUEDATE"
                     label="截止日期"
-                    width="150">
+                    width="150"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="STUTS"
                     label="还款状态"
-                    width="140">
+                    width="140"
+                    align="center">
               <template slot-scope="scope">
-                <el-tag class="btn btn-success">{{scope.row.STUTS | formatStata2}}</el-tag>
+                <el-col class="btn btn-success">{{scope.row.STUTS | formatStata2}}</el-col>
               </template>
             </el-table-column>
-             <el-table-column label="操作">
+             <el-table-column
+                     label="操作"
+                    align="center">
                <template scope="scope">
                  <el-button :plain="true" type="success" v-if="scope.row.STUTS!=3" size="small" icon="edit" @click="editClick(scope.row)">还款</el-button>
-                 <el-button :plain="true" type="success" v-if="scope.row.STUTS==3" size="small" icon="edit" @click="editClick(scope.row)">查看</el-button>
+                 <el-button :plain="true" disabled="true" type="success" v-if="scope.row.STUTS==3" size="small" icon="edit" @click="editClick(scope.row)">已还</el-button>
                </template>
              </el-table-column>
           </el-table>
           <!--编辑界面-->
           <el-dialog title="你确定要还款吗" :visible.sync="editFormVisible" :close-on-click-modal="false">
-            <el-form :model="editForm"  label-width="350px" :rules="editFormRules" ref="editForm" hide-required-asterisk="false"></el-form>
+            <el-form :model="editForm"  label-width="100px" :rules="editFormRules" ref="editForm" hide-required-asterisk="false"></el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click.native="editFormVisible = false">取消</el-button>
-              <el-button type="primary" @click.native="editSubmit('editForm')" :loading="editLoading">提交</el-button>
+              <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
             </div>
           </el-dialog>
         </el-tab-pane>

@@ -203,12 +203,12 @@ public class Information {
     @RequestMapping("/addPortraitToFTP")
     public Object add2(HttpSession session,@RequestParam MultipartFile pic){
 
-//        System.out.println("----------"+pic);
+        System.out.println("----------"+pic);
         Map map = new HashMap();
         if(pic!=null&&!pic.isEmpty()){
             String s = FTPfile.upLoad(pic);
 
-//            System.out.println(s);
+            System.out.println(s);
             map.put("filePath",s);
             map.put("fileName",pic.getOriginalFilename());
         }
@@ -219,7 +219,7 @@ public class Information {
 
         }
         int i = informationService.updateHeadPortrait(map);
-//        System.out.println(i);
+        System.out.println(i);
         return "redirect:/person.html";
     }
 
@@ -299,7 +299,7 @@ public class Information {
     public Object rechargeAmount(HttpSession session,Integer money){
         Map map = new HashMap();
         int userId = loginService.getIdByName(session.getAttribute("CustomerName").toString());
-//        System.out.println(userId);
+        System.out.println(userId);
         map.put("money",money);
         map.put("userId",userId);
         int i = informationService.rechargeAmount(map);
@@ -346,7 +346,6 @@ public class Information {
     @ResponseBody
     public Object calculationMoney(HttpSession session){
         String  customerName = (String)session.getAttribute("CustomerName");
-
         int userId = loginService.getIdByName(customerName);
         //待收本息
         Map map = informationService.calculationMoney(userId);

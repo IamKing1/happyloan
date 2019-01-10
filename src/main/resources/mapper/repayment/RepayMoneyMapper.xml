@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.group8.dao.repayment.RepayMoneyDao">
     <select id="deductMoney" parameterType="map" statementType="CALLABLE" resultType="java.lang.Integer">
-        call pro_batch_huankuan1(#{MO,mode=IN},#{REALID,mode=IN},#{TENDID,mode=IN},#{mse1,mode=OUT,jdbcType=INTEGER})
+        call pro_batch_huankuan1(#{MO,mode=IN},#{REALID,mode=IN},#{TENDID,mode=IN},#{mse,mode=OUT,jdbcType=INTEGER})
     </select>
 
 
@@ -40,4 +40,21 @@ join tb_systemcategoryitem b on a.longtime=b.id
     <update id="updateLoanState">
         update tb_loanrecord set state=2 where tendid =#{tendId}
     </update>
+
+    <select id="getBeOverdueList" resultType="map">
+        select a.tendid from tb_loanrecord a
+        join tb_systemcategoryitem b on a.longtime=b.id
+        where  add_months(trunc(a.begintime),b.item) &lt;= trunc(sysdate-1) and a.stuts=1
+    </select>
+    
+    <update id="updateStutsToTwo" parameterType="map" >
+        update tb_loanrecord set stuts = 2 where tendid=#{TENDID}
+    </update>
+    
+    <select id="getRealMoneyByTendId" resultType="map">
+        select a.realid,((b.item/12)*0.20*a.money+a.money) mo from tb_loanrecord a
+				join tb_systemcategoryitem b on a.longtime=b.id
+				 where a.tendid=#{tendId}
+
+    </select>
 </mapper>

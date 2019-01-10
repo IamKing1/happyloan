@@ -44,7 +44,18 @@ public class MyLoanServiceImpl implements MyLoanService {
         map.put("realId",realIdByUserName.get(0).get("ID"));
 
 
-        return myLoanDao.getIssused(map);
+        List<Map> issused = myLoanDao.getIssused(map);
+        if(issused!=null&&issused.size()>0) {
+            for (Map map1 : issused) {
+                //查询出预期的项目
+             if(Integer.valueOf(map1.get("STUTS").toString()).equals(2)){
+                    //计算出逾期这段时间应还的金额
+                 int yuqi = myLoanDao.getYuQiMoney(Integer.valueOf(map1.get("TENDID").toString()));
+                map1.put("MO", Integer.valueOf(map1.get("MO").toString())+yuqi);
+             }
+            }
+        }
+        return issused;
     }
 
     @Override

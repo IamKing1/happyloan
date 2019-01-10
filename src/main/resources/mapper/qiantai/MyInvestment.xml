@@ -3,7 +3,47 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.group8.dao.qiantai.MyInvestment">
+    <!--投资记录-->
     <select id="getListInvestment" resultType="map">
+        select * from(
+        select rownum rn,to_char(a.begintime,'yyyy/MM/dd') begintime,a.id,a.money,(a.money*0.01*d.item) shouyi,a.readstate,c.housingquantity,e.item purpose,f.realname,f.sex,nvl(g.state,0) state,h.userid,k.username
+        from tb_investmentlist a
+        join tb_tendering b on a.tendid=b.id
+        left join tb_borrow c on b.borrow=c.id
+        join tb_systemcategoryitem d on c.longtime=d.id
+        join tb_systemcategoryitem e on c.purpose=e.id
+        join TB_REALNAME f on c.REALID=f.id
+        left join tb_loanrecord g on g.tendid=b.id
+        left join TB_REALNAME h on a.REALID=h.id
+        join tb_user k on h.userid=k.userid
+        where rownum &lt;#{end} and k.username=#{username} and a.readstate=1
+        ) i
+        where i.rn &gt;#{start}
 
     </select>
+    <!--分页-->
+    <select id="getPageCount" resultType="int">
+        select count(*) from tb_investmentlist a
+        left join tb_realname b on a.realid=b.id
+        join tb_user c on b.userid=c.userid
+        where c.username=#{username} and a.readstate=1
+    </select>
+
+    <!--累计投资和收益-->
+    <select id="getDetails" resultType="map">
+           select sum(a.money) leiji,(sum(a.money*0.01*d.item)) income
+        from tb_investmentlist a
+        join tb_tendering b on a.tendid=b.id
+        left join tb_borrow c on b.borrow=c.id
+        join tb_systemcategoryitem d on c.longtime=d.id
+        join TB_REALNAME f on c.REALID=f.id
+        left join tb_loanrecord g on g.tendid=b.id
+        left join TB_REALNAME h on a.REALID=h.id
+        join tb_user k on h.userid=k.userid
+        where k.username=#{username}
+    </select>
+        <!--用户进行的删除操作-->
+    <update id="update" parameterType="map">
+        update tb_investmentlist set READSTATE=2 where id=#{ID}
+    </update>
 </mapper>

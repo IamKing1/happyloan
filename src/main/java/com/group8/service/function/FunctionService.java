@@ -1,6 +1,8 @@
 package com.group8.service.function;
 
+import com.group8.entity.Permission;
 import com.group8.entity.Role;
+import com.group8.entity.TreePermission;
 
 import java.util.List;
 import java.util.Map;
@@ -35,4 +37,17 @@ public interface FunctionService {
      * @return
      */
     Integer getAllRoleCount(Map map);
+    /**\
+     * 得到所有的权限
+     * @return
+     */
+    List<TreePermission> getAllPermission();
+
+
+    /**
+     * 赋予新的权限
+     * @param map
+     * @return
+     */
+    Integer saveNewPermission(Map map);
 }

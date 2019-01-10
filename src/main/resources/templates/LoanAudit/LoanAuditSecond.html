@@ -41,12 +41,14 @@
             <el-table-column
                     prop="REALNAME"
                     label="姓名"
-                    width="100">
+                    width="100"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="SEX"
                     label="性别"
-                    width="100">
+                    width="100"
+                    align="center">
                 <template slot-scope="scope">
                     <el-col>{{scope.row.SEX | formatStata1}}</el-col>
                 </template>
@@ -54,59 +56,70 @@
             <el-table-column
                     prop="MARRIAGE"
                     label="婚姻状况"
-                    width="120">
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="IDNUMBER"
                     label="身份证号"
-                    width="180">
+                    width="200"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="TELEPHONE"
                     label="联系方式"
-                    width="120">
+                    width="150"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="ACADEMIC"
                     label="学历"
-                    width="100">
+                    width="100"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="INCOME"
                     label="收入（元）"
-                    width="100">
+                    width="130"
+                    align="center">
             </el-table-column>
 
             <el-table-column
                     prop="MONEY"
                     label="借款金额（元）"
-                    width="120">
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="LONGTIME"
-                    label="借款时长"
-                    width="120">
+                    label="借款时长(/月)"
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="FIRSTINCNAME"
                     label="初审人"
-                    width="90">
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="FIRSTINCTIME"
                     label="初审时间"
-                    width="120">
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="STATUS"
                     label="二审状态"
-                    width="100">
+                    width="100"
+                    align="center">
                 <template slot-scope="scope">
                     <el-tag class="btn btn-info">{{scope.row.STATUS | formatStata}}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column
-                    label="操作">
+                    label="操作"
+                    align="center">
                 <template scope="scope">
                     <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">审核</el-button>
                 </template>

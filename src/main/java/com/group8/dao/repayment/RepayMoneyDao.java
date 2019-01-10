@@ -57,10 +57,30 @@ public interface RepayMoneyDao {
 
     /**
      * 回款 已还款更改状态
-     * @param tendId
+     * @param map
      * @return
      */
     int updateLoanState(Map map);
 
+    /**
+     * 查询出预期的借款信息
+     * @param
+     * @return
+     */
+    List<Map> getBeOverdueList();
+
+    /**
+     * 查询出预期的交易 更改他的状态
+     * @param map
+     * @return
+     */
+    int updateStutsToTwo(Map map);
+
+    /**
+     * 根据tendid查询信息
+     * @param tendId
+     * @return
+     */
+    List<Map> getRealMoneyByTendId(Integer tendId);
 
 }

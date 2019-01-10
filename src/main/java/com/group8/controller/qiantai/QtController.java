@@ -27,18 +27,12 @@ public class QtController {
 
     @ResponseBody
     @RequestMapping("/getList")
-    public Object getListEmp(@RequestBody Map map, HttpSession session){
+    public Object getListEmp(@RequestBody Map map){
         Map map1=new HashMap();
-        Object customerName = session.getAttribute("CustomerName");
 
         map1.put("data",qtService.getList(map));
         map1.put("total",qtService.getPageCount(map));
 
-        if(customerName!=null){
-            map1.put("login",1);
-        }else{
-            map1.put("login",2);
-        }
         return map1;
     }
 }
