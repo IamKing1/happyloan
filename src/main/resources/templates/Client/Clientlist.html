@@ -46,12 +46,14 @@
             <el-table-column
                     prop="REALNAME"
                     label="姓名"
-                    width="120">
+                    width="120"
+                     align="center">
             </el-table-column>
             <el-table-column
                     prop="SEX"
                     label="性别"
-                    width="100">
+                    width="100"
+                    align="center">
                 <template slot-scope="scope">
                     <el-col>{{scope.row.SEX | formatStata1}}</el-col>
                 </template>
@@ -59,42 +61,50 @@
             <el-table-column
                     prop="ADDRESS"
                     label="住址"
-                    width="280">
+                    width="340"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="IDNUMBER"
                     label="身份证号"
-                    width="210">
+                    width="210"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="USERNAME"
                     label="用户名"
-                    width="130">
+                    width="130"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="TELEPHONE"
                     label="联系方式"
-                    width="130">
+                    width="130"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="ACADEMIC"
                     label="学历"
-                    width="120">
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="INCOME"
                     label="月收入(元)"
-                    width="120">
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="MARRIAGE"
                     label="婚姻状况"
-                    width="120">
+                    width="120"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="STATE"
                     label="状态"
-                    width="120">
+                    width="120"
+                    align="center">
                 <template slot-scope="scope">
                     <el-tag class="btn btn-success">{{scope.row.STATE | formatStata}}</el-tag>
                 </template>

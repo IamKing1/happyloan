@@ -62,10 +62,12 @@
                 <td th:text="${bid.BID_END_TIME}"></td>
                 <td th:text="${bid.USERID}"></td>
                 <td >
-                    <button type="button" class="xgbtn" data-toggle="modal" id="changeMeth" data-target="#myModala" style="color: #fff;">确认
+                    <button type="button" class="btn btn-warning" id="changeMeths"  data-toggle="modal"  data-target="#myModala" >驳回
+                        <input type="hidden" th:value="${bid.BRRID}">
+                    </button>
+                    <button type="button" class="xgbtn" id="changeMeth" style="color: #fff;"><input type="hidden" th:value="${bid.BID_ID}">确认
                         <input type="hidden" th:value="${bid.BID_ID}">
                     </button>
-                    <!--<button type="button" class="btn btn-danger" id="dele"><input type="hidden" th:value="${bid.BID_ID}">删除</button>-->
                 </td>
             </tr>
             <tr>
@@ -75,8 +77,118 @@
         </table>
     </center>
 </div>
+
+
+<!--添加-->
+<div class="modalbox">
+    <div class="modal fade" id="myModala" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">驳回</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="aaaaaaa">
+
+                    <center>
+                        <table class="tableLeft">
+                            <p style="font-size: 15px">驳回理由：</p>
+                            <textarea class="form-control" rows="3" name="REASONS" id="textarea" placeholder="请输入驳回理由"></textarea>
+                            <td class="words">负责人：</td>
+                            <td>
+
+                                <input name="USERID" class="form-control" id="userx" th:value="${session.sessionValue.getAttribute('userName')}"
+                                       required="true" disabled="disabled">
+                            </td>
+                        </table>
+
+                    </center>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="xgtjbtn">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 </body>
 <script>
+    $(document).on("click", "#changeMeths", function () {
+        var aa = $(this).children("input[type='hidden']").val()
+        $("#aaaaaaa").val(aa)
+    })
+
+    /*
+* 添加方法传值
+* */
+    $(document).on("click", "#xgtjbtn", function () {
+        var gaina= {BID_ID:$("#aaaaaaa").val(),REASONS:$("#textarea").val(),USERID:$("#userx").val()}
+
+        var rea=$("#textarea").val();
+        if(rea.length>0){
+            $.ajax({
+                url : "/bidcon/add",
+                type:"POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(gaina),
+
+                success:function (data) {
+                    if (data>0){
+                        location.href="/bidcon/list"
+
+                        alert("驳回成功")
+                    }else {
+                        alert("驳回失败")
+                        location.href="/bidcon/list"
+                    }
+                },error:function () {
+                    console.log("error")
+                }
+            })
+        }else {
+            alert("驳回失败")
+        }
+
+    })
+    /**
+     *
+     */
+    $(document).on("click", "#xgtjbtn", function () {
+        var gaina ={BID_ID:$("#aaaaaaa").val()}
+        $.ajax({
+            url : "/bidcon/updateb",
+            type:"POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(gaina),
+            success:function (data) {
+            },error:function () {
+                console.log("error")
+            }
+        })
+    })
+    $(document).on("click", "#xgtjbtn", function () {
+        var gaina ={BID_ID:$("#aaaaaaa").val()}
+        $.ajax({
+            url : "/bidcon/updaterr",
+            type:"POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(gaina),
+            success:function (data) {
+            },error:function () {
+                console.log("error")
+            }
+        })
+    })
     /*
     * 修改方法传值
     * */

@@ -146,8 +146,6 @@
 				data: {'email': $(email).val()},
 				url: "tendInfo/updateEmail", //发送请求地址
 				success: function (data) {
-					// alert("aaaaa")
-					// $(".personal-level i.grzxbg").css("background-position", "0px -550px")
 					history.go(0)
 
 				},
@@ -161,10 +159,10 @@
 				type: "post",
 				url: "customer/getIdNumEmail",
 				success: function (data) {
-					console.log(data)
+					/*console.log(data)
 					console.log(data[0]['AUDITORID'])
 					console.log(data[0]['EMAIL'])
-					console.log(data[0]['IDNUMBER'])
+					console.log(data[0]['IDNUMBER'])*/
 					if (data[0]['EMAIL'] != null && data[0]['EMAIL'] != null && data[0]['EMAIL'] != undefined) {
 						if (data[0]['AUDITORID'] == 21 || data[0]['AUDITORID'] == 22  || data[0]['AUDITORID'] == undefined) {
 							$(".personal-level i.grzxbg").css("background-position","0px -550px")
@@ -182,9 +180,6 @@
 							$(".personal-level span.state").html('[中]')
 						}
 					}
-					/*$(".personal-level i.grzxbg").css("background-position","0px -550px")
-                    history.go(0)*/
-                    // #2D364C
 				},
 				error() {
 					console.log("获取认证进度方法出错")
@@ -234,8 +229,8 @@
 					</li>
 					
 					
-					<li><span id="email1"></span> <span class="zhsz-span1">电子邮箱</span><span id="email2"
-					                                                                        class="zhsz-span2"></span>
+					<li><span id="email1"></span> <span class="zhsz-span1">电子邮箱</span>
+						<span id="email2" class="zhsz-span2"></span>
 						<span class="zhsz-span3"><span id="email3"></span>  </span>
 					</li>
 					
@@ -255,7 +250,6 @@
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		     aria-hidden="true">
 			<div class="modal-dialog" role="document">
-				<!--<form class="registerform" action="tendInfo/updateEmail">-->
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">请添加邮箱</h5>
@@ -278,26 +272,16 @@
 					</div>
 				
 				</div>
-				<!--</form>-->
 			</div>
 		</div>
 		<script>
 			$(function () {
 				let aa = document.getElementById("telephone1")
-				// console.log($("#telephone1").children())
-				/*if($("#telephone1>i").hasClass("p-right")){
-					console.log(1111)
-					console.dir($("#telephone1>i"))
-				}else{
-					console.log("else")
-					console.dir($("#telephone1>i"))
-				}*/
 				$(document).on("load", function () {
 
 					console.log($("#telephone1"))
 
 				})
-				// console.log(aa)
 			})
 		
 		</script>

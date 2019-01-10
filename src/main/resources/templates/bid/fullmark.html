@@ -12,7 +12,9 @@
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <style>
-
+        .el-dialog{
+            width: 17%;
+        }
     </style>
 </head>
 <body>
@@ -25,41 +27,50 @@
                 :data="tableData"
                 v-loading.body="loading"
                 border
-                @selection-change="selectionChange"
+
                 style="width: 100%">
-            <el-table-column label="序号" type="index" show-overflow-tooltip width="50">
+            <el-table-column label="序号" type="index" show-overflow-tooltip width="50"  align="center">
             </el-table-column>
             <el-table-column
                     prop="REALNAME"
                     label="姓名"
-                    width="90">
+                    width="90"
+                    align="center">
             </el-table-column>
 
 
             <el-table-column
                     prop="MONEY"
-                    label="贷款金额"
-                    width="100">
+                    label="贷款金额(/元)"
+                    width="140"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="hasMoney"
-                    label="当前已投金额"
-                    width="100">
+                    label="当前已投金额(/元)"
+                    width="150"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="BEGINTIME"
                     label="开始时间"
-                    width="250">
+                    width="250"
+                    align="center">
             </el-table-column>
             <el-table-column
-                    prop="BID_END_TIME"
+                    prop="ENDTIME"
                     label="结束时间"
-                    width="250">
+                    width="250"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="STUTS"
                     label="状态"
-                    width="100">
+                    width="100"
+                    align="center">
+                <template slot-scope="scope">
+                    <el-col>{{scope.row.STUTS | formatStata}}</el-col>
+                </template>
             </el-table-column>
 
             <el-table-column
@@ -110,7 +121,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: '满标一审'
+            message: '满标管理'
         }
     });
 
@@ -156,6 +167,13 @@
                 self.total = response.data.total;
                 self.tableData = response.data.data;
             })
+        },
+        filters: { // el-tag类型转换
+            // 状态显示转换
+            formatStata: function (status) {
+                const statusMap = {2: '符合满标'}
+                return statusMap[status]
+            },
         },
         methods: {
             //表格重新加载数据

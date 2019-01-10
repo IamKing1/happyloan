@@ -175,7 +175,7 @@ public class InformationServiceImpl implements InformationService {
 
         map.put("userId",userId);
         map.put("nickName",nickName);
-        System.out.println(map);
+        //System.out.println(map);
 
         int i = informationDao.updateNickName(map);
 

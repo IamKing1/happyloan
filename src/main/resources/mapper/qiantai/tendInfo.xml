@@ -24,9 +24,10 @@ from TB_BORROW a
 	<!--获取借款金额,期数-->
 	<select id="getLoanInfo" resultType="map">
 
-	select b.item longtime,a.money from TB_BORROW a
+	select b.item longtime,a.money,d.item purpose from TB_BORROW a
 	join TB_SYSTEMCATEGORYITEM b on a.LONGTIME=b.id
 	join tb_tendering c on c.borrow=a.id
+	join TB_SYSTEMCATEGORYITEM d on a.PURPOSE=d.id
 	where c.id=#{tendid}
 	</select>
 

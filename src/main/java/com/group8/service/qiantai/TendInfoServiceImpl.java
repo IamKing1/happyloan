@@ -1,5 +1,6 @@
 package com.group8.service.qiantai;
 
+import com.group8.dao.qiantai.QtDao;
 import com.group8.dao.qiantai.TendInfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class TendInfoServiceImpl implements TendInfoService {
     public List<Map> getLoanList(Map tendid) {
 
         List<Map> loanList = tendInfoDao.getLoanList(tendid);
-        System.out.println("--------------------"+loanList);
+        //System.out.println("--------------------"+loanList);
 
         return loanList;
     }
