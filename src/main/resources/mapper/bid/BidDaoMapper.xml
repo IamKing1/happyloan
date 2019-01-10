@@ -7,7 +7,7 @@
     <select id="getPage" resultType="map">
         select * from (
         select rownum rn,t.* from (
-        select a.id bid_id,a.bid_money,to_char(a.BEGINTIME,'yyyy-MM-dd') bid_creation_time,
+        select a.id bid_id,a.bid_money,a.borrow BRRID,to_char(a.BEGINTIME,'yyyy-MM-dd') bid_creation_time,
         a.bid_minimum,d.item state,c.item cdate,to_char(a.BID_END_TIME,'yyyy-MM-dd') bid_end_time,
         a.userid,c.id
         from tb_tendering a
@@ -49,5 +49,28 @@
     <update id="update" parameterType="map">
         update tb_tendering set stuts=48 where ID=#{BID_ID}
     </update>
+    <insert id="add" parameterType="map">
+        insert into TB_REFUSA(ID,CREATION_TIME,BID_ID,REASONS,USERS) values(SEQ_TBREFUSA_ID.Nextval,trunc(sysdate),#{BID_ID},#{REASONS},#{USERID})
+    </insert>
+    <update id="updateb" parameterType="map">
+        update tb_tendering set stuts=22 where BORROW=#{BID_ID}
+    </update>
 
+
+    <update id="updaterr" parameterType="map">
+        update (
+        select g.id borrow,b.item housed,a.id realid,g.id brrid,g.release,g.MONEY,h.item LONGTIME,g.longtime BID_AMORTIZE,i.item REPAYMENTMETHOD,j.item PURPOSE,g.HOUSINGQUANTITY,g.TOTALPRICE,g.REMARK,to_char(a.AUDITTIME,'yyyy-MM-dd') as AUDITTIME,a.AUDITREMARKS,a.id,a.realname,a.address,to_char(a.applicationtime,'yyyy-MM-dd') applicationtime,a.idnumber,a.sex,a.positive,f.item auditorid,a.opposite,b.item housed,c.item academic,d.item marriage,e.item income
+        from tb_realname a
+        left join tb_systemcategoryitem b on a.housed=b.id
+        left join tb_systemcategoryitem c on a.academic=c.id
+        left join tb_systemcategoryitem d on a.marriage=d.id
+        left join tb_systemcategoryitem e on a.income=e.id
+        left join tb_systemcategoryitem f on a.auditorid=f.id
+        left join tb_borrow g on g.realid=a.id
+        left join tb_systemcategoryitem h on g.LONGTIME=h.id
+        left join tb_systemcategoryitem i on g.REPAYMENTMETHOD=i.id
+        left join tb_systemcategoryitem j on g.PURPOSE=j.id
+        where g.STATUS=23 and g.release = 2
+        ) set RELEASE=1 where BRRID=#{BID_ID}
+    </update>
 </mapper>

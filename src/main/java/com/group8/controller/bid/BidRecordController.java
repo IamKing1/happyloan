@@ -59,7 +59,6 @@ public class BidRecordController {
     @ResponseBody
     @RequestMapping("/add")
     public Object add(@RequestBody Map map){
-        System.out.println("11111111111111111"+map);
         int i = bidRecordService.add(map);
         return i;
     }

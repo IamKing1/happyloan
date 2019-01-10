@@ -54,5 +54,20 @@ public class BidServiceImpl implements BidService {
         return bidDao.update(map);
     }
 
+    @Override
+    public int add(Map map) {
+        return bidDao.add(map);
+    }
+
+    @Override
+    public int updateb(Map map) {
+        return bidDao.updateb(map);
+    }
+
+    @Override
+    public int updaterr(Map map) {
+        return bidDao.updaterr(map);
+    }
+
 
 }
