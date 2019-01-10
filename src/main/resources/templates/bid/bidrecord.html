@@ -30,7 +30,7 @@
                 <td>操作 </td>
             </tr>
             <tr th:each="bid : ${bidList}">
-                <td th:text="${bid.ID}"></td>
+                <td th:text="${bid.BRRID}"></td>
                 <td th:text="${bid.REALNAME}"></td>
                 <td th:text="${bid.SEX}"></td>
                 <td th:text="${bid.ADDRESS}"></td>
@@ -43,7 +43,7 @@
                 <td th:text="${bid.AUDITTIME}"></td>
                 <td >
                     <button type="button" class="xgbtn" data-toggle="modal" id="changeMeth" data-target="#myModala" style="color: #fff;">建标
-                        <input type="hidden" th:value="${bid.ID}">
+                        <input type="hidden" th:value="${bid.BRRID}">
                     </button>
                 </td>
             </tr>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="xgtjbtn">提交</button>
+                    <button type="submit" class="btn btn-primary" id="xgtjbtn">提交</button>
                 </div>
             </div>
         </div>
@@ -164,32 +164,42 @@
     * */
     $(document).on("click", "#xgtjbtn", function () {
         var gaina= {BID_MONEY:$("#bulka").val(),BID_MINIMUM: $("#loada").val(),BID_AMORTIZE:$("#option").val(),BID_END_TIME:$("#endtime").val(),USERID:$("#userx").val(),BID_ID:$("#aaaaaaa").val(),REALID:$("#REALID").val(),BRRID:$("#brr").val()}
-        console.log(gaina)
-        $.ajax({
-            url : "/record/add",
-            type:"POST",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(gaina),
 
-            success:function (data) {
-                if (data>0){
-                    location.href="/record/list"
+        var asb=$("#loada").val()
+        var csb=$("#endtime").val()
+        if(asb.length>0){
+            if(csb.length>0){
+                $.ajax({
+                    url : "/record/add",
+                    type:"POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(gaina),
 
-                    alert("建标成功")
-                }else {
-                    alert("建标失败")
-                    location.href="/record/list"
-                }
-            },error:function () {
-                console.log("error")
+                    success:function (data) {
+                        if (data>0){
+                            location.href="/record/list"
+
+                            alert("建标成功")
+                        }else {
+                            alert("建标失败")
+                            location.href="/record/list"
+                        }
+                    },error:function () {
+                        console.log("error")
+                    }
+                })
+            }else{
+                alert("输入无效，请重新输入2")
             }
-        })
 
+        }else{
+            alert("输入无效，请重新输入1")
+        }
 
     })
     $(document).on("click", "#xgtjbtn", function () {
-        var gaina ={ID:$("#aaaaaaa").val()}
+        var gaina ={BRRID:$("#brr").val()}
         $.ajax({
             url : "/record/update",
             type:"POST",

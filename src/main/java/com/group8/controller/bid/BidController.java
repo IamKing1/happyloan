@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class BidController {
      * @return
      */
     @RequestMapping(value = "/list")
-    public String list(@RequestParam Map map, Model model, HttpServletRequest request){
+    public String list(@RequestParam Map map, Model model, HttpServletRequest request ,HttpSession session){
         map.put("pageSize",7);
         int pageNo = map.get("pageNo") ==null?1:Integer.valueOf(map.get("pageNo")+"");
         int pageSize = map.get("pageSize") ==null?10:Integer.valueOf(map.get("pageSize")+"");
@@ -46,14 +47,13 @@ public class BidController {
         String stringPage = new PageUtil(pageNo, 5, bidService.getPageCount(map), request).getStringPage();
 
 
+        session.setAttribute("sessionValue",session);
         List<Map> selects = bidService.selects(map);
         List<Map> selectu = bidService.selectu(map);
         model.addAttribute("selectu",selectu);
         model.addAttribute("selecta",selects);
         model.addAttribute("stringPage",stringPage);
         model.addAttribute("bidList",bidService.getPage(map));
-
-
         return "bid/bid";
 }
 
@@ -69,9 +69,41 @@ public class BidController {
         return i;
     }
 
+
     public Object jsjsons(@RequestBody  Integer tendId){
         int i = investmentService.hasCurrentlyVoted(tendId);
         return i;
     }
 
-}
+    @ResponseBody
+    @RequestMapping("/add")
+    public Object add(@RequestBody Map map){
+
+        int i = bidService.add(map);
+        return i;
+    }
+    /**
+     * 执行修改方法
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/updateb")
+    public Object updateb(@RequestBody  Map map){
+        int i = bidService.updateb(map);
+
+        return i;
+    }
+    /**
+     * 执行修改方法
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/updaterr")
+    public Object updaterr(@RequestBody  Map map) {
+        int i = bidService.updaterr(map);
+        return i;
+    }
+
+    }

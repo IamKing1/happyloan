@@ -35,5 +35,22 @@ public interface BidService {
      * @return
      */
     int update(Map map);
-
+    /**
+     * 添加
+     * @param map
+     * @return
+     */
+    int add(Map map);
+    /**
+     * 修改
+     * @param map
+     * @return
+     */
+    int updateb(Map map);
+    /**
+     * 修改
+     * @param map
+     * @return
+     */
+    int updaterr(Map map);
 }
