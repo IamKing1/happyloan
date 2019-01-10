@@ -217,4 +217,9 @@ public class InformationServiceImpl implements InformationService {
     public  List<Map> getProgress(Map tendid) {
         return informationDao.getProgress(tendid);
     }
+
+    @Override
+    public List<Map> getIdNumberList() {
+        return informationDao.getIdNumberList();
+    }
 }

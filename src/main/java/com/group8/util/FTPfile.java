@@ -38,6 +38,7 @@ public class FTPfile {
     static String password=configPara.get("password")+"";
     static String pathname=configPara.get("pathname")+"";
     static String path1=configPara.get("path")+"";
+    static String localpath=configPara.get("localpath")+"";
 
     /**
      * 将图片上传到ftp远程服务器
@@ -73,7 +74,7 @@ public class FTPfile {
             String originalFilename = multipartFile.getOriginalFilename();
             String newFileName= UUID.randomUUID()+originalFilename.substring(originalFilename.lastIndexOf("."));
             //读取本地文件
-            File file =new File(pathname+File.separator+newFileName);
+            File file =new File(localpath+File.separator+newFileName);
             //multipartFile.transferTo(file);
             org.apache.commons.io.FileUtils.copyInputStreamToFile(multipartFile.getInputStream(),file);
             System.out.println(file.length()+"............");

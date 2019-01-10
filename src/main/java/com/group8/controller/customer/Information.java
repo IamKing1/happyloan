@@ -5,6 +5,7 @@ import com.group8.entity.Customer;
 import com.group8.service.customer.InformationService;
 import com.group8.service.customer.LoginService;
 import com.group8.util.FTPfile;
+import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -385,5 +386,27 @@ public class Information {
 		System.out.println("----------tendid"+tendid);
 		return informationService.getProgress(tendid);
 	}
+
+	/**
+	 * 实名认证判断身份证唯一
+	 * @param idNumber
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("getIdNumberList")
+	public Object getIdNumberList(@RequestParam String idNumber){
+		List<Map> idNumberList = informationService.getIdNumberList();
+//		System.out.println(idNumber);
+
+		for(int i=0;i<idNumberList.size();i++){
+//			System.out.println(idNumberList);
+			if(idNumberList.get(i).get("IDNUMBER").equals(idNumber)){
+				return "1";
+			}
+		}
+		return "0";
+	}
+
+
 
 }

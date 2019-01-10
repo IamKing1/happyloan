@@ -411,8 +411,7 @@
 									<!--<div class="row cl col-xs-8">-->
 									<label for="idNumber">身份证号:</label>
 									<input type="text"
-									       datatype="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/"
-									       name="idNumber" id="idNumber" class="form-control"/>
+									       datatype="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/"  name="idNumber" id="idNumber" class="form-control"/><span id="number11" style="color: red"></span>
 								</div>
 							</td>
 						</tr>
@@ -554,6 +553,27 @@
 			
 		</div>
 		<script>
+			
+			$("#idNumber").blur(function () {
+				let val = $(this).val()
+				$.ajax({
+					url:"customer/getIdNumberList",
+					type: "get", //请求方式
+					data: {"idNumber":val},
+					dataType: "json",
+					success: function (data) {
+						if(data==1){
+							$("#number11").html("该身份证号已被注册")
+							$("#bttn").attr("disabled","true")
+						}else{
+							$("#bttn").removeAttr("disabled")
+						}
+					},
+					error(data){
+						console.log(data)
+					}
+				})
+			})
 
 			$(".form").Validform({
 				tiptype: 3,
@@ -576,9 +596,9 @@
 			jsonpCallback: 'data',
 			success: function (data) {
 				if (data.success = '1') {
-					console.log(data)
+					// console.log(data)
 					let sex =  data.result.sex;
-					console.log(sex)
+					// console.log(sex)
 					if(sex == '男'){
 						$("#customRadioInline1").prop("checked",true)
 					}else {
@@ -586,7 +606,7 @@
 					}
 					let addr = data.result.att;
 					
-					console.log(addr.split("省"))
+					// console.log(addr.split("省"))
 				} else {
 					consol.log("发生错误")
 				}

@@ -134,4 +134,9 @@ public interface InformationService {
      * @return
      */
     List<Map> getProgress(Map tendid);
+    /**
+     * 实名认证身份证唯一验证
+     * @return
+     */
+    List<Map> getIdNumberList();
 }

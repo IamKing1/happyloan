@@ -424,10 +424,12 @@
                 	
                         _self.$message({
                             message: '投资成功',
-                            type: 'success'
+                            type: 'success',
+	                        
                         });
                         _self.editFormVisible = false;// 让弹出层隐藏
                         _self.num1=100;
+                        history.go(0)
                     }else{
                         _self.$message({
                             message: '余额不足，.请充值',

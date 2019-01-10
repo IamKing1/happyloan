@@ -178,4 +178,10 @@ public interface InformationDao {
      * @return
      */
     Integer getAmountInInvestment(Integer userId);
+
+    /**
+     * 实名认证身份证唯一验证
+     * @return
+     */
+    List<Map> getIdNumberList();
 }
