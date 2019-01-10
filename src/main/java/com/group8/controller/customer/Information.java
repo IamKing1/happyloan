@@ -386,6 +386,12 @@ public class Information {
 		return informationService.getProgress(tendid);
 	}
 
+    /**
+     * 判断是不是本人的标
+     * @param tendid
+     * @param session
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "judgeMark")
 	public Object judgeMark(@RequestBody Map tendid,HttpSession session){
