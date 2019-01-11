@@ -53,7 +53,7 @@ public class Information {
         Object customerName = session.getAttribute("CustomerName");
         if (customerName != null&&customerName!=""){
             Customer customer = informationService.getTelephoneByUserName(customerName.toString());
-            System.out.println(customer.getEmail());
+//            System.out.println(customer.getEmail());
             if (customer != null) {
                 map.put("customer", customer);
             } else {
@@ -203,12 +203,12 @@ public class Information {
     @RequestMapping("/addPortraitToFTP")
     public Object add2(HttpSession session,@RequestParam MultipartFile pic){
 
-        System.out.println("----------"+pic);
+//        System.out.println("----------"+pic);
         Map map = new HashMap();
         if(pic!=null&&!pic.isEmpty()){
             String s = FTPfile.upLoad(pic);
 
-            System.out.println(s);
+//            System.out.println(s);
             map.put("filePath",s);
             map.put("fileName",pic.getOriginalFilename());
         }
@@ -299,7 +299,7 @@ public class Information {
     public Object rechargeAmount(HttpSession session,Integer money){
         Map map = new HashMap();
         int userId = loginService.getIdByName(session.getAttribute("CustomerName").toString());
-        System.out.println(userId);
+//        System.out.println(userId);
         map.put("money",money);
         map.put("userId",userId);
         int i = informationService.rechargeAmount(map);

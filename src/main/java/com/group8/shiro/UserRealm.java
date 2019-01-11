@@ -66,7 +66,7 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("执行认证逻辑");
+//        System.out.println("执行认证逻辑");
         //模拟数据库
        /* String name = "root";
         String psd = "580231";*/

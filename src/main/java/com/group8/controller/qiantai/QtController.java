@@ -36,10 +36,10 @@ public class QtController {
     @RequestMapping("/getList")
     public Object getListEmp(@RequestBody Map map){
         Map map1=new HashMap();
-        System.out.println(map);
+//        System.out.println(map);
         map1.put("data",qtService.getList(map));
         map1.put("total",qtService.getPageCount(map));
-        System.out.println(map1);
+//        System.out.println(map1);
         return map1;
     }
 
@@ -75,8 +75,8 @@ public class QtController {
     @ResponseBody
     @RequestMapping("/changePhone")
     public Object changePhone(@RequestParam Map map ,HttpSession session){
-        System.out.println(map);
-        System.out.println(session.getAttribute("CustomerName").toString());
+//        System.out.println(map);
+//        System.out.println(session.getAttribute("CustomerName").toString());
         Map hashMap = new HashMap();
         hashMap.put("phone",map.get("phone"));
         hashMap.put("username",session.getAttribute("CustomerName"));

@@ -147,7 +147,7 @@ public class InvestmentServiceImpl implements InvestmentService {
 
     @Override
     public int beatMoneyToBorrower(Map map) {
-        System.out.println(map);
+//        System.out.println(map);
         Map map1 = new HashMap();
 
         //借款的多少

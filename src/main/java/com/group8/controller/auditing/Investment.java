@@ -67,7 +67,7 @@ public class Investment {
 
        // System.out.println("---------------------"+moneyByTendId);
         if(integer<moneyByTendId*0.05){
-            System.out.println("生效了~！！！！！！！！！！！！！！！！！！！！！");
+//            System.out.println("生效了~！！！！！！！！！！！！！！！！！！！！！");
             investmentService.updateTendStuts(tendid);
             return 1;
         }

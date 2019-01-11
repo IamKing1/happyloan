@@ -23,7 +23,7 @@ public class CascadeServiceImpl implements  CascadeService {
     @Override
     public List<Map> getProvince() {
         List<Map> provinceList = cascadeDao.getProvince();
-        System.out.println("---------------"+provinceList);
+//        System.out.println("---------------"+provinceList);
         return provinceList;
     }
 
