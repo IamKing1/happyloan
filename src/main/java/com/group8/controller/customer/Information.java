@@ -297,12 +297,14 @@ public class Information {
     @ResponseBody
     @RequestMapping(value = "rechargeAmount")
     public Object rechargeAmount(HttpSession session,Integer money){
+
         Map map = new HashMap();
         int userId = loginService.getIdByName(session.getAttribute("CustomerName").toString());
         System.out.println(userId);
         map.put("money",money);
         map.put("userId",userId);
         int i = informationService.rechargeAmount(map);
+
         Map map1 = new HashMap();
         map1.put("mse",i);
 
