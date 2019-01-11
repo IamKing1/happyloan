@@ -386,6 +386,28 @@ public class Information {
 		return informationService.getProgress(tendid);
 	}
 
+	/**
+	 * 实名认证判断身份证唯一
+	 * @param idNumber
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("getIdNumberList")
+	public Object getIdNumberList(@RequestParam String idNumber){
+		List<Map> idNumberList = informationService.getIdNumberList();
+//		System.out.println(idNumber);
+
+		for(int i=0;i<idNumberList.size();i++){
+//			System.out.println(idNumberList);
+			if(idNumberList.get(i).get("IDNUMBER").equals(idNumber)){
+				return "1";
+			}
+		}
+		return "0";
+	}
+
+
+
     /**
      * 判断是不是本人的标
      * @param tendid

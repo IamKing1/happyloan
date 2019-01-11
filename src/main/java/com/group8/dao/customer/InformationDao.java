@@ -180,6 +180,12 @@ public interface InformationDao {
     Integer getAmountInInvestment(Integer userId);
 
     /**
+     * 实名认证身份证唯一验证
+     * @return
+     */
+    List<Map> getIdNumberList();
+
+    /**
      * 判断此标是否属于自己
      * @param tendid
      * @return

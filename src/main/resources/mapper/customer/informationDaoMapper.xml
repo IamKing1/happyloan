@@ -153,6 +153,10 @@
          join tb_user k on h.userid=k.userid
 		where k.userid=#{userId} and b.stuts=48 or b.stuts=5
     </select>
+	<select id="getIdNumberList" resultType="map">
+
+	select idnumber from TB_REALNAME
+	</select>
 
 
 	<select id="judgeMark" resultType="map">

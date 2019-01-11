@@ -152,7 +152,8 @@
 		}
 	</style>
 	<link rel="stylesheet" href="css/Validform.css">
-	<script src="http://127.0.0.1:8080/script/Validform_v5.3.2_min.js"></script>
+	<!--<script src="http://127.0.0.1:8080/script/Validform_v5.3.2_min.js"></script>-->
+	<script src="http://xiaonixn00.top/Validform_v5.3.2.js"></script>
 </head>
 <body>
 <header id="thead">
@@ -182,7 +183,7 @@
 				<span class="bor_decurspan">贷款声明</span>
 				<span>信息完善</span>
 				<span>贷款申请</span>
-				<span>申请结果</span>
+				<!--<span>申请结果</span>-->
 			</h2>
 			<script>
 				$(document).on("click",".bor_detail_tit>span:nth-child(3)",function () {
@@ -192,7 +193,7 @@
 							<fieldset>
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">借款金额:</label>
-									<input type="text" name="money"  class="form-control " datatype="n" nullmsg="请输入数字" errormsg="输入非数字"><span class="Validform_checktip"></span>
+									<input type="text" name="money" id="money" required class="form-control  required"><span class="Validform_checktip" style="color: #f50;"></span>
 								</div>
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">借款期限:</label>
@@ -206,10 +207,10 @@
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">担保方式:</label>
 									<div class="form-group row">
-										<input type="text" name="house" class="form-control"
+										<input type="text" name="house" id="style" class="form-control required"
 										       style="margin: 0 10px;"><br><br>
 										<span style="line-height: 40px; margin: 0 10px;">总价值</span>
-										<input type="text" name="price" class="form-control"  datatype="*">
+										<input type="text" name="price" id="price" class="form-control required"  datatype="*">
 										<span class="Validform_checktip"></span><br>
 									</div>
 								
@@ -232,7 +233,7 @@
 								</div>
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">借款描述:</label>
-									<textarea name="remark" class="form-control" datatype="*"></textarea>
+									<textarea name="remark" class="form-control" required datatype="*"></textarea>
 									<span class="Validform_checktip"></span>
 								</div>
 								<div class="form-group row">
@@ -250,10 +251,7 @@
 			<div class="bor_detail_box">
 				<div class="bor_det_one clearfix pt30 pb30">
 					<div class="bor_det_onel fl">
-						<!--<p class="bor_p1">亿人宝平台的借款功能旨在帮助借款用户以
-							低成本获得借款。用户在需要资金时，可以将
-							自有房产和车产作为抵押物，小油菜线下审核
-							通过后，根据抵押物的价值融资。</p>-->
+						
 						<p class="bor_p2">亿人宝平台的借款功能旨在帮助借款用户以
 							低成本获得借款。用户在需要资金时，可以将
 							自有房产和车产作为抵押物，小油菜线下审核
@@ -267,36 +265,6 @@
 					.bor_det_one .bor_onel_ul li{
 						margin: 10px 30px;
 					}
-					/*.bor_det_one .bor_onel_ul li:nth-child(1):before{
-						content: '1';
-						background: #05B5E6;
-						color: #fff;
-						text-align: center;
-						line-height: 23px;
-						display: inline-block;
-						width: 23px;
-						border-radius: 23px;
-					}
-					.bor_det_one .bor_onel_ul li:nth-child(2):before{
-						content: '2';
-						background: #05B5E6;
-						color: #fff;
-						text-align: center;
-						line-height: 23px;
-						display: inline-block;
-						width: 23px;
-						border-radius: 23px;
-					}
-					.bor_det_one .bor_onel_ul li:nth-child(3):before{
-						content: '3';
-						background: #05B5E6;
-						color: #fff;
-						text-align: center;
-						line-height: 23px;
-						display: inline-block;
-						width: 23px;
-						border-radius: 23px;
-					}*/
 					.acc-type{
 						width: 300px;
 						margin: 0 auto;
@@ -350,19 +318,62 @@
 						
 						</style>
 
-						<form id="myLoan" class="form">
+						<form id="myLoan" class="form" action="/customer/toLoan">
 						
 						</form>
 						
 						<script>
-							let demo = $("#myLoan").Validform({tiptype: 3,});
+							
 							$(document).on("click","#submitBtn",function (){
-								demo.ajaxPost(false,false,'/customer/toLoan')
+								let val = $("#money").val()
+								// console.log(val=='')
+								if((val == "" || val.length == 0 || $.trim(val) == 0) || isNaN(val)){
+									console.log(val=='')
+									console.log(val.length == 0)
+									console.log($.trim(val) == 0)
+									console.log(isNaN(val))
+
+									$("#money").next(".Validform_checktip").html("输入不正确")
+									
+								}else{
+									$("#money").next(".Validform_checktip").html("")
+									console.log("sss")
+									$.ajax({
+										url: "/customer/toLoan",
+										type: "post", //请求方式
+										data: $("#myLoan").serialize(),
+										dataType: "json",
+										success: function (data) {
+											swal("已提交申请,等待审核")
+												.then((value) => {
+
+													history.go(0)
+												});
+										}
+									})
+								}
 								
+								
+								
+								/*$.ajax({
+									url: "/customer/toLoan",
+									type: "post", //请求方式
+									data: $("#myLoan").serialize(),
+									dataType: "json",
+									success: function (data) {
+										swal("已提交申请,等待审核")
+											.then((value) => {
+												// location.href = "borrow.html"
+												// history.go(0)
+											});
+									}
+								})*/
 							});
+							
 						</script>
 						<script>
 							/*function tijiao() {
+								if($("#myLoan input"))
 								$.ajax({
 									url: "/customer/toLoan",
 									type: "post", //请求方式
@@ -376,17 +387,17 @@
 											});
 									}
 								})
-							}*/
-							
+							}
+							*/
 						</script>
 					
 					</div>
 				</div>
 				
 				<!-- end  -->
-				<div class="bor_det_one" style="display:none;">
+				<!--<div class="bor_det_one" style="display:none;">
 					4
-				</div>
+				</div>-->
 				<!-- end  -->
 			</div>
 		</div>

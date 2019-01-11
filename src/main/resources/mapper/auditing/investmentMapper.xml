@@ -100,5 +100,9 @@ where tendid =#{tendId}
     <select id="getMoneyByTendId" resultType="Integer">
         select bid_money from tb_tendering where id =#{tendId}
     </select>
-
+<select id="getUserId" resultType="Integer">
+    select b.userid from TB_TENDERING a
+	join TB_REALNAME b on a.realname=b.id
+	where a.id=#{tendId}
+</select>
 </mapper>

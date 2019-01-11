@@ -18,6 +18,15 @@
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <!-- 引入组件库 -->
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+    .el-dialog{
+      width:30%;
+    }
+    .el-dialog input{
+      font-size: 25px;
+      color:black;
+    }
+  </style>
 </head>
 <body>
 <header id="thead">
@@ -80,7 +89,7 @@
             <el-dialog title="消息详情" :visible.sync="editFormVisible" :close-on-click-modal="false">
               <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
                 <el-form-item label="消息详情" prop="CONTENT">
-                  <el-input v-model="editForm.CONTENT" disabled="true"></el-input>
+                  <el-input type="textarea" v-model="editForm.CONTENT" :disabled="true"></el-input>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
@@ -126,21 +135,7 @@
 
           </el-tab-pane>
         </el-tabs>
-        <!--列表底部工具条和分页符-->
-      <!--  <el-row style="margin-top: 20px" type="flex" justify="end">
-          <el-col :span="18" >
-            <el-pagination
-                    style="text-align:center "
-                    @size-change="pageSizeChange"
-                    @current-change="currentPageChange"
-                    :current-page="currentPage"
-                    :page-sizes="[5, 10, 15, 20]"
-                    :page-size="pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="total">
-            </el-pagination>
-          </el-col>
-        </el-row>-->
+
 
         </div>
         <script type="text/javascript">
@@ -179,12 +174,10 @@
                     var self = this;
                     var start =(this.currentPage-1)*this.pageSize;
                     var end =this.currentPage*this.pageSize+1;//分页
-                    axios.post('/system/getMessages'/*,{'start':start,'end':end}*/).then(function(response){
-                      /*  self.total=response.data.total;*/
+                    axios.post('/system/getMessages').then(function(response){
                         self.tableDatas = response.data.data;
                     });
                     axios.post('/system/getMessages2').then(function(response){
-                       /* self.total=response.data.total;*/
                         self.issued = response.data.data;
                     });
                 },
@@ -199,7 +192,6 @@
                         var searchForm= {
                         };
                         axios.post('/system/getMessages', searchForm).then(function (response) {
-                          /*  _self.total = response.data.total;*/
                             _self.tableData = response.data.data;
                         });
                         axios.post('/system/getMessages2', searchForm).then(function (response) {

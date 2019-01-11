@@ -124,4 +124,11 @@ public interface InvestmentDao {
      * @return
      */
     Integer getMoneyByTendId(Integer tendId);
+
+    /**
+     * chaxun id
+     * @param tendId
+     * @return
+     */
+    Integer getUserId(Integer tendId);
 }
