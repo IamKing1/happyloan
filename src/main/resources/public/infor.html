@@ -172,8 +172,8 @@
 						</div>
 						<div class="col col-line3"  style="margin: 30px 0">
 							<el-row>
-								<el-button v-if="this.allNum < 0" type="primary" :disabled="true"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
-								<el-button v-if="this.allNum >= 0" type="primary"  @click="toubiao(num1)"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
+								<el-button v-if="this.allNum <= 0" type="primary" :disabled="true"  style="padding: 12px 74px;margin: 0 0 20px 0;">已投满</el-button>
+								<el-button v-if="this.allNum > 0" type="primary"  @click="toubiao(num1)"  style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>
 
 								<!--<el-button type="primary" style="padding: 12px 74px;margin: 0 0 20px 0;">立即投标</el-button>-->
 							</el-row>

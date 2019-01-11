@@ -13,8 +13,8 @@
         join TB_SYSTEMCATEGORYITEM c on a.LONGTIME=c.id
         join TB_SYSTEMCATEGORYITEM e on e.id=a.purpose
         join TB_TENDERING d on a.id=d.borrow
-        where rownum &lt;#{end}
-        ) e where e.rn &gt;#{start} and e.stuts =48 or e.stuts =2
+        where rownum &lt;#{end}  and (d.stuts =48 or d.stuts =2)
+        ) f where f.rn &gt;#{start}
     </select>
     <select id="getPageCount" resultType="int">
         select count(*) from TB_TENDERING a
