@@ -35,7 +35,7 @@ public class QtController {
     @RequestMapping("/getList")
     public Object getListEmp(@RequestBody Map map){
         Map map1=new HashMap();
-
+        System.out.println(map);
         map1.put("data",qtService.getList(map));
         map1.put("total",qtService.getPageCount(map));
 
