@@ -150,7 +150,7 @@
 
          join TB_REALNAME h on a.realid=h.id
 
-		where h.userid=#{userId} and b.stuts=48
+		where h.userid=#{userId} and (b.stuts=48  or b.stuts=2 or b.stuts=5)
 
     </select>
 	<select id="getIdNumberList" resultType="map">

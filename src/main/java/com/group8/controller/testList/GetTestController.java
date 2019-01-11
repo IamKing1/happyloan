@@ -45,7 +45,7 @@ public class GetTestController {
 	@ResponseBody
 	@RequestMapping("updateTest")
 	public Object updateTest(@RequestBody Map map){
-		System.out.println(map);
+//		System.out.println(map);
 		return testService.updateTest(map);
 	}
 

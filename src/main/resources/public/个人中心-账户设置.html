@@ -101,7 +101,7 @@
 					if (user.telephone != "" && user.telephone != null) {
 						$("#telephone").html(user.telephone);
 						$("#telephone1").append("<i class=\"grzxbg p-right\"></i>");
-						$("#telephone2").append("<a href=\"javascript:void(0)\" onclick=\"showSpan('alert-checkOldMobile')\">更改</a>");
+						$("#telephone2").append("<a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#numberPhone\" >更改</a>");
 					}
 					if (user.telephone == "" || user.telephone == null) {
 						$("#telephone").html("没有绑定手机号");
@@ -123,7 +123,7 @@
 
 			})
 		}
-
+		//更改邮箱
 		$(document).on("blur", "#exampleModal #email", function () {
 			console.log($(this).val());
 			let val = $(this).val();
@@ -143,7 +143,7 @@
 			$.ajax({
 				type: "post", //请求方式
 				dataType: "json",
-				data: {'email': $(email).val()},
+				data: {'email': $("#email").val()},
 				url: "tendInfo/updateEmail", //发送请求地址
 				success: function (data) {
 					history.go(0)
@@ -154,15 +154,49 @@
 				}
 			})
 		})
+		//更改手机号
+		$(document).on("blur", "#numberPhone #numberp", function () {
+			console.log($(this).val());
+			let val = $(this).val();
+			let reg = /^1(3|4|5|7|8)\d{9}$/;
+			if (!reg.test(val)) {
+				$(this).next().css("display", "block")
+				$("#numberPhone .btn-primary").prop("disabled", true)
+				$("#numberPhone .btn-primary").css("cursor", "no-drop")
+
+			} else {
+				$(this).next().css("display", "none")
+				$("#numberPhone .btn-primary").prop("disabled", false)
+				$("#numberPhone .btn-primary").css("cursor", "pointer")
+			}
+		});
+		$(document).on("click", "#numberPhone .btn-primary", function () {
+			let aa = $("#numberp").val()
+			console.log(aa)
+			$.ajax({
+				type: "post", //请求方式
+				dataType: "json",
+				data: {'phone': $("#numberp").val()},
+				// contentType:"application/json",
+				url: "qiant/changePhone", //发送请求地址
+				success: function (data) {
+					history.go(0)
+
+				},
+				error() {
+					swal("添加失败了!", "请重新在试一次吧!", "error");
+				}
+			})
+		})
+		
+		
+		//进度条
 		$(function () {
 			$.ajax({
 				type: "post",
 				url: "customer/getIdNumEmail",
 				success: function (data) {
-					/*console.log(data)
-					console.log(data[0]['AUDITORID'])
-					console.log(data[0]['EMAIL'])
-					console.log(data[0]['IDNUMBER'])*/
+					
 					if (data[0]['EMAIL'] != null && data[0]['EMAIL'] != null && data[0]['EMAIL'] != undefined) {
 						if (data[0]['AUDITORID'] == 21 || data[0]['AUDITORID'] == 22  || data[0]['AUDITORID'] == undefined) {
 							$(".personal-level i.grzxbg").css("background-position","0px -550px")
@@ -191,11 +225,7 @@
 <body>
 <header id="thead">
 	<script>
-		$(function(){
-				function(){
-
-				}
-		})
+		
 		$("#thead").load("head.html");
 	</script>
 </header>
@@ -274,6 +304,33 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 						<button type="button" class="btn btn-primary" data-dissmiss="modal">验证邮箱</button>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="numberPhone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		     aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">请更改手机号</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						
+						<div class="form-group">
+							<label for="numberp" class="col-form-label">手机号:</label>
+							<input type="text"  style="width: 94%;" class="form-control" id="numberp">
+							<span style="color:red;display: none;"><i class="fa fa-times"></i>手机号格式不正确</span>
+						</div>
+					
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" data-dissmiss="modal">更改</button>
 					</div>
 				
 				</div>

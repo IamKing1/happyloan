@@ -51,7 +51,7 @@ public class SystemMessage {
     @ResponseBody
     @RequestMapping("/update")
     public Object update(@RequestBody Map map){
-        System.out.println("map+++++++"+map);
+//        System.out.println("map+++++++"+map);
         return systemMessageService.update(map);
     }
 

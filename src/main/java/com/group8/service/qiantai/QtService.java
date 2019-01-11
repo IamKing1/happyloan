@@ -29,4 +29,11 @@ public interface QtService {
      * @return
      */
     List<Map> getCountClient();
+
+    /**
+     * 更改手机号
+
+     * @return
+     */
+    Integer changePhone(Map map);
 }
