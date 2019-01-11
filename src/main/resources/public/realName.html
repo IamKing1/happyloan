@@ -422,12 +422,12 @@
 									
 									<div class="custom-control custom-radio custom-control-inline">
 										<input type="radio" id="customRadioInline1" name="sex"
-										       class="custom-control-input" value="1" >
+										       class="custom-control-input" value="1" disabled>
 										<label class="custom-control-label" for="customRadioInline1">男</label>
 									</div>
 									<div class="custom-control custom-radio custom-control-inline">
 										<input type="radio" id="customRadioInline2" name="sex"
-										       class="custom-control-input" value="2" >
+										       class="custom-control-input" value="2" disabled>
 										<label class="custom-control-label" for="customRadioInline2">女</label>
 									</div>
 								</div>
@@ -565,8 +565,11 @@
 						if(data==1){
 							$("#number11").html("该身份证号已被注册")
 							$("#bttn").attr("disabled","true")
+							$("#exampleModal .btn-primary").css("cursor", "no-drop")
 						}else{
+							$("#number11").html("")
 							$("#bttn").removeAttr("disabled")
+							$("#exampleModal .btn-primary").css("cursor", "pointer")
 						}
 					},
 					error(data){

@@ -83,4 +83,9 @@ public class QtServiceImpl implements QtService {
     public List<Map> getCountClient() {
         return qtDao.getCountClient();
     }
+
+    @Override
+    public Integer changePhone(Map map) {
+        return qtDao.changePhone(map);
+    }
 }

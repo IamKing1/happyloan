@@ -475,28 +475,27 @@
 			el: "#list-loan",
 			data: {
 				tableData: [],
-
+				total:500,
 				color: {"color": "red"},
 			},
-			created: function () {
+			created() {
 				//在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
 				var self = this;
 				var start = 0;
 				var end = 5;//分页
-				axios.post('/qiant/getList', {'start': start, 'end': end}).then(function (response) {
+				axios.post('/qiant/getList', {'start': '0', 'end': '10'}).then(function (response) {
+					self.total=response.data.total;
 					self.tableData = response.data.data;
-					console.log(response.data.data)
+					console.log("----")
+					console.log(response)
 				})
 
 			},
 			methods:{
-				//在method里面写上方法
-				/*cell({row, column, rowIndex, columnIndex}) {
-					//第八列添加 red 类
-					if(columnIndex == 1){
-						return 'red'
-					}
-				}*/
+				toinfor(row){
+					location.href="infor.html?tendId="+row.ID;
+
+				},
 			}
 			
 		}

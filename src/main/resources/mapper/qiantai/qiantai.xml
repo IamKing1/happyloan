@@ -28,4 +28,7 @@
     <select id="getCountClient" resultType="map">
          select count(username) username from TB_USER
     </select>
+    <update id="changePhone">
+      update tb_user set telephone=#{phone} where username=#{username}
+    </update>
 </mapper>
