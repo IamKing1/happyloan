@@ -40,7 +40,7 @@ public class functionCotrolle {
     public String index(Model model,HttpSession session){
 
         Object userName = session.getAttribute("userName");
-        System.out.println("当前登录用户为:"+userName);
+//        System.out.println("当前登录用户为:"+userName);
 
    /*     List<Map> list = functionService.getList();
         for (Map map : list) {

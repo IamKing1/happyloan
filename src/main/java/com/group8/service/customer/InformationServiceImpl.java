@@ -210,6 +210,8 @@ public class InformationServiceImpl implements InformationService {
         if(amountInInvestment==null){
             amountInInvestment=0;
         }
+//        System.out.println(userId);
+//        System.out.println(amountInInvestment);
         map.put("amountInInvestment",amountInInvestment);
         return map;
     }

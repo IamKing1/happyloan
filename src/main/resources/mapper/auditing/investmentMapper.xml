@@ -43,7 +43,7 @@ where a.stuts=2
     </select>
 
     <select id="selectFailMarkList" resultType="map">
-        select b.realname,a.begintime,a.stuts,a.bid_end_time,c.money,a.id,b.id realId from tb_tendering a
+        select b.realname,to_char(a.begintime,'yyyy-mm-dd') begintime,a.stuts,to_char(a.bid_end_time,'yyyy-mm-dd') endtime,c.money,a.id,b.id realId from tb_tendering a
         join tb_realname b on a.realname=b.id
         join tb_borrow c on a.borrow=c.id
         where a.stuts=5

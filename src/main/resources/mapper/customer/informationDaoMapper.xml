@@ -144,14 +144,14 @@
 	</select>
 
     <select id="getAmountInInvestment" resultType="Integer">
- select a.money,g.state,k.userid
+ select sum(a.money) money
         from tb_investmentlist a
         left join tb_tendering b on a.tendid=b.id
-         join tb_borrow c on b.borrow=c.id
-        join tb_loanrecord g on g.tendid=b.id
-         join TB_REALNAME h on a.REALID=h.id
-         join tb_user k on h.userid=k.userid
-		where k.userid=#{userId} and b.stuts=48 or b.stuts=5
+
+         join TB_REALNAME h on a.realid=h.id
+
+		where h.userid=#{userId} and (b.stuts=48  or b.stuts=2 or b.stuts=5)
+
     </select>
 	<select id="getIdNumberList" resultType="map">
 

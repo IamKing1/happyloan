@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -34,11 +35,13 @@ public class QtController {
     @ResponseBody
     @RequestMapping("/getList")
     public Object getListEmp(@RequestBody Map map){
+        System.out.println(map);
         Map map1=new HashMap();
-
+//        System.out.println(map);
         map1.put("data",qtService.getList(map));
         map1.put("total",qtService.getPageCount(map));
-
+        System.out.println(map1);
+//        System.out.println(map1);
         return map1;
     }
 
@@ -65,4 +68,21 @@ public class QtController {
         return countClient;
     }
 
+    /**
+     * 更换手机号
+     * @param phone
+     * @param session
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/changePhone")
+    public Object changePhone(@RequestParam Map map ,HttpSession session){
+//        System.out.println(map);
+//        System.out.println(session.getAttribute("CustomerName").toString());
+        Map hashMap = new HashMap();
+        hashMap.put("phone",map.get("phone"));
+        hashMap.put("username",session.getAttribute("CustomerName"));
+        Integer changePhone = qtService.changePhone(hashMap);
+        return changePhone;
+    }
 }

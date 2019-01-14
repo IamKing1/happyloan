@@ -147,12 +147,11 @@ public class InvestmentServiceImpl implements InvestmentService {
 
     @Override
     public int beatMoneyToBorrower(Map map) {
-        System.out.println(map);
+//        System.out.println(map);
         Map map1 = new HashMap();
-
         //借款的多少
-        Integer money = InvestmentService.hasCurrentlyVoted(Integer.valueOf(map.get("ID").toString()));
-        map1.put("money",money);
+        //Integer money = InvestmentService.hasCurrentlyVoted(Integer.valueOf(map.get("ID").toString()));
+        map1.put("money",Integer.valueOf(map.get("hasMoney").toString()));
         map1.put("realId",Integer.valueOf(map.get("REALID").toString()));
         int i = investmentDao.beatMoneyToBorrower(map1);
         return i;

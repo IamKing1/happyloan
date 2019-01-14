@@ -32,12 +32,29 @@
 
 </header>
 <!--列表-->
-
+<style>
+	#app{
+		position: relative;
+		height: 60px;
+		top: 10px;
+		background: #fff;
+	}
+  #titleList{
+    background: url(../images/home_sprite.png);
+    width: 190px;
+    height: 60px;
+	  color: #fff;
+	  position: absolute;
+	  left: -10px;
+	  padding-left: 27px;
+	  padding-top: 5px;
+  }
+</style>
 
 
 <div id="tableView" style="width:1150px;margin: 0 auto;">
   <div id="app">
-    <h1>{{ message }}</h1>
+    <h1  id="titleList"><i class="el-icon-tickets"></i><span style="font-size: 18px;">{{ message }}</span></h1>
   </div>
   <!--列表-->
   <el-row>
@@ -148,8 +165,6 @@
             axios.post('/qiant/getList',{'start':start,'end':end}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.data;
-
-
 
             })
 

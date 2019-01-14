@@ -139,7 +139,7 @@
         </el-tab-pane>
       </el-tabs>
       <!--列表底部工具条和分页符-->
-      <el-row style="margin-top: 20px" type="flex" justify="end">
+      <!--<el-row style="margin-top: 20px" type="flex" justify="end">
         <el-col :span="18" >
           <el-pagination
                   style="text-align:center "
@@ -152,7 +152,7 @@
                   :total="total">
           </el-pagination>
         </el-col>
-      </el-row>
+      </el-row>-->
     </div>
 <script type="text/javascript">
           var view = new Vue({
@@ -176,7 +176,7 @@
                   editFormVisible: false,
                   editLoading: false,
                   goUrl: '',
-                  editFormRules:{},
+                  // editFormRules:{},
                   //编辑界面数据
                   editForm: {
                       hasMoney:''
@@ -264,6 +264,7 @@
                      if(response.data>0){
                               _self.editFormVisible = false;// 让弹出层隐藏
                               _self.loadingData();//重新加载数据
+                         history.go(0)
                           }else{
                               _self.$message({
                                   message: '余额不足',

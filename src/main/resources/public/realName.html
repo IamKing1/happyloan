@@ -565,8 +565,11 @@
 						if(data==1){
 							$("#number11").html("该身份证号已被注册")
 							$("#bttn").attr("disabled","true")
+							$("#exampleModal .btn-primary").css("cursor", "no-drop")
 						}else{
+							$("#number11").html("")
 							$("#bttn").removeAttr("disabled")
+							$("#exampleModal .btn-primary").css("cursor", "pointer")
 						}
 					},
 					error(data){

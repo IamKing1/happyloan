@@ -14,8 +14,8 @@
         join tb_systemcategoryitem f on b.marriage=f.id
         join tb_systemcategoryitem g on b.ACADEMIC=g.id
         join tb_systemcategoryitem h on b.INCOME=h.id
-        where rownum &lt; #{end}
-        ) i where i.rn &gt;#{start} and status=20
+        where rownum &lt; #{end} and status=20
+        ) i where i.rn &gt;#{start}
         <if test="realname!=null and realname!=''">
             and i.realname like '%'||#{realname}||'%'
         </if>
