@@ -197,7 +197,7 @@ public class InformationServiceImpl implements InformationService {
         if(balance==null){
             balance=0;
         }
-        map.put("balance",balance+principalAndInterestToBeCollected);
+        map.put("balance",balance);
         //累计收益
         Integer accumulatedIncome = informationDao.getAccumulatedIncome(userId);
         if(accumulatedIncome==null){
