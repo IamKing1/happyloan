@@ -184,6 +184,7 @@ public class InformationServiceImpl implements InformationService {
 
     @Override
     public Map calculationMoney(Integer userId) {
+        System.out.println(userId);
         Map map = new HashMap();
         //待收本息
         Integer principalAndInterestToBeCollected = informationDao.getPrincipalAndInterestToBeCollected(userId);

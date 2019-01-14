@@ -93,7 +93,6 @@
             </el-table-column>
         </el-table>
     </el-row>
-
     <!--列表底部工具条和分页符-->
     <el-row style="margin-top: 20px" type="flex" justify="end">
         <el-col :span="18">
@@ -109,7 +108,6 @@
             </el-pagination>
         </el-col>
     </el-row>
-
     <!--编辑界面-->
     <el-dialog title="更改权限" :visible.sync="editFormVisible" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="120px" :rules="editFormRules" ref="editForm">
