@@ -43,6 +43,7 @@ public class LoanAuditController {
     @ResponseBody
     @RequestMapping("/getListLoan")
     public Object getListLoan(@RequestBody Map map){
+        System.out.println(map);
         Map map1=new HashMap();
         map1.put("data",loanAuditService.getListLoan(map));
         map1.put("total",loanAuditService.getPageCount(map));
