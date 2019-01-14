@@ -88,32 +88,40 @@
             <el-table-column
                     prop="MONEY"
                     label="贷款金额(元)"
-                    width="120"
+                    width="110"
                     align="center">
             </el-table-column>
             <el-table-column
                     prop="LONGTIME"
                     label="贷款时长(月)"
-                    width="120"
+                    width="110"
                     align="center">
             </el-table-column>
+
+            <el-table-column
+                    prop="SHI"
+                    label="实到金额(元)"
+                    width="110"
+                    align="center">
+            </el-table-column>
+
             <el-table-column
                     prop="MO"
                     label="应还贷款(元)"
-                    width="120"
+                    width="110"
                     align="center">
             </el-table-column>
 
             <el-table-column
                     prop="DUEDATE"
                     label="截止日期"
-                    width="150"
+                    width="100"
                     align="center">
             </el-table-column>
             <el-table-column
                     prop="STUTS"
                     label="还款状态"
-                    width="140"
+                    width="100"
                     align="center">
               <template slot-scope="scope">
                 <el-col class="btn btn-success">{{scope.row.STUTS | formatStata2}}</el-col>
@@ -124,7 +132,7 @@
                     align="center">
                <template scope="scope">
                  <el-button :plain="true" type="success" v-if="scope.row.STUTS!=3" size="small" icon="edit" @click="editClick(scope.row)">还款</el-button>
-                 <el-button :plain="true" disabled="true" type="success" v-if="scope.row.STUTS==3" size="small" icon="edit" @click="editClick(scope.row)">已还</el-button>
+                 <el-button :plain="true" :disabled="true" type="success" v-if="scope.row.STUTS==3" size="small" icon="edit" @click="editClick(scope.row)">已还</el-button>
                </template>
              </el-table-column>
           </el-table>
