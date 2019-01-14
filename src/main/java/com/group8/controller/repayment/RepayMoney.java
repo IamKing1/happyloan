@@ -27,7 +27,7 @@ public class RepayMoney {
     public Object moneyBackPool(@RequestBody Map map){
 
         //还款操作  需要三个参数
-
+        System.out.println(map);
         //借款人还款操作
         int i = repayMoneyService.deductMoney(map);
     if(i<0){

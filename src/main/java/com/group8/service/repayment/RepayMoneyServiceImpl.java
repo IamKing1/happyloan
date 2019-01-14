@@ -22,10 +22,27 @@ public class RepayMoneyServiceImpl implements RepayMoneyService {
     @Autowired
     private RepayMoneyDao repayMoneyDao;
 
+    @Autowired
+    private RepayMoneyService repayMoneyService;
+
     @Override
     public int deductMoney(Map map) {
 
       repayMoneyDao.deductMoney(map);
+
+        if(Integer.valueOf(map.get("mse").toString())>0){
+            //需要还钱的id
+            Integer tendid = Integer.valueOf(map.get("TENDID").toString());
+
+            //创建一个新map
+            Map newMap = new HashMap();
+            newMap.put("tendId",tendid);
+            //投资人回款操作
+            int i1 = repayMoneyService.transferMoneyToTouZiRen(newMap);
+            if(i1<1){
+                System.out.println("系统就要完蛋了");
+            }
+        }
 
         return Integer.valueOf(map.get("mse").toString());
     }
