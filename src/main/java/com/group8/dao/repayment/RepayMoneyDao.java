@@ -83,4 +83,10 @@ public interface RepayMoneyDao {
      */
     List<Map> getRealMoneyByTendId(Integer tendId);
 
+    /**
+     * 得到还款列表
+     * @return
+     */
+    List<Map> getHuanKuanList();
+
 }

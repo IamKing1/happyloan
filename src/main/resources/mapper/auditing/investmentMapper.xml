@@ -62,7 +62,7 @@ where a.stuts=2
     </update>
 
     <update id="beatMoneyToBorrower" parameterType="map">
-          UPDATE  tb_realname set balance=balance+(#{money}*0.03) where id=#{realId}
+          UPDATE  tb_realname set balance=balance+(#{money}*0.97) where id=#{realId}
     </update>
 
    <update id="failToBeSoldAtAuction">

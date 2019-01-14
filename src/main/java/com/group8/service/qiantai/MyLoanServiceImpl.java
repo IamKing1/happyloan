@@ -41,7 +41,9 @@ public class MyLoanServiceImpl implements MyLoanService {
         Object customerName = session.getAttribute("CustomerName");
         Map map = new HashMap();
         List<Map> realIdByUserName = informationService.getRealIdByUserName(customerName.toString());
-        map.put("realId",realIdByUserName.get(0).get("ID"));
+        if(realIdByUserName!=null&&realIdByUserName.size()>0){
+            map.put("realId",realIdByUserName.get(0).get("ID"));
+        }
 
 
         List<Map> issused = myLoanDao.getIssused(map);
