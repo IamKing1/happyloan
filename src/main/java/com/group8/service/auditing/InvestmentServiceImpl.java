@@ -153,6 +153,8 @@ public class InvestmentServiceImpl implements InvestmentService {
         //Integer money = InvestmentService.hasCurrentlyVoted(Integer.valueOf(map.get("ID").toString()));
         map1.put("money",Integer.valueOf(map.get("hasMoney").toString()));
         map1.put("realId",Integer.valueOf(map.get("REALID").toString()));
+
+        System.out.println("-------------"+map1);
         int i = investmentDao.beatMoneyToBorrower(map1);
         return i;
     }

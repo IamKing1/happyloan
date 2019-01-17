@@ -184,6 +184,7 @@ public class InformationServiceImpl implements InformationService {
 
     @Override
     public Map calculationMoney(Integer userId) {
+        System.out.println(userId);
         Map map = new HashMap();
         //待收本息
         Integer principalAndInterestToBeCollected = informationDao.getPrincipalAndInterestToBeCollected(userId);
@@ -197,7 +198,7 @@ public class InformationServiceImpl implements InformationService {
         if(balance==null){
             balance=0;
         }
-        map.put("balance",balance+principalAndInterestToBeCollected);
+        map.put("balance",balance);
         //累计收益
         Integer accumulatedIncome = informationDao.getAccumulatedIncome(userId);
         if(accumulatedIncome==null){

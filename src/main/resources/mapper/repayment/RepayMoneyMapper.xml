@@ -22,7 +22,7 @@ join tb_systemcategoryitem b on a.longtime=b.id
         update tb_moneypool set money = money - #{repayMoney} where id=1
     </update>
     <select id="calculationProportion" resultType="map" parameterType="map">
-      select realid,round(sum(money)/(select sum(money) from tb_investmentlist )*100,6) proportion from tb_investmentlist
+      select realid,round(sum(money)/(select sum(money) from tb_investmentlist where tendid=#{tendId} )*100,6) proportion from tb_investmentlist
       where tendid=#{tendId} group by realid
     </select>
 
@@ -52,9 +52,16 @@ join tb_systemcategoryitem b on a.longtime=b.id
     </update>
     
     <select id="getRealMoneyByTendId" resultType="map">
-        select a.realid,((b.item/12)*0.20*a.money+a.money) mo from tb_loanrecord a
+        select a.realid,((b.item/12)*0.12*a.money+a.money) mo from tb_loanrecord a
 				join tb_systemcategoryitem b on a.longtime=b.id
 				 where a.tendid=#{tendId}
 
+    </select>
+
+
+    <select id="getHuanKuanList" resultType="map">
+      select a.tendid from tb_loanrecord a
+        join tb_systemcategoryitem b on a.longtime=b.id
+         where  add_months(trunc(a.begintime),b.item)= trunc(sysdate) and a.stuts=1
     </select>
 </mapper>
