@@ -53,4 +53,15 @@ public interface BidService {
      * @return
      */
     int updaterr(Map map);
+	/**
+	 * 获取所有满标的标
+	 * @return
+	 */
+	List<Map> getAllTend(Map map);
+
+	/**
+	 * 获取总页数
+	 * @return
+	 */
+	int countAllTend();
 }

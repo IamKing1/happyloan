@@ -69,5 +69,15 @@ public class BidServiceImpl implements BidService {
         return bidDao.updaterr(map);
     }
 
+	@Override
+	public List<Map> getAllTend(Map map) {
+		return bidDao.getAllTend(map);
+	}
+
+	@Override
+	public int countAllTend() {
+		return bidDao.countAllTend();
+	}
+
 
 }

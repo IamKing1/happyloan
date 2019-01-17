@@ -73,4 +73,26 @@
         where g.STATUS=23 and g.release = 2
         ) set RELEASE=1 where BRRID=#{BID_ID}
     </update>
+    <select id="getAllTend" resultType="map">
+
+	    select * from(
+	    select rownum rn ,b.realname,money,to_char(a.begintime,'yyyy-MM-dd  HH24:mi:ss') a,d.item,to_char(c.begintime,'yyyy-MM-dd  HH24:mi:ss') begintime,to_char(c.bid_end_time ,'yyyy-MM-dd  HH24:mi:ss') bid_end_time,a.stuts
+	    from TB_LOANRECORD a
+	    join TB_REALNAME b on b.id=a.realid
+	    join TB_TENDERING c on a.tendid=c.id
+	    join TB_SYSTEMCATEGORYITEM d on d.id=a.longtime
+	    where c.stuts=3 and rownum &lt; #{end}
+
+	    ) e where e.rn &gt; #{start}
+    </select>
+	<select id="countAllTend" resultType="int">
+		SELECT count(*) total from(
+		select rownum rn,b.realname,money,a.begintime a,d.item,c.begintime,c.bid_end_time,a.stuts
+		from TB_LOANRECORD a
+		join TB_REALNAME b on b.id=a.realid
+		join TB_TENDERING c on a.tendid=c.id
+		join TB_SYSTEMCATEGORYITEM d on d.id=a.longtime
+		where c.stuts=3
+		)
+	</select>
 </mapper>
