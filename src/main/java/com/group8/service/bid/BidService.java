@@ -64,4 +64,10 @@ public interface BidService {
 	 * @return
 	 */
 	int countAllTend();
+
+	/**
+	 * 平台流水
+	 * @return
+	 */
+	int tendAllMoney();
 }

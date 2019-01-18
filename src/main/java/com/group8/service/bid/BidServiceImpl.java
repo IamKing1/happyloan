@@ -79,5 +79,10 @@ public class BidServiceImpl implements BidService {
 		return bidDao.countAllTend();
 	}
 
+	@Override
+	public int tendAllMoney() {
+		return bidDao.tendAllMoney();
+	}
+
 
 }

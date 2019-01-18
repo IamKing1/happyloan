@@ -20,6 +20,10 @@
     <h2>{{ message }}</h2>
 </div>
 <div id="tableView">
+	<el-row >
+		收益总计: <span style="font-size: 20px;color: #f50;">{{tendMoney}}</span>
+	</el-row>
+	<br>
     <!--列表-->
     <el-table
             :data="tableData"
@@ -63,6 +67,7 @@
                 value-format="yyyy-MM-dd"
                 width="250">
         </el-table-column>
+	    
 	    <el-table-column
 			  
 			    label="还钱状态"
@@ -71,12 +76,20 @@
 			    <el-col>{{scope.row.STUTS | formatStata1}}</el-col>
 		    </template>
 	    </el-table-column>
+	
+	    <el-table-column
+			    prop="MON"
+			    label="单笔收益"
+			    width="100">
+	    </el-table-column>
+	    
        <!-- <el-table-column
                 label="操作">
             <template scope="scope">
                 <el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">流标</el-button>
             </template>
         </el-table-column>-->
+	    
     </el-table>
     </el-row>
 
@@ -116,7 +129,7 @@
     let app = new Vue({
         el: '#app',
         data: {
-            message: 'aaa'
+            message: '平台流水'
         }
     });
 
@@ -151,7 +164,8 @@
             editForm: {
                 title:''
             },
-            radio:'1'
+            radio:'1',
+	        tendMoney: 0
         },
         created: function () {
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
@@ -162,6 +176,7 @@
             	console.log(response);
                 self.total = response.data.total;
                 self.tableData = response.data.data;
+                self.tendMoney = response.data.allTendMoney;
             })
         },
         methods: {
@@ -179,6 +194,7 @@
                 axios.post('/bidcon/getAllCountTend', searchForm).then(function (response) {
                     _self.total = response.data.total;
                     _self.tableData = response.data.data;
+	                self.tendMoney = response.data.allTendMoney;
 
                 })
                 setTimeout(function () {

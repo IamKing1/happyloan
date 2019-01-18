@@ -70,4 +70,10 @@ public interface BidDao {
      * @return
      */
     int countAllTend();
+
+	/**
+	 * 平台流水
+	 * @return
+	 */
+	int tendAllMoney();
 }

@@ -76,7 +76,7 @@
     <select id="getAllTend" resultType="map">
 
 	    select * from(
-	    select rownum rn ,b.realname,money,to_char(a.begintime,'yyyy-MM-dd  HH24:mi:ss') a,d.item,to_char(c.begintime,'yyyy-MM-dd  HH24:mi:ss') begintime,to_char(c.bid_end_time ,'yyyy-MM-dd  HH24:mi:ss') bid_end_time,a.stuts
+	    select rownum rn ,b.realname,money,to_char(a.begintime,'yyyy-MM-dd  HH24:mi:ss') a,d.item,to_char(c.begintime,'yyyy-MM-dd  HH24:mi:ss') begintime,to_char(c.bid_end_time ,'yyyy-MM-dd  HH24:mi:ss') bid_end_time,a.stuts,(money*0.03) mon
 	    from TB_LOANRECORD a
 	    join TB_REALNAME b on b.id=a.realid
 	    join TB_TENDERING c on a.tendid=c.id
@@ -94,5 +94,9 @@
 		join TB_SYSTEMCATEGORYITEM d on d.id=a.longtime
 		where c.stuts=3
 		)
+	</select>
+	<select id="tendAllMoney" resultType="int">
+		select sum(money)*0.03 allMoney
+	from TB_LOANRECORD a
 	</select>
 </mapper>

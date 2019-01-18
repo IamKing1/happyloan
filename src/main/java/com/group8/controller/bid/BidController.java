@@ -1,6 +1,7 @@
 package com.group8.controller.bid;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
+import com.group8.dao.bid.BidDao;
 import com.group8.service.auditing.InvestmentService;
 import com.group8.service.bid.BidService;
 
@@ -114,6 +115,11 @@ public class BidController {
 		return i;
 	}
 
+	/**
+	 * 平台流水
+	 * @param map
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("getAllCountTend")
 	public Object getAllCountTend(@RequestBody Map map){
@@ -121,6 +127,7 @@ public class BidController {
 
 		data.put("total",bidService.countAllTend());
 		data.put("data",bidService.getAllTend(map));
+		data.put("allTendMoney", bidService.tendAllMoney());
 		System.out.println(data);
 		return data;
 	}
