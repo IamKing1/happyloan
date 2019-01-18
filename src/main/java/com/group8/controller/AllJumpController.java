@@ -53,4 +53,8 @@ public class AllJumpController {
         return "eg2";
     }
 
+    @RequestMapping("alltend")
+	public String jumpToAlltend(){
+    	return "/bid/alltend";
+    }
 }

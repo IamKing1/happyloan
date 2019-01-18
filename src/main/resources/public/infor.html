@@ -168,7 +168,7 @@
 								<el-input-number v-model="num1" :step="100" :change="numChange()" :max="allNum" :min="100"></el-input-number>
 							</template>
 							<el-col style="margin: 10px 0;font-size: 14px;text-align: left;margin-left: 26%;">
-								预计收入: <span style="color: red;">{{(num1*0.12)|numFilter}}</span> 元</el-col>
+								预计收入: <span style="color: red;">{{(num1*0.12*(month/12))|numFilter}}</span> 元</el-col>
 						</div>
 						<div class="col col-line3"  style="margin: 30px 0">
 							<el-row>
@@ -307,7 +307,7 @@
 	let vue = new Vue({
 		el: "#app",
 		data: {
-			num1: 100,
+			num1: 0,
 			allNum: 900,
 			tendNum:130000,
 			tableData2:[],
@@ -329,7 +329,7 @@
 			goUrl:'',
 			tendId:0,
 			progress:20,
-			login:""
+			login:"",
 		},
 
 		mounted(){
