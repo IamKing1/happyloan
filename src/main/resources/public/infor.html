@@ -218,7 +218,7 @@
 								<br />
 								<el-table :data="job" style="width: 90%;margin: 0 auto;" border >
 									<el-table-column prop="JOB" label="工作行业" ></el-table-column>
-									<el-table-column prop="ADDRESS" label="工作城市" ></el-table-column>
+									<!--<el-table-column prop="ADDRESS" label="工作城市" ></el-table-column>-->
 									<el-table-column prop="INCOME" label="年收入(/元)" ></el-table-column>
 									<el-table-column label="负债状况">
 										<template scope="scope">
@@ -330,6 +330,7 @@
 			tendId:0,
 			progress:20,
 			login:"",
+			num2:100
 		},
 
 		mounted(){
