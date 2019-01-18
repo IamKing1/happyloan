@@ -64,4 +64,8 @@ join tb_systemcategoryitem b on a.longtime=b.id
         join tb_systemcategoryitem b on a.longtime=b.id
          where  add_months(trunc(a.begintime),b.item)= trunc(sysdate) and a.stuts=1
     </select>
+
+    <select id="getStateByTendId" resultType="Integer" parameterType="Integer">
+        select state from tb_loanrecord where tendid=#{tendId}
+    </select>
 </mapper>
