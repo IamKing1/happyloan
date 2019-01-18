@@ -89,4 +89,11 @@ public interface RepayMoneyDao {
      */
     List<Map> getHuanKuanList();
 
+    /**
+     * 查询状态
+     * @param tendId
+     * @return
+     */
+    Integer getStateByTendId(Integer tendId);
+
 }

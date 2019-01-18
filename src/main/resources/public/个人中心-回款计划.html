@@ -114,7 +114,7 @@
 
             <el-table-column
                     prop="DUEDATE"
-                    label="截止日期"
+                    label="还款日期"
                     width="100"
                     align="center">
             </el-table-column>
@@ -131,8 +131,9 @@
                      label="操作"
                     align="center">
                <template scope="scope">
-                 <el-button :plain="true" type="success" v-if="scope.row.STUTS!=3" size="small" icon="edit" @click="editClick(scope.row)">还款</el-button>
-                 <el-button :plain="true" :disabled="true" type="success" v-if="scope.row.STUTS==3" size="small" icon="edit" @click="editClick(scope.row)">已还</el-button>
+                 <el-button :plain="true" type="success" v-if="scope.row.isno==1" size="small" icon="edit" @click="editClick(scope.row)">还款</el-button>
+                 <el-button :plain="true" type="success" v-if="scope.row.isno==3" size="small" icon="edit" :disabled="true"  @click="editClick(scope.row)">还款</el-button>
+                 <el-button :plain="true" :disabled="true" type="success" v-if="scope.row.isno==2" size="small" icon="edit" @click="editClick(scope.row)">已还</el-button>
                </template>
              </el-table-column>
           </el-table>
